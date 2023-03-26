@@ -1,12 +1,35 @@
 import Navbar from "@/components/navbar";
 import Project, { ProjectType } from "@/components/project";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home() {
+  const { data: categories } = useSWR("/api/categories", fetcher);
   const { data: projects } = useSWR("/api/projects", fetcher);
+  const [filter, setFilter] = useState<string>("*");
+  const [filtered, setFiltered] = useState<ProjectType[]>([]);
+
+  useEffect(() => {
+    if (projects) {
+      setFiltered(projects);
+      runFilter(filter);
+    }
+  }, [projects]);
+
+  function runFilter(category: string) {
+    if (category === "*") {
+      setFiltered(projects);
+      setFilter("*");
+    } else {
+      setFiltered(
+        projects.filter((project: ProjectType) => project.category === category)
+      );
+      setFilter(category);
+    }
+  }
 
   return (
     <main>
@@ -19,10 +42,7 @@ export default function Home() {
               className="text-3xl md:text-7xl mt-10 font-bold font-sans w-96 h-fit"
               data-aos="fade-down"
             >
-              Hello, I'm{" "}
-              <span className="from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-gradient-to-r">
-                Lorenzo
-              </span>
+              Hello, I'm <span className="text-gradient">Lorenzo</span>
             </h1>
             <p
               className="text-xl text-gray-400"
@@ -88,12 +108,50 @@ export default function Home() {
 
       <div
         id="projects"
-        className="my-20 flex gap-8 flex-wrap w-full content-center justify-center items-center text-center"
+        className="my-20 w-3/4 mx-auto justify-center text-center"
       >
-        {projects &&
-          projects.map((project: ProjectType) => {
-            return <Project key={project.id} project={project} />;
-          })}
+        <h1 className="text-3xl font-extrabold my-4 text-gradient">
+          My projects
+        </h1>
+        <div className="w-full flex justify-between">
+          <ul className="w-fit mt-2 flex gap-2 text-center mx-auto justify-center">
+            <li>
+              <button
+                onClick={(e) => runFilter("*")}
+                className={
+                  filter === "*"
+                    ? "text-primary hover:text-primary"
+                    : "hover:text-primary"
+                }
+              >
+                All
+              </button>
+            </li>
+            {categories &&
+              categories.map((category: string) => {
+                return (
+                  <li>
+                    <button
+                      onClick={(e) => runFilter(category)}
+                      className={
+                        filter === category
+                          ? "text-primary hover:text-primary"
+                          : "hover:text-primary"
+                      }
+                    >
+                      {category}
+                    </button>
+                  </li>
+                );
+              })}
+          </ul>
+          <div className="w-full flex gap-8 flex-wrap content-end justify-end items-center text-center">
+            {filtered &&
+              filtered.map((project: ProjectType) => {
+                return <Project key={project.id} project={project} />;
+              })}
+          </div>
+        </div>
       </div>
     </main>
   );
