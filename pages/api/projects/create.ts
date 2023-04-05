@@ -4,6 +4,8 @@ import { uploadImage } from "@/lib/firebase";
 import { NextApiResponse } from "next";
 import { IncomingMessage } from "http";
 import prisma from "@/lib/prismadb";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -25,6 +27,11 @@ apiRoute.use(upload.array("file"));
 apiRoute.post(async (req: IncomingMessage, res: NextApiResponse) => {
   const { files } = req;
   const { name, description, category, link } = req.body;
+
+  const session = await getServerSession(req as any, res, authOptions);
+  if (session?.user?.email !== process.env.NEXT_PUBLIC_ADMIN) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
 
   if (!files || files.length === 0 || !name || !description || !category) {
     return res.status(400).json({ error: "Missing parameters" });

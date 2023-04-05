@@ -39,7 +39,7 @@ export default function Home() {
         <div className="flex flex-col md:flex-row w-full">
           <div>
             <h1
-              className="text-3xl md:text-7xl mt-10 font-bold font-sans w-96 h-fit"
+              className="text-3xl md:text-7xl mt-10 font-bold font-sans md:w-96 h-fit"
               data-aos="fade-down"
             >
               Hello, I'm <span className="text-gradient">Lorenzo</span>
@@ -87,7 +87,7 @@ export default function Home() {
           data-aos-duration="1000"
         />
 
-        <div className="ml-auto w-1/2">
+        <div className="md:ml-auto w-1/2">
           <h1 className="from-[#e3a002] to-[#fcc203] text-4xl mt-10 font-extrabold text-transparent bg-clip-text bg-gradient-to-r font-sans">
             About Me
           </h1>
@@ -113,7 +113,7 @@ export default function Home() {
         <h1 className="text-3xl font-extrabold my-4 text-gradient">
           My projects
         </h1>
-        <div className="w-full flex justify-between">
+        <div className="w-full flex flex-col md:flex-row gap-6 md:gap-0 justify-between">
           <ul className="w-fit mt-2 flex gap-2 text-center mx-auto justify-center">
             <li>
               <button
@@ -145,7 +145,7 @@ export default function Home() {
                 );
               })}
           </ul>
-          <div className="w-full flex gap-8 flex-wrap content-end justify-end items-center text-center">
+          <div className="w-full flex gap-8 flex-wrap justify-center content-center md:content-end md:justify-end items-center text-center">
             {filtered &&
               filtered.map((project: ProjectType) => {
                 return <Project key={project.id} project={project} />;
