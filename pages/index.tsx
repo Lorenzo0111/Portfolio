@@ -42,14 +42,14 @@ export default function Home() {
               className="text-3xl md:text-7xl mt-10 font-bold font-sans md:w-96 h-fit"
               data-aos="fade-down"
             >
-              Hello, I'm <span className="text-gradient">Lorenzo</span>
+              Hello, I&apos;m <span className="text-gradient">Lorenzo</span>
             </h1>
             <p
               className="text-xl text-gray-400"
               data-aos="fade-right"
               data-aos-duration="1500"
             >
-              I'm a java, web and bot developer from Italy
+              I&apos;m a java, web and bot developer from Italy
             </p>
           </div>
 
@@ -92,16 +92,16 @@ export default function Home() {
             About Me
           </h1>
           <p className="mt-2 text-md md:text-xl leading-8 md:text-left">
-            Hello! I'm Lorenzo. I'm a java, web and bot developer from Italy who
-            loves to code and create amazing new things every day.
+            Hello! I&apos;m Lorenzo. I&apos;m a java, web and bot developer from
+            Italy who loves to code and create amazing new things every day.
           </p>
           <p className="mt-1 text-md md:text-xl leading-8 md:text-left">
-            I can code in many languages, but I'm most experienced in TypeScript
-            and Java.
+            I can code in many languages, but I&apos;m most experienced in
+            TypeScript and Java.
           </p>
           <p className="mt-1 text-md md:text-xl leading-8 md:text-left">
-            I'm currently working on a lot of projects, but I'm always looking
-            for new opportunities.
+            I&apos;m currently working on a lot of projects, but I&apos;m always
+            looking for new opportunities.
           </p>
         </div>
       </div>
@@ -130,7 +130,7 @@ export default function Home() {
             {categories &&
               categories.map((category: string) => {
                 return (
-                  <li>
+                  <li key={category}>
                     <button
                       onClick={(e) => runFilter(category)}
                       className={
