@@ -49,7 +49,7 @@ export default function Skill({
       >
         <div className="flex flex-col gap-2 p-4">
           {Object.entries(skills).map(([skill, level]) => (
-            <div className="py-2">
+            <div className="py-2" key={skill}>
               <div className="flex justify-between items-center">
                 <span>{skill}</span>
                 <span>{level}%</span>
