@@ -1,4 +1,3 @@
-import Navbar from "@/components/navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -13,8 +12,6 @@ export default function ProjectPage() {
 
   return (
     <main>
-      <Navbar />
-
       <div className="text-left mt-20 m-auto flex flex-col gap-4 h-[500px] md:w-3/4 xl:w-1/2">
         {project && project.error && <p>{project.error}</p>}
         {project && !project.error && (
@@ -23,7 +20,7 @@ export default function ProjectPage() {
             <p className="text-gray-400">{project.description}</p>
             {project.link && (
               <div className="flex w-full gap-4">
-                <Link href={project.link} className="bg-primary text-black rounded-xl h-10 w-full">
+                <Link href={project.link} className="bg-primary text-black rounded-xl h-10 w-full flex items-center justify-center">
                   Visit Page
                 </Link>
               </div>

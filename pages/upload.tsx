@@ -1,6 +1,5 @@
-import Navbar from "@/components/navbar";
 import { useState } from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export default function Upload() {
   const { data: session, status } = useSession();
@@ -54,8 +53,6 @@ export default function Upload() {
   ) {
     return (
       <main>
-        <Navbar />
-
         <div className="text-center m-auto flex flex-col justify-center items-center content-center h-[500px] md:w-3/4 xl:w-1/2">
           <h1 className="from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-gradient-to-r font-extrabold text-4xl mb-4">
             Unauthorized
@@ -68,8 +65,6 @@ export default function Upload() {
 
   return (
     <main>
-      <Navbar />
-
       <div className="text-center m-auto flex flex-col justify-center items-center content-center h-[500px] md:w-3/4 xl:w-1/2">
         <h1 className="from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-gradient-to-r font-extrabold text-4xl mb-4">
           Upload a new item

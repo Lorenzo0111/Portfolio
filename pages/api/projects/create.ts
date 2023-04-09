@@ -29,7 +29,7 @@ apiRoute.post(async (req: IncomingMessage, res: NextApiResponse) => {
   const { name, description, category, link } = req.body;
 
   const session = await getServerSession(req as any, res, authOptions);
-  if (session?.user?.email !== process.env.NEXT_PUBLIC_ADMIN) {
+  if (session?.user?.id !== process.env.NEXT_PUBLIC_ADMIN) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 

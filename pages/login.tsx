@@ -1,4 +1,3 @@
-import Navbar from "@/components/navbar";
 import { signIn, useSession } from "next-auth/react";
 
 export default function Login() {
@@ -7,8 +6,6 @@ export default function Login() {
   if (status === "authenticated") {
     return (
       <main>
-        <Navbar />
-
         <div className="text-center m-auto flex flex-col justify-center items-center content-center h-[500px] md:w-3/4 xl:w-1/2">
           <h1 className="from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-gradient-to-r font-extrabold text-4xl mb-4">
             Already logged in
@@ -21,8 +18,6 @@ export default function Login() {
 
   return (
     <main>
-      <Navbar />
-
       <div className="text-center m-auto flex flex-col justify-center items-center content-center h-[500px] md:w-3/4 xl:w-1/2">
         <h1 className="from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-gradient-to-r font-extrabold text-4xl mb-4">
           Login
