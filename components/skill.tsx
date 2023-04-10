@@ -30,7 +30,7 @@ export default function Skill({
   };
 
   return (
-    <div className="w-full md:w-[30rem] 2xl:w-[20rem] flex flex-col gap-2">
+    <div className="w-full md:w-[30rem] 2xl:w-[20rem] flex flex-col gap-2" data-aos="fade-right">
       <button
         className="bg-[#232323] rounded-xl w-full min-h-[3rem] px-4 flex justify-between items-center"
         onClick={() => toggleSlider(!open)}

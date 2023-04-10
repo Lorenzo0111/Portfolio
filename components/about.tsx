@@ -7,9 +7,9 @@ export default function About() {
       className="mt-[20px] flex flex-col md:flex-row gap-x-5 content-center justify-center items-center text-center m-auto md:w-3/4"
     >
       <Image
-        className="mt-5 md:mt-0 mr-auto md:mr-0 ml-auto"
-        src="/meditation.svg"
-        alt="meditation"
+        className="mt-40 md:mt-auto mr-auto md:mr-0 ml-auto"
+        src="/about.svg"
+        alt="about"
         width={300}
         height={300}
         data-aos="zoom-in"
