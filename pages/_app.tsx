@@ -11,6 +11,7 @@ import { SessionProvider } from "next-auth/react";
 import { useEffect } from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { Analytics } from "@vercel/analytics/react";
 
 config.autoAddCss = false;
 
@@ -36,6 +37,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <div className="w-full min-h-screen flex flex-col">
           <Navbar />
           <Component {...pageProps} />
+          <Footer />
+          <Analytics />
         </div>
       </SessionProvider>
     </main>

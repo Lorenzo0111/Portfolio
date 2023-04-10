@@ -1,7 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
+import Image from "next/image";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -20,7 +22,10 @@ export default function ProjectPage() {
             <p className="text-gray-400">{project.description}</p>
             {project.link && (
               <div className="flex w-full gap-4">
-                <Link href={project.link} className="bg-primary text-black rounded-xl h-10 w-full flex items-center justify-center">
+                <Link
+                  href={project.link}
+                  className="bg-primary text-black rounded-xl h-10 w-full flex items-center justify-center"
+                >
                   Visit Page
                 </Link>
               </div>
@@ -28,16 +33,26 @@ export default function ProjectPage() {
             {project.images.length > 0 && (
               <h1 className="font-bold text-2xl">Images</h1>
             )}
-            {project.images.map((image: string) => (
+            <Carousel autoPlay={true} showArrows={true} showIndicators={false} showStatus={false}>
               <Image
-                key={Math.floor(Math.random() * 100)}
-                className="w-full"
-                src={image}
-                alt="image"
-                width={500}
-                height={500}
+                src={project.images[0]}
+                alt="project image"
+                key={"1"}
+                width={300}
+                height={300}
               />
-            ))}
+              {project.images.map((image: string) => {
+                return (
+                  <Image
+                    src={image}
+                    alt="project image"
+                    key={image + "1"}
+                    width={300}
+                    height={300}
+                  />
+                );
+              })}
+            </Carousel>
           </>
         )}
       </div>
