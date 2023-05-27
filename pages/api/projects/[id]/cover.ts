@@ -20,15 +20,13 @@ export default async function handler(
       return res.status(404).json({ error: "Project not found" });
     }
 
-    const promises = project.images.map(async (image) => {
-      return await getImageUrl(project.name, image);
-    });
+    if (project.images.length > 0) {
+      const url = await getImageUrl(project.name, project.images[0]);
+      return res.status(200).json(url);
+    }
 
-    const images = await Promise.all(promises);
-
-    return res.status(200).json({
-      ...project,
-      images,
+    return res.status(404).json({
+      error: "No cover image found",
     });
   } catch {
     return res.status(404).json({ error: "Project not found" });

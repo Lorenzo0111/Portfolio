@@ -1,27 +1,32 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prismadb";
-import { Project } from "@prisma/client";
-import { getImageUrl } from "@/lib/firebase";
-
-type ProjectCard = {
-  cover?: string;
-} & Project;
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const projects: ProjectCard[] = await prisma.project.findMany({
-    orderBy: {
-      category: "asc"
-    }
-  });
+  const { filter, limit } = req.query;
 
-  for (const project of projects) {
-    if (project.images.length > 0) {
-      project.cover = await getImageUrl(project.name, project.images[0]);
-    }
+  let limitNum = -1;
+  if (limit && !isNaN(Number(limit))) limitNum = Number(limit);
+
+  let filterObject = {};
+  if (filter && filter !== "*") {
+    filterObject = {
+      category: {
+        contains: filter as string | undefined,
+      },
+    };
   }
 
-  res.status(200).json(projects);
+  const projects = await prisma.project.findMany({
+    orderBy: {
+      category: "asc",
+    },
+    where: filterObject,
+  });
+
+  res
+    .status(200)
+    .json(projects.slice(0, limitNum === -1 ? projects.length : limitNum));
 }

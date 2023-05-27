@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import useSWR from "swr";
-import Project, { ProjectType } from "./project";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import Project from "./project";
+import type { Project as ProjectType } from "@prisma/client";
+import { useFetcher } from "@/utils/fetcher";
 
 export default function Projects() {
-  const { data: categories } = useSWR("/api/categories", fetcher);
-  const { data: projects } = useSWR("/api/projects", fetcher);
+  const { data: categories } = useFetcher("/api/categories");
+  const { data: projects } = useFetcher("/api/projects?limit=5");
   const [filter, setFilter] = useState<string>("*");
   const [filtered, setFiltered] = useState<ProjectType[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (projects) {
@@ -17,29 +17,41 @@ export default function Projects() {
     }
   }, [projects]);
 
-  function runFilter(category: string) {
+  async function runFilter(category: string) {
     if (category === "*") {
-      setFiltered(projects);
       setFilter("*");
     } else {
-      setFiltered(
-        projects.filter((project: ProjectType) => project.category === category)
-      );
       setFilter(category);
     }
+
+    setLoading(true);
+
+    const projects = await fetch(
+      "/api/projects?filter=" +
+        encodeURIComponent(category) +
+        (category === "*" ? "&limit=5" : "")
+    ).then((res) => res.json());
+
+    setFiltered(projects);
+    setLoading(false);
   }
 
   return (
     <div
       id="projects"
-      className="my-20 w-3/4 mx-auto justify-center text-center"
+      className="mx-auto my-20 text-center w-3/4 justify-center"
     >
-      <h1 className="text-3xl font-extrabold my-4 text-gradient">
+      <h1 className="font-extrabold mt-4 text-gradient text-3xl">
         My projects
       </h1>
+      <h2 className="text-lg mb-4">
+        Select a category to view all the projects. Click on a project to get
+        images and infos
+      </h2>
+      {loading && <span className="mt-6 loader"></span>}
       {projects ? (
-        <div className="w-full flex flex-col md:flex-row gap-6 md:gap-0 justify-between">
-          <ul className="w-fit mt-2 flex gap-2 text-center mx-auto justify-center">
+        <div className="flex flex-col w-full gap-6 justify-between md:flex-row md:gap-0">
+          <ul className="flex mx-auto mt-2 text-center w-fit gap-2 justify-center">
             <li>
               <button
                 onClick={(e) => runFilter("*")}
@@ -70,7 +82,7 @@ export default function Projects() {
                 );
               })}
           </ul>
-          <div className="w-full flex gap-8 flex-wrap justify-center content-center md:content-end md:justify-end items-center text-center">
+          <div className="flex flex-wrap text-center w-full gap-8 justify-center content-center items-center md:content-end md:justify-end">
             {filtered &&
               filtered.map((project: ProjectType) => {
                 return <Project key={project.id} project={project} />;
