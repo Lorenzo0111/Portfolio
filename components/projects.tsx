@@ -44,14 +44,14 @@ export default function Projects() {
       <h1 className="font-extrabold mt-4 text-gradient text-3xl">
         My projects
       </h1>
-      <h2 className="text-lg mb-4">
+      <h2 className="text-lg">
         Select a category to view all the projects. Click on a project to get
         images and infos
       </h2>
       {loading && <span className="mt-6 loader"></span>}
       {projects ? (
-        <div className="flex flex-col w-full gap-6 justify-between md:flex-row md:gap-0">
-          <ul className="flex mx-auto mt-2 text-center w-fit gap-2 justify-center">
+        <div className="flex flex-col w-full justify-between">
+          <ul className="flex mx-auto text-center mb-2 w-fit gap-2 justify-center">
             <li>
               <button
                 onClick={(e) => runFilter("*")}
@@ -82,7 +82,7 @@ export default function Projects() {
                 );
               })}
           </ul>
-          <div className="flex flex-wrap text-center w-full gap-8 justify-center content-center items-center md:content-end md:justify-end">
+          <div className="flex flex-wrap text-center w-full gap-8 justify-center content-center items-center">
             {filtered &&
               filtered.map((project: ProjectType) => {
                 return <Project key={project.id} project={project} />;

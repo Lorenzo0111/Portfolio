@@ -9,10 +9,10 @@ import {
 
 export default function Skills() {
   return (
-    <div id="skills" className="my-20 w-3/4 mx-auto justify-center text-center">
-      <h1 className="text-3xl font-extrabold my-4 text-gradient">Skills</h1>
+    <div id="skills" className="mx-auto my-20 text-center w-3/4 justify-center">
+      <h1 className="font-extrabold my-4 text-gradient text-3xl">Skills</h1>
 
-      <div className="flex flex-wrap gap-4 justify-between">
+      <div className="flex flex-wrap gap-4 justify-center 2xl:justify-between">
         <Skill skills={{ Spigot: 100, Paper: 75, NMS: 60 }}>
           <FontAwesomeIcon icon={faJava} className="mr-2" /> Plugin Developer
         </Skill>
