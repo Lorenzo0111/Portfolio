@@ -2,12 +2,13 @@ import "@/styles/globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "aos/dist/aos.css";
 
+import { dark } from "@clerk/themes";
 import AOS from "aos";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import type { AppProps } from "next/app";
-import { SessionProvider } from "next-auth/react";
+import { ClerkProvider } from "@clerk/nextjs";
 import { useEffect } from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
@@ -24,7 +25,15 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <main className={inter.className}>
-      <SessionProvider session={pageProps.session}>
+      <ClerkProvider
+        {...pageProps}
+        appearance={{
+          baseTheme: dark,
+          variables: {
+            colorPrimary: "#fcba03",
+          },
+        }}
+      >
         <Head>
           <title>Lorenzo0111</title>
           <meta name="title" content="Lorenzo0111" />
@@ -53,7 +62,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Footer />
           <Analytics />
         </div>
-      </SessionProvider>
+      </ClerkProvider>
     </main>
   );
 }

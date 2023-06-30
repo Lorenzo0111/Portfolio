@@ -1,8 +1,34 @@
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+
+import { getAuth, clerkClient } from "@clerk/nextjs/server";
+import { GetServerSideProps } from "next";
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { userId } = getAuth(ctx.req);
+
+  if (!userId) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  const user = userId ? await clerkClient.users.getUser(userId) : undefined;
+  if (!user || user.publicMetadata.role !== "admin") {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
+};
 
 export default function Upload() {
-  const { data: session, status } = useSession();
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [category, setCategory] = useState<string>("");
@@ -45,22 +71,6 @@ export default function Upload() {
     }
 
     setSuccess("Successfully created project");
-  }
-
-  if (
-    status !== "authenticated" ||
-    session.user.id !== process.env.NEXT_PUBLIC_ADMIN
-  ) {
-    return (
-      <main>
-        <div className="text-center m-auto flex flex-col justify-center items-center content-center h-[500px] md:w-3/4 xl:w-1/2">
-          <h1 className="from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-gradient-to-r font-extrabold text-4xl mb-4">
-            Unauthorized
-          </h1>
-          <p>You are not authorized to upload a project.</p>
-        </div>
-      </main>
-    );
   }
 
   return (

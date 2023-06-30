@@ -15,6 +15,7 @@ export default function Projects() {
       setFiltered(projects);
       runFilter(filter);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projects]);
 
   async function runFilter(category: string) {

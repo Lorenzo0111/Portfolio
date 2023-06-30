@@ -4,8 +4,7 @@ import { uploadImage } from "@/lib/firebase";
 import { NextApiResponse } from "next";
 import { IncomingMessage } from "http";
 import prisma from "@/lib/prismadb";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]";
+import { getAuth, clerkClient } from "@clerk/nextjs/server";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -28,8 +27,13 @@ apiRoute.post(async (req: IncomingMessage, res: NextApiResponse) => {
   const { files } = req;
   const { name, description, category, link } = req.body;
 
-  const session = await getServerSession(req as any, res, authOptions);
-  if (session?.user?.id !== process.env.NEXT_PUBLIC_ADMIN) {
+  const { userId } = getAuth(req as any);
+  if (!userId) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  const user = userId ? await clerkClient.users.getUser(userId) : null;
+  if (user?.publicMetadata.role !== "admin") {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
