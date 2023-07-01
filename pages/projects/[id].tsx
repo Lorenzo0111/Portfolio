@@ -5,8 +5,6 @@ import { Carousel } from "react-responsive-carousel";
 import Image from "next/image";
 import { useFetcher } from "@/utils/fetcher";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 export default function ProjectPage() {
   const router = useRouter();
   const id = router.query.id;
