@@ -1,3 +1,4 @@
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import {
   faDiscord,
   faGithub,
@@ -29,7 +30,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className=" md:absolute right-0 space-x-4">
+        <div className="flex items-center md:absolute right-0 gap-4">
           <Link
             className="hover:text-primary"
             href="https://rocketcreations.net/discord"
@@ -58,6 +59,12 @@ export default function Navbar() {
           >
             <FontAwesomeIcon icon={faYoutube} />
           </Link>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
         </div>
       </div>
     </nav>
