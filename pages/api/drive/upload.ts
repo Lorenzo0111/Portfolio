@@ -37,14 +37,16 @@ apiRoute.post(async (req: IncomingMessage, res: NextApiResponse) => {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  if (!file || !name || !description || !ownerId) {
+  if (!file || !name || !description) {
     return res.status(400).json({ error: "Missing parameters" });
   }
 
-  try {
-    await clerkClient.users.getUser(ownerId);
-  } catch (e) {
-    return res.status(404).json({ error: "Owner not found" });
+  if (ownerId) {
+    try {
+      await clerkClient.users.getUser(ownerId);
+    } catch (e) {
+      return res.status(404).json({ error: "Owner not found" });
+    }
   }
 
   const driveFile = await prisma.driveFile.create({
@@ -53,7 +55,7 @@ apiRoute.post(async (req: IncomingMessage, res: NextApiResponse) => {
       fileName: file.originalname,
       mimeType: file.mimetype,
       description,
-      userId: ownerId,
+      userId: ownerId ? ownerId : null,
     },
   });
 

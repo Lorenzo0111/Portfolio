@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { getAuth, clerkClient } from "@clerk/nextjs/server";
 import { GetServerSideProps } from "next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { userId } = getAuth(ctx.req);
@@ -54,6 +56,7 @@ export default function Upload({
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
+  const [id, setId] = useState<string>("");
 
   let fileInput: HTMLInputElement | null = null;
 
@@ -63,7 +66,7 @@ export default function Upload({
     setError("");
     setSuccess("");
 
-    if (!name || !description || !ownerId || !file) {
+    if (!name || !description || !file) {
       setError("Please fill in all fields");
       return;
     }
@@ -71,7 +74,7 @@ export default function Upload({
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", description);
-    formData.append("ownerId", ownerId);
+    if (ownerId) formData.append("ownerId", ownerId);
     formData.append("file", file);
 
     const response = await fetch("/api/drive/upload", {
@@ -85,7 +88,12 @@ export default function Upload({
       return;
     }
 
-    setSuccess("Successfully created drive file");
+    if (!ownerId) setId(data.id);
+    setSuccess(
+      ownerId
+        ? "Successfully created drive file"
+        : "Invited created successfully"
+    );
   }
 
   return (
@@ -97,7 +105,22 @@ export default function Upload({
 
         <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2">
           {error && <p className="text-red-500">{error}</p>}
-          {success && <p className="text-primary">{success}</p>}
+          {success && (
+            <p className="text-primary">
+              {success}{" "}
+              {id && (
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      `${window.location.protocol}//${window.location.host}/drive/invite/${id}`
+                    );
+                  }}
+                >
+                  <FontAwesomeIcon icon={faClipboard} />
+                </button>
+              )}
+            </p>
+          )}
           <input
             type="text"
             placeholder="Name"
@@ -116,9 +139,7 @@ export default function Upload({
             defaultValue={""}
             className="rounded-xl bg-[#18181b] p-2 outline-none"
           >
-            <option value="" disabled>
-              Owner
-            </option>
+            <option value="">Create an Invite</option>
             {users.map((user) => (
               <option
                 key={user.id}
