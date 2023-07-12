@@ -94,6 +94,11 @@ export default function Upload({
         ? "Successfully created drive file"
         : "Invited created successfully"
     );
+
+    setName("");
+    setDescription("");
+    setOwnerId("");
+    setFile(null);
   }
 
   return (
@@ -110,7 +115,8 @@ export default function Upload({
               {success}{" "}
               {id && (
                 <button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     navigator.clipboard.writeText(
                       `${window.location.protocol}//${window.location.host}/drive/invite/${id}`
                     );
