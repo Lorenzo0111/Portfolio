@@ -1,0 +1,61 @@
+import "@/styles/globals.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import "aos/dist/aos.css";
+
+import { Metadata } from "next";
+
+import AnimationLoader from "@/components/animation";
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import { Analytics } from "@vercel/analytics/react";
+import { Inter } from "next/font/google";
+
+export const metadata: Metadata = {
+  title: "Lorenzo0111",
+  description: "Java and Web developer from Italy",
+  metadataBase: new URL('https://lorenzo0111.me'),
+  openGraph: {
+    type: "website",
+    url: "https://lorenzo0111.me",
+    title: "Lorenzo0111",
+    description: "Java and Web developer from Italy",
+    images: ["/icon.png"],
+  },
+  themeColor: "#fcba03",
+  viewport: "width=device-width, initial-scale=1",
+};
+
+config.autoAddCss = false;
+const inter = Inter({ subsets: ["latin"] });
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+        variables: {
+          colorPrimary: "#fcba03",
+        },
+      }}
+    >
+      <html lang="en">
+        <body
+          className={"flex flex-col min-h-screen w-full " + inter.className}
+        >
+          <AnimationLoader />
+          <Navbar />
+          {children}
+          <Footer />
+          <Analytics />
+        </body>
+      </html>
+    </ClerkProvider>
+  );
+}

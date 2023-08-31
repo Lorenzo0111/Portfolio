@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["firebasestorage.googleapis.com"],
+    domains: ["vgdbmt7zigpfy6rk.public.blob.vercel-storage.com"],
   },
 };
 

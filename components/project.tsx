@@ -1,20 +1,15 @@
-import { useFetcher } from "@/utils/fetcher";
 import type { Project } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Project({ project }: { project: Project }) {
-  const { data: cover, error } = useFetcher(
-    `/api/projects/${project.id}/cover`
-  );
-
   return (
     <Link
       href={"/projects/" + project.id}
       className="border-primary rounded-xl border-2 h-60 w-60 relative hover:shadow-lg hover:shadow-primary/30"
     >
-      {!cover && !error && <span className="mt-6 loader"></span>}
-      {cover && (
+      {!project.images[0] && <span className="mt-6 loader"></span>}
+      {project.images[0] && (
         <>
           {project.images[0].endsWith(".mp4") ? (
             <video
@@ -25,11 +20,11 @@ export default function Project({ project }: { project: Project }) {
               loop={true}
               muted={true}
             >
-              <source src={cover} type="video/mp4" />
+              <source src={project.images[0]} type="video/mp4" />
             </video>
           ) : (
             <Image
-              src={cover}
+              src={project.images[0]}
               alt={project.name}
               width={500}
               height={500}

@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import Project from "./project";
 import type { Project as ProjectType } from "@prisma/client";
@@ -15,7 +17,7 @@ export default function Projects() {
       setFiltered(projects);
       runFilter(filter);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projects]);
 
   async function runFilter(category: string) {
