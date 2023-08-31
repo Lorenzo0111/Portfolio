@@ -23,7 +23,7 @@ export async function GET(request: Request) {
       category: "asc",
     },
     where: filterObject,
-    take: limitNum,
+    take: limitNum > -1 ? limitNum : undefined,
   });
 
   return NextResponse.json(projects);
