@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "aos/dist/aos.css";
 
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 
 import AnimationLoader from "@/components/animation";
 import Footer from "@/components/footer";
@@ -16,7 +16,7 @@ import { Inter } from "next/font/google";
 export const metadata: Metadata = {
   title: "Lorenzo0111",
   description: "Java and Web developer from Italy",
-  metadataBase: new URL('https://lorenzo0111.me'),
+  metadataBase: new URL("https://lorenzo0111.me"),
   openGraph: {
     type: "website",
     url: "https://lorenzo0111.me",
@@ -24,8 +24,12 @@ export const metadata: Metadata = {
     description: "Java and Web developer from Italy",
     images: ["/icon.png"],
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: "#fcba03",
-  viewport: "width=device-width, initial-scale=1",
 };
 
 config.autoAddCss = false;

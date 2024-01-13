@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const { id } = params;
 
@@ -11,6 +11,10 @@ export async function GET(
     const project = await prisma.project.findFirst({
       where: {
         id,
+      },
+      cacheStrategy: {
+        ttl: 60 * 60,
+        swr: 60 * 30,
       },
     });
 
@@ -23,7 +27,11 @@ export async function GET(
       });
     }
 
-    return NextResponse.json(project);
+    return NextResponse.json(project, {
+      headers: {
+        "Cache-Control": "public, max-age=3600",
+      },
+    });
   } catch {
     return new Response(JSON.stringify({ error: "Project not found" }), {
       status: 404,

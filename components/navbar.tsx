@@ -2,7 +2,7 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import {
   faDiscord,
   faGithub,
-  faTwitter,
+  faXTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,24 +33,24 @@ export default function Navbar() {
         <div className="flex items-center md:absolute right-0 gap-4">
           <Link
             className="hover:text-primary"
-            href="https://rocketcreations.net/discord"
+            href="https://discord.gg/HT47UQXBqG"
             aria-label="Discord"
           >
             <FontAwesomeIcon icon={faDiscord} />
           </Link>
           <Link
             className="hover:text-primary"
-            href="https://github.net/Lorenzo0111"
+            href="https://github.com/Lorenzo0111"
             aria-label="GitHub"
           >
             <FontAwesomeIcon icon={faGithub} />
           </Link>
           <Link
             className="hover:text-primary"
-            href="https://twitter.com/akaLorenzo0111"
-            aria-label="Twitter"
+            href="https://x.com/akaLorenzo0111"
+            aria-label="X (Twitter)"
           >
-            <FontAwesomeIcon icon={faTwitter} />
+            <FontAwesomeIcon icon={faXTwitter} />
           </Link>
           <Link
             className="hover:text-primary"

@@ -6,6 +6,10 @@ export async function GET(request: Request) {
     orderBy: {
       category: "asc",
     },
+    cacheStrategy: {
+      ttl: 60 * 60,
+      swr: 60 * 30,
+    },
   });
 
   const categories: string[] = [];
@@ -16,5 +20,9 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.json(categories);
+  return NextResponse.json(categories, {
+    headers: {
+      "Cache-Control": "public, max-age=3600",
+    },
+  });
 }

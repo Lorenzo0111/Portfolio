@@ -18,11 +18,20 @@ export async function GET(request: Request) {
 
   const user = userId ? await clerkClient.users.getUser(userId) : null;
   if (user?.publicMetadata.role !== "admin") {
-    files = await prisma.driveFile.findMany({});
+    files = await prisma.driveFile.findMany({
+      cacheStrategy: {
+        ttl: 60,
+        swr: 30,
+      },
+    });
   } else {
     files = await prisma.driveFile.findMany({
       where: {
         userId: userId,
+      },
+      cacheStrategy: {
+        ttl: 60,
+        swr: 30,
       },
     });
   }

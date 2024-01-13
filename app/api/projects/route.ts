@@ -24,7 +24,15 @@ export async function GET(request: Request) {
     },
     where: filterObject,
     take: limitNum > -1 ? limitNum : undefined,
+    cacheStrategy: {
+      ttl: 60 * 60,
+      swr: 60 * 30,
+    },
   });
 
-  return NextResponse.json(projects);
+  return NextResponse.json(projects, {
+    headers: {
+      "Cache-Control": "public, max-age=3600",
+    },
+  });
 }
