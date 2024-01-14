@@ -22,11 +22,8 @@ export default function Navbar() {
           <Link className="hover:text-primary" href="/#skills">
             Skills
           </Link>
-          <Link className="hover:text-primary" href="/#projects">
+          <Link className="hover:text-primary" href="/projects">
             Projects
-          </Link>
-          <Link className="hover:text-primary" href="/#experience">
-            Experience
           </Link>
         </div>
 

@@ -6,7 +6,7 @@ export default function Project({ project }: { project: Project }) {
   return (
     <Link
       href={"/projects/" + project.id}
-      className="border-primary rounded-xl border-2 h-60 w-60 relative hover:shadow-lg hover:shadow-primary/30"
+      className="border-primary rounded-xl border-2 h-60 w-[400px] relative hover:shadow-lg hover:shadow-primary/30"
     >
       {!project.images[0] && <span className="mt-6 loader"></span>}
       {project.images[0] && (
@@ -14,11 +14,13 @@ export default function Project({ project }: { project: Project }) {
           {project.images[0].endsWith(".mp4") ? (
             <video
               preload="none"
-              className="rounded-xl"
+              className="rounded-xl w-full h-full"
               autoPlay={true}
               controls={false}
               loop={true}
               muted={true}
+              width={400}
+              height={240}
             >
               <source src={project.images[0]} type="video/mp4" />
             </video>
@@ -26,9 +28,10 @@ export default function Project({ project }: { project: Project }) {
             <Image
               src={project.images[0]}
               alt={project.name}
-              width={500}
-              height={500}
-              className="rounded-xl h-full"
+              width={400}
+              height={240}
+              className="rounded-xl h-full w-full"
+              placeholder="empty"
             />
           )}
         </>

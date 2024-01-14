@@ -25,7 +25,13 @@ export default function WrappedCarousel({ project }: { project: any }) {
             <source src={image} type="video/mp4" />
           </video>
         ) : (
-          <Image src={image} alt={project.name} width={300} height={300} />
+          <Image
+            src={image}
+            alt={project.name}
+            width={500}
+            height={500}
+            placeholder="empty"
+          />
         );
       })}
     </Carousel>

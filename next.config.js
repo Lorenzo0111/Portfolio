@@ -8,7 +8,7 @@ const nextConfig = {
         hostname: "vgdbmt7zigpfy6rk.public.blob.vercel-storage.com",
       },
     ],
-    minimumCacheTTL: 60 * 60,
+    minimumCacheTTL: 7 * 24 * 60 * 60,
   },
 };
 

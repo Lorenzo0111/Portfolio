@@ -7,7 +7,7 @@ import { useFetcher } from "@/utils/fetcher";
 
 export default function Projects() {
   const { data: categories } = useFetcher("/api/categories");
-  const { data: projects } = useFetcher("/api/projects?limit=5");
+  const { data: projects } = useFetcher("/api/projects");
   const [filter, setFilter] = useState<string>("*");
   const [filtered, setFiltered] = useState<ProjectType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -30,9 +30,7 @@ export default function Projects() {
     setLoading(true);
 
     const projects = await fetch(
-      "/api/projects?filter=" +
-        encodeURIComponent(category) +
-        (category === "*" ? "&limit=5" : "")
+      "/api/projects?filter=" + encodeURIComponent(category)
     ).then((res) => res.json());
 
     setFiltered(projects);
@@ -40,10 +38,7 @@ export default function Projects() {
   }
 
   return (
-    <div
-      id="projects"
-      className="mx-auto my-20 text-center w-3/4 justify-center"
-    >
+    <div id="projects" className="mx-auto text-center w-[90%] px-8 justify-center">
       <h1 className="font-extrabold mt-4 text-gradient text-3xl">
         My projects
       </h1>

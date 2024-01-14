@@ -1,7 +1,7 @@
 import Skills from "@/components/skills";
 import About from "@/components/about";
 import Landing from "@/components/landing";
-import Projects from "@/components/projects";
+import ProjectsBanner from "@/components/projects-banner";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
       <Landing />
       <About />
       <Skills />
-      <Projects />
+      <ProjectsBanner />
     </main>
   );
 }
