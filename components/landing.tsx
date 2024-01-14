@@ -26,7 +26,6 @@ export default function Landing() {
           alt="Lorenzo"
           width={300}
           height={300}
-          sizes="300"
           data-aos="zoom-in"
           data-aos-duration="1000"
         />
