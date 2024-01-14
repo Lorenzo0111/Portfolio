@@ -12,6 +12,7 @@ import { dark } from "@clerk/themes";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: "Lorenzo0111",
@@ -54,6 +55,7 @@ export default function RootLayout({
           className={"flex flex-col min-h-screen w-full " + inter.className}
         >
           <AnimationLoader />
+          <SpeedInsights/>
           <Navbar />
           {children}
           <Footer />
