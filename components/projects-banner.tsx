@@ -10,7 +10,7 @@ export default function ProjectsBanner() {
         <h1 className="text-3xl font-extrabold text-gradient">
           Learn more about what I did
         </h1>
-        <Link href="/projects" className="w-fit bg-primary p-2 px-4 rounded-xl">
+        <Link href="/projects" className="w-fit bg-primary text-black p-2 px-4 rounded-xl">
           See my projects
         </Link>
       </div>

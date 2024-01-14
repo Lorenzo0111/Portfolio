@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="mx-auto px-4 sm:px-6 lg:px-8 h-24 items-center justify-center text-center flex mt-auto">
       <p>
         Made with <FontAwesomeIcon icon={faHeart} className="text-primary" /> by{" "}
-        <Link href="/" className="text-primary hover:underline">
+        <Link href="/" className="text-primary underline">
           Lorenzo0111
         </Link>
       </p>

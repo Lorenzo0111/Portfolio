@@ -33,28 +33,28 @@ export default function Navbar() {
             href="https://discord.gg/HT47UQXBqG"
             aria-label="Discord"
           >
-            <FontAwesomeIcon icon={faDiscord} />
+            <FontAwesomeIcon width={48} icon={faDiscord} />
           </Link>
           <Link
             className="hover:text-primary"
             href="https://github.com/Lorenzo0111"
             aria-label="GitHub"
           >
-            <FontAwesomeIcon icon={faGithub} />
+            <FontAwesomeIcon width={48} icon={faGithub} />
           </Link>
           <Link
             className="hover:text-primary"
             href="https://x.com/akaLorenzo0111"
             aria-label="X (Twitter)"
           >
-            <FontAwesomeIcon icon={faXTwitter} />
+            <FontAwesomeIcon width={48} icon={faXTwitter} />
           </Link>
           <Link
             className="hover:text-primary"
             href="https://www.youtube.com/@lorenzo0111"
             aria-label="YouTube"
           >
-            <FontAwesomeIcon icon={faYoutube} />
+            <FontAwesomeIcon width={48} icon={faYoutube} />
           </Link>
           <SignedIn>
             <UserButton />
