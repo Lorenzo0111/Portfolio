@@ -7,7 +7,7 @@ export default function About() {
       className="mt-[20px] flex flex-col md:flex-row gap-x-5 content-center justify-center items-center text-center m-auto md:w-3/4"
     >
       <Image
-        className="mt-40 md:mt-auto mr-auto md:mr-0 ml-auto"
+        className="mt-40 md:mt-auto mr-auto md:mr-0 ml-auto h-[300px] w-[300px]"
         src="/about.svg"
         alt="about"
         width={300}
