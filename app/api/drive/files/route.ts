@@ -1,4 +1,4 @@
-import { auth, clerkClient } from "@clerk/nextjs";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import type { DriveFile } from "@prisma/client";
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";

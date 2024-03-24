@@ -2,7 +2,7 @@
 
 import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Page({
   users,
@@ -19,8 +19,7 @@ export default function Page({
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
   const [id, setId] = useState<string>("");
-
-  let fileInput: HTMLInputElement | null = null;
+  const inputRef = useRef<HTMLInputElement>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -124,13 +123,13 @@ export default function Page({
             max={1}
             onChange={(e) => setFile(e.target.files?.[0] || null)}
             className="hidden"
-            ref={(ref) => (fileInput = ref)}
+            ref={inputRef}
           />
           <div className="flex gap-2">
             <button
               onClick={(e) => {
                 e.preventDefault();
-                fileInput?.click();
+                inputRef.current?.click();
               }}
               className="rounded-xl border-2 border-primary p-2 w-full"
             >

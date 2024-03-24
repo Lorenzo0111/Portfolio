@@ -1,4 +1,4 @@
-import { auth, clerkClient } from "@clerk/nextjs";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import * as vercelBlob from "@vercel/blob";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";

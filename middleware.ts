@@ -1,7 +1,14 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-export default authMiddleware({
-  publicRoutes: ["/api/(.*)", "/projects(.*)", "/"],
+const isPrivateRoute = createRouteMatcher(["/drive(.*)", "/upload"]);
+
+export default clerkMiddleware((auth, request) => {
+  if (isPrivateRoute(request)) {
+    auth().protect();
+  }
+
+  return NextResponse.next();
 });
 
 export const config = {

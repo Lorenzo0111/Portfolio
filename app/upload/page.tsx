@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Upload() {
   const [name, setName] = useState<string>("");
@@ -10,8 +10,7 @@ export default function Upload() {
   const [file, setFile] = useState<FileList | null>(null);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
-
-  let imageInput: HTMLInputElement | null = null;
+  const inputRef = useRef<HTMLInputElement>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -90,13 +89,13 @@ export default function Upload() {
             multiple={true}
             onChange={(e) => setFile(e.target.files)}
             className="hidden"
-            ref={(ref) => (imageInput = ref)}
+            ref={inputRef}
           />
           <div className="flex gap-2">
             <button
               onClick={(e) => {
                 e.preventDefault();
-                imageInput?.click();
+                inputRef.current?.click();
               }}
               className="rounded-xl border-2 border-primary p-2 w-full"
             >
