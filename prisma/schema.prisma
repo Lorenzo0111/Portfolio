@@ -3,13 +3,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
-  url      = env("DATABASE_URL")
+  provider  = "postgres"
+  url       = env("DATABASE_URL")
   directUrl = env("DATABASE_URL_NON_POOLING")
 }
 
 model DriveFile {
-  id          String  @id @default(uuid()) @map("_id")
+  id          String  @id @default(cuid()) @map("_id")
   name        String
   fileName    String
   mimeType    String
@@ -19,7 +19,7 @@ model DriveFile {
 }
 
 model Project {
-  id          String   @id @default(uuid()) @map("_id")
+  id          String   @id @default(cuid()) @map("_id")
   name        String
   description String?
   images      String[]
