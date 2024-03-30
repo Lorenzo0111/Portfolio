@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
   const { id } = params;
 
@@ -32,7 +32,8 @@ export async function GET(
         "Cache-Control": "public, max-age=3600",
       },
     });
-  } catch {
+  } catch (err) {
+    console.error(err);
     return new Response(JSON.stringify({ error: "Project not found" }), {
       status: 404,
       headers: {
