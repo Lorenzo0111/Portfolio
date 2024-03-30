@@ -1,7 +1,7 @@
 import { auth, clerkClient } from "@clerk/nextjs/server";
-import * as vercelBlob from "@vercel/blob";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
+import supabase from "@/lib/supabase";
 
 export async function POST(request: Request) {
   const form = await request.formData();
@@ -56,21 +56,42 @@ export async function POST(request: Request) {
     });
   }
 
-  const fileUrls = [];
-  for (const file of files) {
-    const blob = await vercelBlob.put(file.name, file, {
-      access: "public",
-    });
-    fileUrls.push(blob.url);
-  }
-
   project = await prisma.project.create({
     data: {
       name: newName,
       description,
-      images: fileUrls,
       category,
       link,
+    },
+  });
+
+  const fileUrls = [];
+  for (const file of files) {
+    const { error } = await supabase.storage
+      .from("drive")
+      .upload(`${project.id}/${file.name.trim().replaceAll(" ", "-")}`, file, {
+        contentType: file.type,
+      });
+
+    if (error) {
+      return NextResponse.json(
+        { error: error.message },
+        {
+          status: 500,
+        }
+      );
+    }
+
+    const url = supabase.storage.from("drive").getPublicUrl(file.name);
+    fileUrls.push(url.data.publicUrl);
+  }
+
+  await prisma.project.update({
+    where: {
+      id: project.id,
+    },
+    data: {
+      images: fileUrls,
     },
   });
 

@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "pnpm prisma generate --no-engine",
-    "dev:prisma": "dotenv -e .env.development.local prisma"
+    "postinstall": "pnpm prisma generate --no-engine"
   },
   "dependencies": {
     "@clerk/nextjs": "5.0.0-beta.35",
@@ -21,11 +20,11 @@
     "@million/lint": "^0.0.73",
     "@prisma/client": "^5.11.0",
     "@prisma/extension-accelerate": "^1.0.0",
-    "@types/node": "20.11.30",
-    "@types/react": "18.2.69",
-    "@types/react-dom": "18.2.22",
+    "@supabase/supabase-js": "^2.41.1",
+    "@types/node": "20.12.2",
+    "@types/react": "18.2.73",
+    "@types/react-dom": "18.2.23",
     "@vercel/analytics": "^1.2.2",
-    "@vercel/blob": "^0.22.1",
     "@vercel/speed-insights": "^1.0.10",
     "aos": "3.0.0-beta.6",
     "eslint": "8.57.0",
@@ -33,17 +32,17 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-responsive-carousel": "^3.2.23",
+    "sharp": "^0.33.3",
     "swr": "^2.2.5",
     "typescript": "5.4.3"
   },
   "devDependencies": {
     "@types/aos": "^3.0.7",
     "autoprefixer": "^10.4.19",
-    "dotenv-cli": "^7.4.1",
     "eslint-config-next": "14.1.4",
     "postcss": "^8.4.38",
     "prisma": "^5.11.0",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.3"
   },
   "packageManager": "pnpm@8.15.5"
 }
