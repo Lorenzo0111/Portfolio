@@ -13,17 +13,17 @@ export default function Skills() {
       <h1 className="font-extrabold my-4 text-gradient text-3xl">Skills</h1>
 
       <div className="flex flex-wrap gap-4 justify-center 2xl:justify-between">
-        <Skill skills={{ Spigot: 100, Paper: 75, NMS: 60 }}>
+        <Skill skills={{ Spigot: 100, Paper: 75, NMS: 65 }}>
           <FontAwesomeIcon icon={faJava} className="mr-2" /> Plugin Developer
         </Skill>
-        <Skill skills={{ "HTML & CSS": 100, VueJS: 75, ReactJS: 60 }}>
+        <Skill skills={{ "HTML & CSS": 100, ReactJS: 90, VueJS: 75 }}>
           <FontAwesomeIcon icon={faHtml5} className="mr-2" /> Web Developer
         </Skill>
-        <Skill skills={{ "Ubuntu": 90, "Windows": 80 }}>
+        <Skill skills={{ "Ubuntu": 85, "Windows": 70 }}>
           <FontAwesomeIcon icon={faUbuntu} className="mr-2" /> System
           Administrator
         </Skill>
-        <Skill skills={{ "UIX": 100, "Logo Design": 85 }}>
+        <Skill skills={{ "UIX": 85, "Logo Design": 75 }}>
           <FontAwesomeIcon icon={faFigma} className="mr-2" /> Designer
         </Skill>
       </div>
