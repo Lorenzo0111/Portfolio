@@ -1,7 +1,6 @@
 "use client";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { ChevronDown } from "lucide-react";
 import { ReactNode, useRef, useState } from "react";
 
 export default function Skill({
@@ -32,17 +31,16 @@ export default function Skill({
   };
 
   return (
-    <div className="w-full md:w-[30rem] 2xl:w-[20rem] flex flex-col gap-2" data-aos="fade-right">
+    <div
+      className="w-full md:w-[30rem] 2xl:w-[20rem] flex flex-col gap-2"
+      data-aos="fade-right"
+    >
       <button
         className="bg-[#232323] rounded-xl w-full min-h-[3rem] px-4 flex justify-between items-center"
         onClick={() => toggleSlider(!open)}
       >
-        <span>{children}</span>
-        <FontAwesomeIcon
-          icon={faChevronDown}
-          className="transition-all"
-          ref={chevronRef}
-        />
+        <span className="flex items-center">{children}</span>
+        <ChevronDown className="transition-all" ref={chevronRef} />
       </button>
       <div
         ref={contentRef}

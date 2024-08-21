@@ -1,4 +1,3 @@
-const MillionLint = require("@million/lint");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -12,6 +11,5 @@ const nextConfig = {
     minimumCacheTTL: 7 * 24 * 60 * 60,
   },
 };
-module.exports = MillionLint.next({
-  rsc: true,
-})(nextConfig);
+
+module.exports = nextConfig;

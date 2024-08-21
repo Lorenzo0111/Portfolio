@@ -1,7 +1,6 @@
 "use client";
 
-import { faClipboard } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Clipboard } from "lucide-react";
 import { useRef, useState } from "react";
 
 export default function Page({
@@ -72,7 +71,7 @@ export default function Page({
         <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2">
           {error && <p className="text-red-500">{error}</p>}
           {success && (
-            <p className="text-primary">
+            <p className="text-primary flex items-center gap-1">
               {success}{" "}
               {id && (
                 <button
@@ -83,7 +82,7 @@ export default function Page({
                     );
                   }}
                 >
-                  <FontAwesomeIcon icon={faClipboard} />
+                  <Clipboard />
                 </button>
               )}
             </p>

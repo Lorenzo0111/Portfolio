@@ -1,9 +1,8 @@
 "use client";
 
 import { useFetcher } from "@/utils/fetcher";
-import { faFile } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { DriveFile } from "@prisma/client";
+import { File } from "lucide-react";
 import Link from "next/link";
 
 export default function DrivePage() {
@@ -26,7 +25,7 @@ export default function DrivePage() {
                 className="bg-[#232323] w-full rounded-xl flex justify-between items-center p-4"
               >
                 <div className="flex gap-2">
-                  <FontAwesomeIcon icon={faFile} className="text-2xl" />
+                  <File />
                   <p>{file.name}</p>
                   <p className="text-[#505050]">{file.description}</p>
                 </div>

@@ -16,7 +16,7 @@ export async function GET(request: Request) {
 
   let files: DriveFile[] = [];
 
-  const user = userId ? await clerkClient.users.getUser(userId) : null;
+  const user = userId ? await clerkClient().users.getUser(userId) : null;
   if (user?.publicMetadata.role !== "admin") {
     files = await prisma.driveFile.findMany({
       cacheStrategy: {

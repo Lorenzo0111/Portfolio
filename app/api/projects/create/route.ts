@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     });
   }
 
-  const user = userId ? await clerkClient.users.getUser(userId) : null;
+  const user = userId ? await clerkClient().users.getUser(userId) : null;
   if (user?.publicMetadata.role !== "admin") {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,

@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-import "@fortawesome/fontawesome-svg-core/styles.css";
 import "aos/dist/aos.css";
 
 import { Metadata, Viewport } from "next";
@@ -9,7 +8,6 @@ import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import { config } from "@fortawesome/fontawesome-svg-core";
 import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -33,7 +31,6 @@ export const viewport: Viewport = {
   themeColor: "#fcba03",
 };
 
-config.autoAddCss = false;
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({

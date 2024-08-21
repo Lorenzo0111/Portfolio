@@ -1,8 +1,7 @@
 "use client";
 
 import { useFetcher } from "@/utils/fetcher";
-import { faFile } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { File } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 
 export default function Invite() {
@@ -33,8 +32,8 @@ export default function Invite() {
         Click the button below to accept it
       </p>
 
-      <div className="w-52 flex justify-center text-center flex-col p-4 bg-[#232323] rounded-2xl">
-        <FontAwesomeIcon icon={faFile} className="text-6xl" />
+      <div className="w-52 flex justify-center items-center text-center flex-col p-4 bg-[#232323] rounded-2xl">
+        <File size={50} />
         <p className="text-xl mt-2">{invite.data.name}</p>
         <p className="text-[#505050]">{invite.data.description}</p>
       </div>
