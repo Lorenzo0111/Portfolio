@@ -8,32 +8,18 @@ export default function Project({ project }: { project: Project }) {
       href={"/projects/" + project.id}
       className="border-primary rounded-xl border-2 h-60 w-[400px] relative hover:shadow-lg hover:shadow-primary/30"
     >
-      {!project.images[0] && <span className="mt-6 loader"></span>}
-      {project.images[0] && (
+      {!project.thumbnail && <span className="mt-6 loader"></span>}
+      {project.thumbnail && (
         <>
-          {project.images[0].endsWith(".mp4") ? (
-            <video
-              preload="none"
-              className="rounded-xl w-full h-full"
-              autoPlay={true}
-              controls={false}
-              loop={true}
-              muted={true}
-              width={400}
-              height={240}
-            >
-              <source src={project.images[0]} type="video/mp4" />
-            </video>
-          ) : (
-            <Image
-              src={project.images[0]}
-              alt={project.name}
-              width={400}
-              height={240}
-              className="rounded-xl h-full w-full"
-              placeholder="empty"
-            />
-          )}
+          <Image
+            src={project.thumbnail}
+            alt={project.name}
+            width={400}
+            height={240}
+            className="rounded-xl h-full w-full"
+            placeholder="blur"
+            blurDataURL="LD71s6}j^I-m~V^G==-m^$=r-P%0"
+          />
         </>
       )}
       <div className="rounded-b-xl flex flex-col bg-black/70 w-full max-h-[6rem] p-4 bottom-0 absolute justify-center items-center">
