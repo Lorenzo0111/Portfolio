@@ -2,11 +2,20 @@ import type { Project } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Project({ project }: { project: Project }) {
+export default function Project({
+  project,
+  embed,
+}: {
+  project: Project;
+  embed?: boolean;
+}) {
   return (
     <Link
       href={"/projects/" + project.id}
-      className="border-primary rounded-xl border-2 h-60 w-[400px] relative hover:shadow-lg hover:shadow-primary/30"
+      className={
+        "border-primary rounded-xl border-2 h-60 w-[400px] min-w-[400px] block relative hover:shadow-lg hover:shadow-primary/30" +
+        (embed ? " mr-8" : "")
+      }
     >
       {!project.thumbnail && <span className="mt-6 loader"></span>}
       {project.thumbnail && (
