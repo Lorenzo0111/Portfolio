@@ -91,7 +91,7 @@ export async function POST(request: Request) {
       id: project.id,
     },
     data: {
-      images: fileUrls,
+      images: fileUrls.filter((url) => !url.endsWith("thumbnail.png")),
       thumbnail: fileUrls.find((url) => url.endsWith("thumbnail.png")),
     },
   });
