@@ -5,6 +5,7 @@ import {
   SiX,
   SiYoutube,
 } from "@icons-pack/react-simple-icons";
+import { Mail } from "lucide-react";
 import Link from "next/link";
 
 export default function Navbar() {
@@ -29,6 +30,13 @@ export default function Navbar() {
         <div className="flex items-center md:absolute right-0 gap-4">
           <Link
             className="hover:text-primary"
+            href="mailto:hello@lorenzo0111.me"
+            aria-label="Email"
+          >
+            <Mail width={48} />
+          </Link>
+          <Link
+            className="hover:text-primary"
             href="https://discord.gg/HT47UQXBqG"
             aria-label="Discord"
           >
@@ -47,13 +55,6 @@ export default function Navbar() {
             aria-label="X (Twitter)"
           >
             <SiX width={48} />
-          </Link>
-          <Link
-            className="hover:text-primary"
-            href="https://www.youtube.com/@lorenzo0111"
-            aria-label="YouTube"
-          >
-            <SiYoutube width={48} />
           </Link>
           <SignedIn>
             <UserButton />

@@ -21,16 +21,16 @@ export default function About() {
           About Me
         </h1>
         <p className="mt-2 text-md md:text-xl leading-8 md:text-left">
-          Hello! I&apos;m Lorenzo. I&apos;m a java, web and bot developer from
-          Italy who loves to code and create amazing new things every day.
+          Hello! I&apos;m Lorenzo. I&apos;m a fullstack developer from Italy. I
+          love to create new experiences for people to enjoy.
         </p>
         <p className="mt-1 text-md md:text-xl leading-8 md:text-left">
-          I can code in many languages, but I&apos;m most experienced in
-          TypeScript and Java.
+          I mainly use Typescript and Java for my projects but I also know a lot
+          of other technologies.
         </p>
         <p className="mt-1 text-md md:text-xl leading-8 md:text-left">
-          I&apos;m currently working on a lot of projects, but I&apos;m always
-          looking for new opportunities.
+          I&apos;m always looking for new opportunities to learn and grow as a
+          developer.
         </p>
       </div>
     </div>

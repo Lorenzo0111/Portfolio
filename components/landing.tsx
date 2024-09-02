@@ -16,7 +16,7 @@ export default function Landing() {
             data-aos="fade-right"
             data-aos-duration="1500"
           >
-            I&apos;m a java, web and bot developer from Italy
+            I&apos;m a fullstack developer from Italy
           </p>
         </div>
 
