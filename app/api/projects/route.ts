@@ -1,4 +1,5 @@
 import prisma from "@/lib/prismadb";
+import type { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -9,7 +10,7 @@ export async function GET(request: Request) {
   let limitNum = -1;
   if (limit && !isNaN(Number(limit))) limitNum = Number(limit);
 
-  let filterObject = {};
+  let filterObject: Prisma.ProjectWhereInput = {};
   if (filter && filter !== "*") {
     filterObject = {
       category: {

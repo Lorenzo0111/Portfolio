@@ -1,7 +1,7 @@
-import { auth, clerkClient } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import supabase from "@/lib/supabase";
+import { auth, clerkClient } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const form = await request.formData();
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
   const fileUrls = [];
   for (const file of files) {
     const { error } = await supabase.storage
-      .from("drive")
+      .from("projects")
       .upload(`${project.id}/${file.name.trim().replaceAll(" ", "-")}`, file, {
         contentType: file.type,
       });
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const url = supabase.storage.from("drive").getPublicUrl(file.name);
+    const url = supabase.storage.from("projects").getPublicUrl(file.name);
     fileUrls.push(url.data.publicUrl);
   }
 
@@ -92,6 +92,7 @@ export async function POST(request: Request) {
     },
     data: {
       images: fileUrls,
+      thumbnail: fileUrls.find((url) => url.endsWith("thumbnail.png")),
     },
   });
 
