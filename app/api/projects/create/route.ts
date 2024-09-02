@@ -10,6 +10,7 @@ export async function POST(request: Request) {
   const description = form.get("description") as string;
   const category = form.get("category") as string;
   const link = form.get("link") as string;
+  const youtube = form.get("youtube") as string;
 
   const { userId } = auth();
   if (!userId) {
@@ -62,12 +63,14 @@ export async function POST(request: Request) {
       description,
       category,
       link,
+      youtube,
     },
   });
 
   const fileUrls = [];
+  let thumbnail;
   for (const file of files) {
-    const { error } = await supabase.storage
+    const { error, data } = await supabase.storage
       .from("projects")
       .upload(`${project.id}/${file.name.trim().replaceAll(" ", "-")}`, file, {
         contentType: file.type,
@@ -82,8 +85,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const url = supabase.storage.from("projects").getPublicUrl(file.name);
-    fileUrls.push(url.data.publicUrl);
+    const url = supabase.storage.from("projects").getPublicUrl(data.path)
+      .data.publicUrl;
+
+    if (file.name === "thumbnail.png") thumbnail = url;
+    else fileUrls.push(url);
   }
 
   await prisma.project.update({
@@ -91,8 +97,8 @@ export async function POST(request: Request) {
       id: project.id,
     },
     data: {
-      images: fileUrls.filter((url) => !url.endsWith("thumbnail.png")),
-      thumbnail: fileUrls.find((url) => url.endsWith("thumbnail.png")),
+      images: fileUrls,
+      thumbnail,
     },
   });
 

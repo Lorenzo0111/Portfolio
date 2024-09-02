@@ -24,6 +24,7 @@ model Project {
   description String?
   thumbnail   String?
   images      String[]
+  youtube     String?
   category    String
   link        String?
 }

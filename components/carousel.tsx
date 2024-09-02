@@ -8,9 +8,49 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useMemo } from "react";
 
 export default function WrappedCarousel({ project }: { project: Project }) {
-  const memoizedProject = useMemo(() => project, [project]);
+  const items = useMemo(() => {
+    const items = project.images.map((image: string) => {
+      return image.endsWith(".mp4") ? (
+        <video
+          preload="none"
+          autoPlay={true}
+          controls={false}
+          loop={true}
+          muted={true}
+          key={image}
+          className="w-[400px] h-[400px] object-contain"
+        >
+          <source src={image} type="video/mp4" />
+        </video>
+      ) : (
+        <Image
+          src={image}
+          alt={project.name}
+          width={400}
+          height={400}
+          placeholder="empty"
+          className="w-[400px] h-[400px] object-contain"
+          key={image}
+        />
+      );
+    });
 
-  if (memoizedProject.images.length === 0) {
+    if (project.youtube)
+      items.push(
+        <iframe
+          key="youtube"
+          src={`https://www.youtube-nocookie.com/embed/${project.youtube}`}
+          allowFullScreen
+          width={400}
+          height={400}
+          className="w-[400px] h-[400px] object-contain"
+        />
+      );
+
+    return items;
+  }, [project]);
+
+  if (items.length === 0) {
     return <div></div>;
   }
 
@@ -22,29 +62,7 @@ export default function WrappedCarousel({ project }: { project: Project }) {
       showStatus={false}
       showThumbs={false}
     >
-      {memoizedProject.images.map((image: string) => {
-        return image.endsWith(".mp4") ? (
-          <video
-            preload="none"
-            autoPlay={true}
-            controls={false}
-            loop={true}
-            muted={true}
-            key={image}
-          >
-            <source src={image} type="video/mp4" />
-          </video>
-        ) : (
-          <Image
-            src={image}
-            alt={memoizedProject.name}
-            width={500}
-            height={500}
-            placeholder="empty"
-            key={image}
-          />
-        );
-      })}
+      {items}
     </Carousel>
   );
 }

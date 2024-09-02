@@ -7,6 +7,7 @@ export default function Upload() {
   const [description, setDescription] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [link, setLink] = useState<string>("");
+  const [youtube, setYoutube] = useState<string>("");
   const [file, setFile] = useState<FileList | null>(null);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
@@ -28,6 +29,7 @@ export default function Upload() {
     formData.append("description", description);
     formData.append("category", category);
     if (link && link !== "") formData.append("link", link);
+    if (youtube && youtube !== "") formData.append("youtube", youtube);
     for (let i = 0; i < file?.length; i++) {
       formData.append("file", file[i]);
     }
@@ -61,6 +63,7 @@ export default function Upload() {
             placeholder="Name"
             className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-none"
             onChange={(e) => setName(e.target.value)}
+            value={name}
             required
           />
           <input
@@ -68,6 +71,7 @@ export default function Upload() {
             placeholder="Category"
             className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-none"
             onChange={(e) => setCategory(e.target.value)}
+            value={category}
             required
           />
           <input
@@ -75,11 +79,19 @@ export default function Upload() {
             placeholder="Link"
             className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-none"
             onChange={(e) => setLink(e.target.value)}
+            value={link}
+          />
+          <input
+            placeholder="Youtube ID"
+            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-none"
+            onChange={(e) => setYoutube(e.target.value)}
+            value={youtube}
           />
           <textarea
             placeholder="Description"
             className="rounded-xl bg-[#18181b] p-2 resize-none focus:border-2 focus:border-primary outline-none"
             onChange={(e) => setDescription(e.target.value)}
+            value={description}
             rows={5}
             required
           />
