@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   const description = form.get("description") as string;
   const ownerId = form.get("ownerId") as string;
 
-  const { userId } = auth();
+  const { userId } = await auth();
   if (!userId) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
@@ -20,7 +20,8 @@ export async function POST(request: Request) {
     });
   }
 
-  const user = userId ? await clerkClient().users.getUser(userId) : null;
+  const clerk = await clerkClient();
+  const user = userId ? await clerk.users.getUser(userId) : null;
   if (user?.publicMetadata.role !== "admin") {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
@@ -41,7 +42,7 @@ export async function POST(request: Request) {
 
   if (ownerId) {
     try {
-      await clerkClient().users.getUser(ownerId);
+      await clerk.users.getUser(ownerId);
     } catch (e) {
       return new Response(JSON.stringify({ error: "Owner not found" }), {
         status: 404,

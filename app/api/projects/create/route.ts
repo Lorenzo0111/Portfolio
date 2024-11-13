@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   const link = form.get("link") as string;
   const youtube = form.get("youtube") as string;
 
-  const { userId } = auth();
+  const { userId } = await auth();
   if (!userId) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
@@ -22,7 +22,8 @@ export async function POST(request: Request) {
     });
   }
 
-  const user = userId ? await clerkClient().users.getUser(userId) : null;
+  const clerk = await clerkClient();
+  const user = userId ? await clerk.users.getUser(userId) : null;
   if (user?.publicMetadata.role !== "admin") {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,

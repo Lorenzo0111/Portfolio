@@ -2,7 +2,8 @@ import Page from "@/components/drive-upload";
 import { clerkClient } from "@clerk/nextjs/server";
 
 async function getData() {
-  const { data: users } = await clerkClient().users.getUserList();
+  const clerk = await clerkClient();
+  const { data: users } = await clerk.users.getUserList();
   const transformedUsers = users.map((user) => {
     return {
       id: user.id,

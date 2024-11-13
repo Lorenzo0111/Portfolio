@@ -4,7 +4,7 @@ import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  const { userId } = auth();
+  const { userId } = await auth();
   if (!userId) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
@@ -16,7 +16,8 @@ export async function GET(request: Request) {
 
   let files: DriveFile[] = [];
 
-  const user = userId ? await clerkClient().users.getUser(userId) : null;
+  const clerk = await clerkClient();
+  const user = userId ? await clerk.users.getUser(userId) : null;
   if (user?.publicMetadata.role !== "admin") {
     files = await prisma.driveFile.findMany({
       cacheStrategy: {
