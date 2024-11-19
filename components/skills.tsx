@@ -13,7 +13,7 @@ export default function Skills() {
     <div id="skills" className="mx-auto my-20 text-center w-3/4 justify-center">
       <h1 className="font-extrabold my-4 text-gradient text-3xl">Skills</h1>
 
-      <div className="flex flex-wrap gap-4 justify-center 2xl:justify-between">
+      <div className="flex flex-wrap gap-4 justify-center">
         <Skill skills={{ Spigot: 100, Paper: 75, NMS: 65 }}>
           <Box className="mr-2" /> Plugin Development
         </Skill>
