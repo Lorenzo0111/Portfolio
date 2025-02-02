@@ -2,10 +2,8 @@ import prisma from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { userId } = await auth();
   if (!userId) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {

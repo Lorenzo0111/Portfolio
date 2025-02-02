@@ -51,7 +51,7 @@ export default function Upload() {
   return (
     <main>
       <div className="text-center m-auto flex flex-col justify-center items-center content-center h-[500px] md:w-3/4 xl:w-1/2">
-        <h1 className="from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-gradient-to-r font-extrabold text-4xl mb-4">
+        <h1 className="from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-linear-to-r font-extrabold text-4xl mb-4">
           Upload a new item
         </h1>
 
@@ -61,7 +61,7 @@ export default function Upload() {
           <input
             type="text"
             placeholder="Name"
-            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-none"
+            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-hidden"
             onChange={(e) => setName(e.target.value)}
             value={name}
             required
@@ -69,7 +69,7 @@ export default function Upload() {
           <input
             type="text"
             placeholder="Category"
-            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-none"
+            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-hidden"
             onChange={(e) => setCategory(e.target.value)}
             value={category}
             required
@@ -77,19 +77,19 @@ export default function Upload() {
           <input
             type="url"
             placeholder="Link"
-            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-none"
+            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-hidden"
             onChange={(e) => setLink(e.target.value)}
             value={link}
           />
           <input
             placeholder="Youtube ID"
-            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-none"
+            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-hidden"
             onChange={(e) => setYoutube(e.target.value)}
             value={youtube}
           />
           <textarea
             placeholder="Description"
-            className="rounded-xl bg-[#18181b] p-2 resize-none focus:border-2 focus:border-primary outline-none"
+            className="rounded-xl bg-[#18181b] p-2 resize-none focus:border-2 focus:border-primary outline-hidden"
             onChange={(e) => setDescription(e.target.value)}
             value={description}
             rows={5}

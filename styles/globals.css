@@ -1,6 +1,30 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #fcba03;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility text-gradient {
+  @apply from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-linear-to-r;
+}
 
 @layer base {
   body {
@@ -19,12 +43,6 @@
 
   ::-moz-selection {
     @apply bg-primary text-white;
-  }
-}
-
-@layer utilities {
-  .text-gradient {
-    @apply from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-gradient-to-r;
   }
 }
 

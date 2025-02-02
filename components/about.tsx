@@ -17,7 +17,7 @@ export default function About() {
       />
 
       <div className="md:ml-auto w-1/2">
-        <h1 className="from-[#e3a002] to-[#fcc203] text-4xl mt-10 font-extrabold text-transparent bg-clip-text bg-gradient-to-r font-sans">
+        <h1 className="from-[#e3a002] to-[#fcc203] text-4xl mt-10 font-extrabold text-transparent bg-clip-text bg-linear-to-r font-sans">
           About Me
         </h1>
         <p className="mt-2 text-md md:text-xl leading-8 md:text-left">

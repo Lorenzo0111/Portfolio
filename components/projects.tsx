@@ -6,13 +6,16 @@ import type { Project as ProjectType } from "@prisma/client";
 import { useFetcher } from "@/utils/fetcher";
 import dynamic from "next/dynamic";
 
+const Marquee = dynamic(() => import("react-fast-marquee"), {
+  loading: () => <span className="mt-6 loader"></span>,
+});
+
 export default function Projects({ embed }: { embed?: boolean }) {
   const { data: categories } = useFetcher("/api/categories");
   const { data: projects } = useFetcher("/api/projects");
   const [filter, setFilter] = useState<string>("*");
   const [filtered, setFiltered] = useState<ProjectType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const Marquee = embed ? dynamic(() => import("react-fast-marquee")) : null;
 
   useEffect(() => {
     if (projects) {
@@ -88,7 +91,7 @@ export default function Projects({ embed }: { embed?: boolean }) {
               })}
           </ul>
           {filtered ? (
-            embed && Marquee ? (
+            embed ? (
               <Marquee
                 className="flex flex-row text-center gap-8 w-full justify-center content-center items-center"
                 pauseOnHover

@@ -64,7 +64,7 @@ export default function Page({
   return (
     <main>
       <div className="text-center m-auto flex flex-col justify-center items-center content-center h-[500px] md:w-3/4 xl:w-1/2">
-        <h1 className="from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-gradient-to-r font-extrabold text-4xl mb-4">
+        <h1 className="from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-linear-to-r font-extrabold text-4xl mb-4">
           Upload a new item
         </h1>
 
@@ -90,20 +90,20 @@ export default function Page({
           <input
             type="text"
             placeholder="Name"
-            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-none"
+            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-hidden"
             onChange={(e) => setName(e.target.value)}
             required
           />
           <input
             type="text"
             placeholder="Description"
-            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-none"
+            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-hidden"
             onChange={(e) => setDescription(e.target.value)}
             required
           />
           <select
             defaultValue={""}
-            className="rounded-xl bg-[#18181b] p-2 outline-none"
+            className="rounded-xl bg-[#18181b] p-2 outline-hidden"
           >
             <option value="">Create an Invite</option>
             {users.map((user) => (
