@@ -10,46 +10,50 @@
     "postinstall": "pnpm prisma generate --no-engine"
   },
   "dependencies": {
-    "@clerk/nextjs": "6.11.3",
-    "@clerk/themes": "2.2.18",
-    "@icons-pack/react-simple-icons": "^11.2.0",
-    "@prisma/client": "^6.3.1",
+    "@clerk/nextjs": "6.12.5",
+    "@clerk/themes": "2.2.21",
+    "@icons-pack/react-simple-icons": "^12.2.0",
+    "@prisma/client": "^6.5.0",
     "@prisma/extension-accelerate": "^1.2.2",
-    "@supabase/supabase-js": "^2.48.1",
+    "@supabase/supabase-js": "^2.49.1",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "aos": "3.0.0-beta.6",
-    "lucide-react": "^0.475.0",
-    "next": "15.1.7",
+    "lucide-react": "^0.482.0",
+    "next": "15.2.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-fast-marquee": "^1.6.5",
     "react-responsive-carousel": "^3.2.23",
     "sharp": "^0.33.5",
-    "swr": "^2.3.2"
+    "swr": "^2.3.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.0.6",
+    "@tailwindcss/postcss": "^4.0.14",
     "@types/aos": "^3.0.7",
-    "@types/node": "22.13.4",
-    "@types/react": "19.0.8",
-    "@types/react-dom": "19.0.3",
-    "eslint": "9.20.1",
-    "eslint-config-next": "15.1.7",
-    "postcss": "^8.5.2",
-    "prisma": "^6.3.1",
-    "tailwindcss": "^4.0.6",
-    "typescript": "5.7.3"
+    "@types/node": "22.13.10",
+    "@types/react": "19.0.10",
+    "@types/react-dom": "19.0.4",
+    "eslint": "9.22.0",
+    "eslint-config-next": "15.2.2",
+    "postcss": "^8.5.3",
+    "prisma": "^6.5.0",
+    "tailwindcss": "^4.0.14",
+    "typescript": "5.8.2"
   },
-  "packageManager": "pnpm@10.2.0",
+  "packageManager": "pnpm@10.6.3",
   "pnpm": {
     "overrides": {
-      "@types/react": "19.0.8",
-      "@types/react-dom": "19.0.3"
+      "@types/react": "19.0.10",
+      "@types/react-dom": "19.0.4"
     },
     "onlyBuiltDependencies": [
       "@clerk/shared",
-      "@vercel/speed-insights"
+      "@prisma/client",
+      "@prisma/engines",
+      "@vercel/speed-insights",
+      "esbuild",
+      "prisma"
     ]
   }
 }
