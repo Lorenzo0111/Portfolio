@@ -1,4 +1,5 @@
 import Image from "next/image";
+import aboutImage from "@/public/about.svg";
 
 export default function About() {
   return (
@@ -8,7 +9,7 @@ export default function About() {
     >
       <Image
         className="mt-40 md:mt-auto mr-auto md:mr-0 ml-auto h-[300px] w-[300px]"
-        src="/about.svg"
+        src={aboutImage}
         alt="about"
         width={300}
         height={300}

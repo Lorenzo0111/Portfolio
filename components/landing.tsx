@@ -1,4 +1,5 @@
 import Image from "next/image";
+import iconImage from "@/public/icon.png";
 
 export default function Landing() {
   return (
@@ -22,7 +23,7 @@ export default function Landing() {
 
         <Image
           className="mt-5 md:mt-0 mr-auto md:mr-0 ml-auto"
-          src="/icon.png"
+          src={iconImage}
           alt="Lorenzo"
           width={300}
           height={300}
