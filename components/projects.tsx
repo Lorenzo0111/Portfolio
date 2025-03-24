@@ -5,12 +5,15 @@ import Project from "./project";
 import type { Project as ProjectType } from "@prisma/client";
 import { useFetcher } from "@/utils/fetcher";
 import dynamic from "next/dynamic";
+import { usePlausible } from "next-plausible";
+import type { EventTypes } from "@/lib/plausible";
 
 const Marquee = dynamic(() => import("react-fast-marquee"), {
   loading: () => <span className="mt-6 loader"></span>,
 });
 
 export default function Projects({ embed }: { embed?: boolean }) {
+  const plausible = usePlausible<EventTypes>();
   const { data: categories } = useFetcher("/api/categories");
   const { data: projects } = useFetcher("/api/projects");
   const [filter, setFilter] = useState<string>("*");
@@ -26,6 +29,12 @@ export default function Projects({ embed }: { embed?: boolean }) {
   }, [projects]);
 
   async function runFilter(category: string) {
+    plausible("filter-projects", {
+      props: {
+        filter: category,
+      },
+    });
+
     if (category === "*") {
       setFilter("*");
     } else {

@@ -5,6 +5,9 @@ import WrappedCarousel from "@/components/carousel";
 import { useFetcher } from "@/utils/fetcher";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import type { EventTypes } from "@/lib/plausible";
+import { usePlausible } from "next-plausible";
+import { useEffect } from "react";
 
 function BasePage({ children }: { children: React.ReactNode }) {
   return (
@@ -18,6 +21,7 @@ function BasePage({ children }: { children: React.ReactNode }) {
 
 export default function ProjectPage() {
   const { id } = useParams();
+  const plausible = usePlausible<EventTypes>();
   const { data: project, isLoading } = useFetcher<
     | Project
     | {
@@ -27,6 +31,16 @@ export default function ProjectPage() {
     revalidateOnFocus: false,
     refreshInterval: 0,
   });
+
+  useEffect(() => {
+    if (!id || typeof id !== "string") return;
+
+    plausible("view-project", {
+      props: {
+        id,
+      },
+    });
+  }, [id]);
 
   if (isLoading) {
     return (
