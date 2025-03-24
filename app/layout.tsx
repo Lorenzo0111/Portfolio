@@ -11,6 +11,7 @@ import { dark } from "@clerk/themes";
 import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import PlausibleProvider from "next-plausible";
 
 export const metadata: Metadata = {
   title: "Lorenzo0111",
@@ -47,18 +48,20 @@ export default function RootLayout({
         },
       }}
     >
-      <html lang="en">
-        <body
-          className={"flex flex-col min-h-screen w-full " + inter.className}
-        >
-          <AnimationLoader />
-          <SpeedInsights />
-          <Navbar />
-          {children}
-          <Footer />
-          <Analytics />
-        </body>
-      </html>
+      <PlausibleProvider domain="lorenzo0111.me" selfHosted>
+        <html lang="en">
+          <body
+            className={"flex flex-col min-h-screen w-full " + inter.className}
+          >
+            <AnimationLoader />
+            <SpeedInsights />
+            <Navbar />
+            {children}
+            <Footer />
+            <Analytics />
+          </body>
+        </html>
+      </PlausibleProvider>
     </ClerkProvider>
   );
 }

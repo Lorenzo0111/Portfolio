@@ -1,3 +1,5 @@
+const { withPlausibleProxy } = require('next-plausible');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -12,4 +14,7 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withPlausibleProxy({
+  subdirectory: "s",
+  customDomain: "https://s.lorenzo0111.me"
+})(nextConfig);
