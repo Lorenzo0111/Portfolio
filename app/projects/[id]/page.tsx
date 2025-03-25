@@ -40,7 +40,7 @@ export default function ProjectPage() {
         id,
       },
     });
-  }, [id]);
+  }, [id, plausible]);
 
   if (isLoading) {
     return (
