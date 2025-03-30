@@ -1,12 +1,9 @@
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import {
-  SiDiscord,
-  SiGithub,
-  SiX,
-  SiYoutube,
-} from "@icons-pack/react-simple-icons";
+import { SiDiscord, SiGithub, SiX } from "@icons-pack/react-simple-icons";
 import { Mail } from "lucide-react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
+
+const ClerkButton = dynamic(() => import("./clerk"));
 
 export default function Navbar() {
   return (
@@ -56,12 +53,7 @@ export default function Navbar() {
           >
             <SiX width={48} />
           </Link>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
+          <ClerkButton />
         </div>
       </div>
     </nav>
