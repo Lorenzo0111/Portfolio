@@ -10,7 +10,7 @@ export default function Page() {
   useEffect(() => {
     signOut();
     redirect("/");
-  }, []);
+  }, [signOut]);
 
   return null;
 }
