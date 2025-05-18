@@ -1,9 +1,6 @@
 import { SiDiscord, SiGithub, SiX } from "@icons-pack/react-simple-icons";
 import { Mail } from "lucide-react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
-
-const ClerkButton = dynamic(() => import("./clerk"));
 
 export default function Navbar() {
   return (
@@ -53,7 +50,6 @@ export default function Navbar() {
           >
             <SiX width={48} />
           </Link>
-          <ClerkButton />
         </div>
       </div>
     </nav>
