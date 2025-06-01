@@ -14,9 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const project: Project | null = await fetch(
     `${
-      process.env.NEXT_PUBLIC_APP_URL ??
-      process.env.VERCEL_URL ??
-      "http://localhost:3000"
+      process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
     }/api/projects/${id}`
   ).then((res) => res.json());
 
@@ -38,9 +36,7 @@ export default async function ProjectPage({ params }: Props) {
 
   const project: Project | null = await fetch(
     `${
-      process.env.NEXT_PUBLIC_APP_URL ??
-      process.env.VERCEL_URL ??
-      "http://localhost:3000"
+      process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
     }/api/projects/${id}`,
     {
       next: {

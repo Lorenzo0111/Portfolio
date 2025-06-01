@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const baseUrl = process.env.VERCEL_URL ?? "https://lorenzo0111.me";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://lorenzo0111.me";
   const buildInfo = await fetch(`${baseUrl}/api/build-info`).then((res) =>
     res.json()
   );
