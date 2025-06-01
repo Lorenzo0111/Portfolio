@@ -1,89 +1,61 @@
-"use client";
+import { Project } from "@prisma/client";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import ProjectPageClient from "./page.client";
 
-import type { Project } from "@prisma/client";
-import WrappedCarousel from "@/components/carousel";
-import { useFetcher } from "@/utils/fetcher";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import type { EventTypes } from "@/lib/plausible";
-import { usePlausible } from "next-plausible";
-import { useEffect } from "react";
+export const revalidate = 3600;
 
-function BasePage({ children }: { children: React.ReactNode }) {
-  return (
-    <main>
-      <div className="flex flex-col m-auto h-[500px] mt-20 text-left gap-4 md:w-3/4 xl:w-1/2">
-        {children}
-      </div>
-    </main>
-  );
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+
+  const project: Project | null = await fetch(
+    `${
+      process.env.NEXT_PUBLIC_APP_URL ??
+      process.env.VERCEL_URL ??
+      "http://localhost:3000"
+    }/api/projects/${id}`
+  ).then((res) => res.json());
+
+  if (!project) return notFound();
+
+  const images = project.images.filter((image) => image.endsWith(".png"));
+
+  return {
+    title: project.name,
+    description: project.description,
+    openGraph: {
+      images: images.length > 0 ? images : undefined,
+    },
+  };
 }
 
-export default function ProjectPage() {
-  const { id } = useParams();
-  const plausible = usePlausible<EventTypes>();
-  const { data: project, isLoading } = useFetcher<
-    | Project
-    | {
-        error: string;
-      }
-  >(id ? `/api/projects/${id}` : null, {
-    revalidateOnFocus: false,
-    refreshInterval: 0,
-  });
+export default async function ProjectPage({ params }: Props) {
+  const { id } = await params;
 
-  useEffect(() => {
-    if (!id || typeof id !== "string") return;
-
-    plausible("view-project", {
-      props: {
-        id,
+  const project: Project | null = await fetch(
+    `${
+      process.env.NEXT_PUBLIC_APP_URL ??
+      process.env.VERCEL_URL ??
+      "http://localhost:3000"
+    }/api/projects/${id}`,
+    {
+      next: {
+        revalidate: 3600,
+        tags: [`project-${id}`],
       },
-    });
-  }, [id, plausible]);
+    }
+  )
+    .then(async (res) => {
+      if (!res.ok) return null;
+      return res.json();
+    })
+    .catch(() => null);
 
-  if (isLoading) {
-    return (
-      <BasePage>
-        <span className="mx-auto mt-6 loader"></span>
-      </BasePage>
-    );
-  }
+  if (!project) return notFound();
 
-  if (project && "error" in project) {
-    return (
-      <BasePage>
-        <p>{project.error}</p>
-      </BasePage>
-    );
-  }
-
-  if (!project) {
-    return (
-      <BasePage>
-        <p>Project not found</p>
-      </BasePage>
-    );
-  }
-
-  return (
-    <BasePage>
-      <h1 className="font-bold text-4xl">{project.name}</h1>
-      <p className="text-gray-400">{project.description}</p>
-      {project.link && (
-        <div className="flex w-full gap-4">
-          <Link
-            href={project.link}
-            className="bg-primary rounded-xl flex h-10 text-black w-full items-center justify-center"
-          >
-            Visit Page
-          </Link>
-        </div>
-      )}
-      {project.images.length > 0 && (
-        <h1 className="font-bold text-2xl">Images</h1>
-      )}
-      <WrappedCarousel project={project} />
-    </BasePage>
-  );
+  return <ProjectPageClient project={project} />;
 }

@@ -14,14 +14,15 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import PlausibleProvider from "next-plausible";
 
 export const metadata: Metadata = {
-  title: "Lorenzo0111",
+  title: {
+    template: "%s - Lorenzo0111",
+    default: "Lorenzo0111",
+  },
   description: "Java and Web developer from Italy",
   metadataBase: new URL("https://lorenzo0111.me"),
   openGraph: {
     type: "website",
     url: "https://lorenzo0111.me",
-    title: "Lorenzo0111",
-    description: "Java and Web developer from Italy",
     images: ["/icon.png"],
   },
 };

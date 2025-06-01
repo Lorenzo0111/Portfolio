@@ -27,4 +27,5 @@ model Project {
   youtube     String?
   category    String
   link        String?
+  updatedAt   DateTime @default(now()) @updatedAt
 }

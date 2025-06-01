@@ -1,2 +1,12 @@
 User-agent: *
 Allow: /
+
+# Sitemap
+Sitemap: https://lorenzo0111.me/sitemap.xml
+
+# Disallow admin and auth routes
+Disallow: /upload
+Disallow: /drive
+Disallow: /account
+Disallow: /logout
+Disallow: /api/
