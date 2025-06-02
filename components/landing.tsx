@@ -14,13 +14,14 @@ export default function Landing() {
           </p>
         </div>
 
-        <Image
-          className="mt-5 md:mt-0 mr-auto md:mr-0 ml-auto"
-          src={iconImage}
-          alt="Lorenzo"
-          width={300}
-          height={300}
-        />
+        <div className="mt-5 md:mt-0 mr-auto md:mr-0 ml-auto w-3/4 lg:w-1/3">
+          <Image
+            className="h-auto w-full"
+            src={iconImage}
+            alt="Lorenzo"
+            sizes="100vw"
+          />
+        </div>
       </div>
       <a href="#about" className="text-slate-300 text-xl mt-14 animate-bounce">
         <span className="mr-1 text-primary">↓</span> Learn more
