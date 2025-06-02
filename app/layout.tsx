@@ -1,17 +1,14 @@
 import "@/styles/globals.css";
-import "aos/dist/aos.css";
 
-import { Metadata, Viewport } from "next";
-
-import AnimationLoader from "@/components/animation";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { Analytics } from "@vercel/analytics/react";
-import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Metadata, Viewport } from "next";
 import PlausibleProvider from "next-plausible";
+import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
   title: {
@@ -54,7 +51,6 @@ export default function RootLayout({
           <body
             className={"flex flex-col min-h-screen w-full " + inter.className}
           >
-            <AnimationLoader />
             <SpeedInsights />
             <Navbar />
             {children}

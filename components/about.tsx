@@ -13,8 +13,6 @@ export default function About() {
         alt="about"
         width={300}
         height={300}
-        data-aos="zoom-in"
-        data-aos-duration="1000"
       />
 
       <div className="md:ml-auto w-1/2">
