@@ -20,6 +20,7 @@ export default function Landing() {
             src={iconImage}
             alt="Lorenzo"
             sizes="100vw"
+            priority
           />
         </div>
       </div>
