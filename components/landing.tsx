@@ -1,5 +1,5 @@
 import Image from "next/image";
-import iconImage from "@/public/icon.png";
+import iconImage from "@/public/icon.webp";
 
 export default function Landing() {
   return (
