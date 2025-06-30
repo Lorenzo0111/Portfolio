@@ -24,6 +24,12 @@ export async function GET() {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/reviews`,
+      lastModified: buildTimestamp,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/login`,
       lastModified: buildTimestamp,
       changeFrequency: "yearly",
