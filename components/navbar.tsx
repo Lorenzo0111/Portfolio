@@ -19,6 +19,9 @@ export default function Navbar() {
           <Link className="hover:text-primary" href="/projects">
             Projects
           </Link>
+          <Link className="hover:text-primary" href="/reviews">
+            Reviews
+          </Link>
         </div>
 
         <div className="flex items-center md:absolute right-0 gap-4">

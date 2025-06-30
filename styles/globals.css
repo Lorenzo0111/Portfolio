@@ -1,17 +1,9 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --color-primary: #fcba03;
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
   *,
   ::after,
@@ -46,15 +38,15 @@
   }
 }
 
-.loader {
-  width: 48px;
-  height: 48px;
-  border: 5px solid #fcba03;
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
+@layer components {
+  .badge {
+    @apply bg-primary/10 text-primary text-xs px-2 py-1 rounded-md;
+  }
+
+  .loader {
+    @apply w-12 h-12 border-5 border-primary border-b-transparent rounded-full inline-block box-border;
+    animation: rotation 1s linear infinite;
+  }
 }
 
 @keyframes rotation {

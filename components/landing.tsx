@@ -1,5 +1,6 @@
-import Image from "next/image";
 import iconImage from "@/public/icon.webp";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Landing() {
   return (
@@ -24,9 +25,12 @@ export default function Landing() {
           />
         </div>
       </div>
-      <a href="#about" className="text-slate-300 text-xl mt-14 animate-bounce">
+      <Link
+        href="#about"
+        className="text-slate-300 text-xl mt-14 animate-bounce"
+      >
         <span className="mr-1 text-primary">↓</span> Learn more
-      </a>
+      </Link>
     </div>
   );
 }

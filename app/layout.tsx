@@ -46,7 +46,7 @@ export default function RootLayout({
         },
       }}
     >
-      <PlausibleProvider domain="lorenzo0111.me" selfHosted>
+      <PlausibleProvider domain="lorenzo0111.me" selfHosted trackOutboundLinks>
         <html lang="en">
           <body
             className={"flex flex-col min-h-screen w-full " + inter.className}

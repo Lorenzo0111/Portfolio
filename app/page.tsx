@@ -1,6 +1,7 @@
 import About from "@/components/about";
 import Landing from "@/components/landing";
-import Projects from "@/components/projects";
+import ProjectsBanner from "@/components/projects/banner";
+import Reviews from "@/components/reviews";
 import Skills from "@/components/skills";
 import type { Metadata } from "next";
 
@@ -14,7 +15,8 @@ export default function Home() {
       <Landing />
       <About />
       <Skills />
-      <Projects embed />
+      <Reviews embed />
+      <ProjectsBanner />
     </main>
   );
 }
