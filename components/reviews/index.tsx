@@ -2,7 +2,7 @@
 
 import type { VouchleyResponse } from "@/lib/vouchley";
 import { useFetcher } from "@/utils/fetcher";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 import { ReviewCard, StarRating } from "./review";
 
@@ -87,8 +87,8 @@ export default function Reviews({ embed }: { embed?: boolean }) {
           href="/reviews"
           className="text-primary hover:text-primary/80 transition-colors mt-8 flex justify-center items-center gap-2"
         >
-          <ArrowLeftIcon className="w-4 h-4" />
           View all
+          <ArrowRightIcon className="w-4 h-4" />
         </Link>
       )}
     </div>
