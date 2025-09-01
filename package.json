@@ -10,41 +10,41 @@
     "postinstall": "pnpm prisma generate --no-engine"
   },
   "dependencies": {
-    "@clerk/nextjs": "6.23.2",
-    "@clerk/themes": "2.2.53",
-    "@icons-pack/react-simple-icons": "^13.3.0",
-    "@prisma/client": "^6.10.1",
-    "@prisma/extension-accelerate": "^2.0.1",
-    "@supabase/supabase-js": "^2.50.2",
+    "@clerk/nextjs": "6.31.6",
+    "@clerk/themes": "2.4.15",
+    "@icons-pack/react-simple-icons": "^13.7.0",
+    "@prisma/client": "^6.15.0",
+    "@prisma/extension-accelerate": "^2.0.2",
+    "@supabase/supabase-js": "^2.56.1",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
-    "lucide-react": "^0.525.0",
-    "next": "15.3.4",
+    "lucide-react": "^0.542.0",
+    "next": "15.5.2",
     "next-plausible": "^3.12.4",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
     "react-fast-marquee": "^1.6.5",
     "react-responsive-carousel": "^3.2.23",
-    "sharp": "^0.34.2",
-    "swr": "^2.3.3"
+    "sharp": "^0.34.3",
+    "swr": "^2.3.6"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/postcss": "^4.1.12",
     "@types/node": "^22",
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6",
-    "eslint": "9.30.0",
-    "eslint-config-next": "15.3.4",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9",
+    "eslint": "9.34.0",
+    "eslint-config-next": "15.5.2",
     "postcss": "^8.5.6",
-    "prisma": "^6.10.1",
-    "tailwindcss": "^4.1.11",
-    "typescript": "5.8.3"
+    "prisma": "^6.15.0",
+    "tailwindcss": "^4.1.12",
+    "typescript": "5.9.2"
   },
-  "packageManager": "pnpm@10.12.4",
+  "packageManager": "pnpm@10.15.1",
   "pnpm": {
     "overrides": {
-      "@types/react": "19.1.8",
-      "@types/react-dom": "19.1.6"
+      "@types/react": "19.1.12",
+      "@types/react-dom": "19.1.9"
     },
     "onlyBuiltDependencies": [
       "@clerk/shared",
