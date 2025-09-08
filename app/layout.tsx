@@ -2,8 +2,6 @@ import "@/styles/globals.css";
 
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata, Viewport } from "next";
@@ -38,27 +36,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-        variables: {
-          colorPrimary: "#fcba03",
-        },
-      }}
-    >
-      <PlausibleProvider domain="lorenzo0111.me" selfHosted trackOutboundLinks>
-        <html lang="en">
-          <body
-            className={"flex flex-col min-h-screen w-full " + inter.className}
-          >
-            <SpeedInsights />
-            <Navbar />
-            {children}
-            <Footer />
-            <Analytics />
-          </body>
-        </html>
-      </PlausibleProvider>
-    </ClerkProvider>
+    <PlausibleProvider domain="lorenzo0111.me" selfHosted trackOutboundLinks>
+      <html lang="en">
+        <body
+          className={"flex flex-col min-h-screen w-full " + inter.className}
+        >
+          <SpeedInsights />
+          <Navbar />
+          {children}
+          <Footer />
+          <Analytics />
+        </body>
+      </html>
+    </PlausibleProvider>
   );
 }

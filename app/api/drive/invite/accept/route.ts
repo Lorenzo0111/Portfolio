@@ -1,10 +1,14 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prismadb";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const { userId } = await auth();
-  if (!userId) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
       headers: {
@@ -46,7 +50,7 @@ export async function POST(request: Request) {
         id: file.id,
       },
       data: {
-        userId: userId,
+        userId: session.user.id,
       },
     });
 

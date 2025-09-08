@@ -2,6 +2,7 @@
 
 @theme {
   --color-primary: #fcba03;
+  --color-card: #232323;
 }
 
 @layer base {

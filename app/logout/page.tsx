@@ -1,16 +1,21 @@
 "use client";
 
-import { useClerk } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Page() {
-  const { signOut } = useClerk();
+  const router = useRouter();
 
   useEffect(() => {
-    signOut();
-    redirect("/");
-  }, [signOut]);
+    authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+        },
+      },
+    });
+  }, [router]);
 
   return null;
 }

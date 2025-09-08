@@ -33,7 +33,7 @@ export default function Skill({
   return (
     <div className="w-full md:w-[30rem] 2xl:w-[20rem] flex flex-col gap-2">
       <button
-        className="bg-[#232323] rounded-xl w-full min-h-[3rem] px-4 flex justify-between items-center"
+        className="bg-card rounded-xl w-full min-h-[3rem] px-4 flex justify-between items-center"
         onClick={() => toggleSlider(!open)}
       >
         <span className="flex items-center">{children}</span>
@@ -41,7 +41,7 @@ export default function Skill({
       </button>
       <div
         ref={contentRef}
-        className="transition-all ease-in-out duration-200 overflow-hidden bg-[#232323] rounded-xl"
+        className="transition-all ease-in-out duration-200 overflow-hidden bg-card rounded-xl"
         style={{ height: "0px" }}
       >
         <div className="flex flex-col gap-2 p-4">

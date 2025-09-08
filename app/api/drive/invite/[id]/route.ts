@@ -1,11 +1,18 @@
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prismadb";
-import { auth } from "@clerk/nextjs/server";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function GET(
+  _request: Request,
+  props: { params: Promise<{ id: string }> }
+) {
   const params = await props.params;
-  const { userId } = await auth();
-  if (!userId) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
       headers: {

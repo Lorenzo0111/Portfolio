@@ -1,13 +1,25 @@
 import Page from "@/components/drive-upload";
-import { clerkClient } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 async function getData() {
-  const clerk = await clerkClient();
-  const { data: users } = await clerk.users.getUserList();
-  const transformedUsers = users.map((user) => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) {
+    return { users: [] };
+  }
+
+  const response = await auth.api.listUsers({
+    query: {},
+  });
+
+  const transformedUsers = response.users.map((user) => {
     return {
       id: user.id,
-      username: user.username,
+      username: user.name,
     };
   });
 
@@ -17,6 +29,13 @@ async function getData() {
 }
 
 export default async function Upload() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) return redirect("/login");
+  if (session.user.role !== "admin") return redirect("/");
+
   const data = await getData();
 
   return <Page {...data} />;

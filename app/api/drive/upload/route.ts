@@ -1,7 +1,8 @@
-import { auth, clerkClient } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prismadb";
 import supabase from "@/lib/supabase";
+import { headers } from "next/headers";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const form = await request.formData();
@@ -10,19 +11,11 @@ export async function POST(request: Request) {
   const description = form.get("description") as string;
   const ownerId = form.get("ownerId") as string;
 
-  const { userId } = await auth();
-  if (!userId) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  }
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  const clerk = await clerkClient();
-  const user = userId ? await clerk.users.getUser(userId) : null;
-  if (user?.publicMetadata.role !== "admin") {
+  if (!session?.user || session.user.role !== "admin") {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
       headers: {
@@ -42,7 +35,11 @@ export async function POST(request: Request) {
 
   if (ownerId) {
     try {
-      await clerk.users.getUser(ownerId);
+      await auth.api.getUser({
+        query: {
+          id: ownerId,
+        },
+      });
     } catch (e) {
       return new Response(JSON.stringify({ error: "Owner not found" }), {
         status: 404,

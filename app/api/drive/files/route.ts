@@ -1,11 +1,15 @@
-import { auth, clerkClient } from "@clerk/nextjs/server";
-import type { DriveFile } from "@prisma/client";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prismadb";
+import type { DriveFile } from "@prisma/client";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
-  const { userId } = await auth();
-  if (!userId) {
+export async function GET(_request: Request) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
       headers: {
@@ -16,9 +20,7 @@ export async function GET(request: Request) {
 
   let files: DriveFile[] = [];
 
-  const clerk = await clerkClient();
-  const user = userId ? await clerk.users.getUser(userId) : null;
-  if (user?.publicMetadata.role !== "admin") {
+  if (session.user.role !== "admin") {
     files = await prisma.driveFile.findMany({
       cacheStrategy: {
         ttl: 60,
@@ -28,7 +30,7 @@ export async function GET(request: Request) {
   } else {
     files = await prisma.driveFile.findMany({
       where: {
-        userId: userId,
+        userId: session.user.id,
       },
       cacheStrategy: {
         ttl: 60,
