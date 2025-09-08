@@ -4,7 +4,7 @@ import {
   Database,
   HardDrive,
   Paintbrush,
-  Smartphone
+  Smartphone,
 } from "lucide-react";
 import Skill from "./skill";
 
@@ -26,7 +26,7 @@ export default function Skills() {
         <Skill skills={{ UIX: 85, "Logo Design": 75 }}>
           <Paintbrush className="mr-2" /> Design
         </Skill>
-        <Skill skills={{ Capacitor: 90, "React Native": 75 }}>
+        <Skill skills={{ Capacitor: 90, "React Native": 75, Flutter: 50 }}>
           <Smartphone className="mr-2" /> Mobile Development
         </Skill>
         <Skill skills={{ MySQL: 85, MongoDB: 75, Postgres: 75 }}>
