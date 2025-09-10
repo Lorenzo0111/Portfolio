@@ -60,6 +60,10 @@ export async function POST(request: Request) {
     },
   });
 
+  await prisma.$accelerate.invalidate({
+    tags: ["drive-files"],
+  });
+
   const { error } = await supabase.storage
     .from("drive")
     .upload(driveFile.id, file, {
@@ -85,6 +89,10 @@ export async function POST(request: Request) {
     data: {
       fileUrl: url,
     },
+  });
+
+  await prisma.$accelerate.invalidate({
+    tags: ["drive-files"],
   });
 
   return NextResponse.json({

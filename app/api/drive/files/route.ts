@@ -25,6 +25,7 @@ export async function GET(_request: Request) {
       cacheStrategy: {
         ttl: 60,
         swr: 30,
+        tags: ["drive-files"],
       },
     });
   } else {
@@ -35,6 +36,7 @@ export async function GET(_request: Request) {
       cacheStrategy: {
         ttl: 60,
         swr: 30,
+        tags: ["drive-files"],
       },
     });
   }

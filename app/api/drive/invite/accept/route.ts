@@ -34,6 +34,11 @@ export async function POST(request: Request) {
       where: {
         id: id as string,
       },
+      cacheStrategy: {
+        ttl: 60,
+        swr: 30,
+        tags: ["drive-files"],
+      },
     });
 
     if (!file) {
@@ -52,6 +57,10 @@ export async function POST(request: Request) {
       data: {
         userId: session.user.id,
       },
+    });
+
+    await prisma.$accelerate.invalidate({
+      tags: ["drive-files"],
     });
 
     return NextResponse.json({ success: true });

@@ -3,12 +3,15 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const projects = await prisma.project.findMany({
+    select: {
+      category: true,
+    },
     orderBy: {
       category: "asc",
     },
     cacheStrategy: {
-      ttl: 60 * 60,
-      swr: 60 * 30,
+      ttl: 60 * 60 * 24,
+      tags: ["projects"],
     },
   });
 

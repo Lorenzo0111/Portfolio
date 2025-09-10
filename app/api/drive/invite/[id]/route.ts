@@ -28,6 +28,11 @@ export async function GET(
       where: {
         id: id as string,
       },
+      cacheStrategy: {
+        ttl: 60,
+        swr: 30,
+        tags: ["drive-files"],
+      },
     });
 
     if (!file) {

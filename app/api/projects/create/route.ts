@@ -40,6 +40,10 @@ export async function POST(request: Request) {
     where: {
       name: newName,
     },
+    cacheStrategy: {
+      ttl: 60 * 60 * 24,
+      tags: ["projects"],
+    },
   });
 
   if (project) {
@@ -59,6 +63,10 @@ export async function POST(request: Request) {
       link,
       youtube,
     },
+  });
+
+  await prisma.$accelerate.invalidate({
+    tags: ["projects"],
   });
 
   const fileUrls = [];
@@ -94,6 +102,10 @@ export async function POST(request: Request) {
       images: fileUrls,
       thumbnail,
     },
+  });
+
+  await prisma.$accelerate.invalidate({
+    tags: ["projects"],
   });
 
   return NextResponse.json(project);
