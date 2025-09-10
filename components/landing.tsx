@@ -11,7 +11,7 @@ export default function Landing() {
             Hello, I&apos;m <span className="text-gradient">Lorenzo</span>
           </h1>
           <p className="text-xl text-gray-400 w-3/4 md:w-full m-auto">
-            I&apos;m a fullstack developer from Italy
+            I&apos;m a software developer from Italy
           </p>
         </div>
 

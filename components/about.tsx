@@ -20,7 +20,7 @@ export default function About() {
           About Me
         </h1>
         <p className="mt-2 text-md md:text-xl leading-8 md:text-left">
-          Hello! I&apos;m Lorenzo. I&apos;m a fullstack developer from Italy. I
+          Hello! I&apos;m Lorenzo. I&apos;m a software developer from Italy. I
           love to create new experiences for people to enjoy.
         </p>
         <p className="mt-1 text-md md:text-xl leading-8 md:text-left">
