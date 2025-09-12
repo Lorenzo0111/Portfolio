@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -82,6 +81,8 @@ model DriveFile {
   fileUrl     String?
 
   user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
 }
 
 model Project {
@@ -94,4 +95,6 @@ model Project {
   category    String
   link        String?
   updatedAt   DateTime @default(now()) @updatedAt
+
+  @@index([category])
 }
