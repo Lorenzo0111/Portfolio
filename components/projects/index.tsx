@@ -1,12 +1,12 @@
 "use client";
 
+import type { EventTypes } from "@/lib/plausible";
+import { useFetcher } from "@/utils/fetcher";
+import type { Project as ProjectType } from "@prisma/client";
+import { usePlausible } from "next-plausible";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import Project from "./project";
-import type { Project as ProjectType } from "@prisma/client";
-import { useFetcher } from "@/utils/fetcher";
-import dynamic from "next/dynamic";
-import { usePlausible } from "next-plausible";
-import type { EventTypes } from "@/lib/plausible";
 
 const Marquee = dynamic(() => import("react-fast-marquee"), {
   loading: () => <span className="mt-6 loader"></span>,
@@ -68,14 +68,13 @@ export default function Projects({ embed }: { embed?: boolean }) {
       {loading && <span className="mt-6 loader"></span>}
       {projects ? (
         <div className="flex flex-col w-full justify-between">
-          <ul className="flex mx-auto text-center mb-2 w-fit gap-2 justify-center">
+          <ul className="flex mx-auto text-center mt-2 mb-4 w-fit gap-2 justify-center">
             <li>
               <button
                 onClick={(e) => runFilter("*")}
                 className={
-                  filter === "*"
-                    ? "text-primary hover:text-primary"
-                    : "hover:text-primary"
+                  "rounded-lg bg-white/5 px-6 text-white backdrop-blur-sm border border-white/10 hover:border-primary transition-all duration-200 flex h-10 w-full items-center justify-center " +
+                  (filter === "*" ? "bg-primary!" : "")
                 }
               >
                 All
@@ -88,9 +87,8 @@ export default function Projects({ embed }: { embed?: boolean }) {
                     <button
                       onClick={(e) => runFilter(category)}
                       className={
-                        filter === category
-                          ? "text-primary hover:text-primary"
-                          : "hover:text-primary"
+                        "rounded-lg bg-white/5 px-6 text-white backdrop-blur-sm border border-white/10 hover:border-primary transition-all duration-200 flex h-10 w-full items-center justify-center " +
+                        (filter === category ? "bg-primary!" : "")
                       }
                     >
                       {category}

@@ -13,7 +13,7 @@ export default function Project({
     <Link
       href={"/projects/" + project.id}
       className={
-        "border-primary rounded-xl border-2 h-60 w-[400px] min-w-[400px] block relative hover:shadow-lg hover:shadow-primary/30" +
+        "bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 hover:border-primary transition-all duration-200 flex flex-col h-60 w-[400px] min-w-[400px] relative " +
         (embed ? " mr-8" : "")
       }
     >
