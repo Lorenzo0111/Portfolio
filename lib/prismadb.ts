@@ -1,8 +1,10 @@
-import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
+import { PrismaClient } from "../generated/client";
 
 function getPrisma() {
-  return new PrismaClient().$extends(withAccelerate());
+  return new PrismaClient({
+    accelerateUrl: process.env.DATABASE_URL!,
+  }).$extends(withAccelerate());
 }
 
 declare global {

@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prismadb";
-import type { DriveFile } from "@prisma/client";
+import type { DriveFile } from "@/generated/client";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 

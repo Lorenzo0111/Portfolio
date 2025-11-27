@@ -1,6 +1,6 @@
 "use client";
 
-import type { Project } from "@prisma/client";
+import type { Project } from "@/generated/client";
 import { ZoomInIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";

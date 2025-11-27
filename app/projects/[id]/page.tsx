@@ -1,4 +1,4 @@
-import { Project } from "@prisma/client";
+import type { Project } from "@/generated/client";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ProjectPageClient from "./page.client";

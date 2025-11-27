@@ -2,7 +2,7 @@
 
 import type { EventTypes } from "@/lib/plausible";
 import { useFetcher } from "@/utils/fetcher";
-import type { Project as ProjectType } from "@prisma/client";
+import type { Project as ProjectType } from "@/generated/client";
 import { usePlausible } from "next-plausible";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";

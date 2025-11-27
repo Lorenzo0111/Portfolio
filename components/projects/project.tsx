@@ -1,4 +1,4 @@
-import type { Project } from "@prisma/client";
+import type { Project } from "@/generated/client";
 import Image from "next/image";
 import Link from "next/link";
 

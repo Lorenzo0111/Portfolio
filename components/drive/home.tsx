@@ -1,7 +1,7 @@
 "use client";
 
 import { useFetcher } from "@/utils/fetcher";
-import type { DriveFile } from "@prisma/client";
+import type { DriveFile } from "@/generated/client";
 import { File } from "lucide-react";
 import Link from "next/link";
 

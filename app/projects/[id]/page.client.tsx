@@ -1,7 +1,7 @@
 "use client";
 
+import type { Project } from "@/generated/client";
 import type { EventTypes } from "@/lib/plausible";
-import type { Project } from "@prisma/client";
 import { usePlausible } from "next-plausible";
 import dynamic from "next/dynamic";
 import Link from "next/link";
