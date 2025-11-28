@@ -41,7 +41,7 @@ export default async function ProjectPage({ params }: Props) {
     {
       next: {
         revalidate: 3600,
-        tags: [`project-${id}`],
+        tags: [`project_${id}`],
       },
     }
   )

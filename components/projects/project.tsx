@@ -1,6 +1,6 @@
 import type { Project } from "@/generated/client";
 import Image from "next/image";
-import Link from "next/link";
+import { Card } from "../ui/card";
 
 export default function Project({
   project,
@@ -10,10 +10,11 @@ export default function Project({
   embed?: boolean;
 }) {
   return (
-    <Link
+    <Card
+      variant="glass"
       href={"/projects/" + project.id}
       className={
-        "bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 hover:border-primary transition-all duration-200 flex flex-col h-60 w-[400px] min-w-[400px] relative " +
+        "flex flex-col h-60 w-[400px] min-w-[400px] relative p-0 " +
         (embed ? " mr-8" : "")
       }
     >
@@ -31,7 +32,7 @@ export default function Project({
           />
         </>
       )}
-      <div className="rounded-b-xl flex flex-col bg-black/70 w-full max-h-[6rem] p-4 bottom-0 absolute justify-center items-center">
+      <div className="rounded-b-xl flex flex-col bg-black/70 w-full max-h-24 p-4 bottom-0 absolute justify-center items-center">
         <h1 className="font-extrabold text-ellipsis w-full text-2xl overflow-hidden whitespace-nowrap">
           {project.name}
         </h1>
@@ -39,6 +40,6 @@ export default function Project({
           {project.category}
         </p>
       </div>
-    </Link>
+    </Card>
   );
 }

@@ -61,7 +61,7 @@ export async function POST(request: Request) {
   });
 
   await prisma.$accelerate.invalidate({
-    tags: ["drive-files"],
+    tags: ["drive_files"],
   });
 
   const { error } = await supabase.storage
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
   });
 
   await prisma.$accelerate.invalidate({
-    tags: ["drive-files"],
+    tags: ["drive_files"],
   });
 
   return NextResponse.json({

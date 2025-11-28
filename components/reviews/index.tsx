@@ -46,7 +46,9 @@ export default function Reviews({ embed }: { embed?: boolean }) {
   return (
     <div
       id="reviews"
-      className="mx-auto text-center w-[90%] px-8 justify-center my-20"
+      className={`mx-auto text-center justify-center my-10 ${
+        embed ? "w-full" : "w-[90%]"
+      }`}
     >
       <h1 className="font-extrabold mt-4 text-gradient text-3xl">
         What they say about me

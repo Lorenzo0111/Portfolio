@@ -1,9 +1,12 @@
 "use client";
 
-import { Clipboard } from "lucide-react";
+import { Check, Clipboard, Upload as UploadIcon } from "lucide-react";
 import { useRef, useState } from "react";
+import { Button } from "./ui/button";
+import { Card } from "./ui/card";
+import { Input } from "./ui/input";
 
-export default function Page({
+export default function DriveUpload({
   users,
 }: {
   users: {
@@ -37,44 +40,138 @@ export default function Page({
     if (ownerId) formData.append("ownerId", ownerId);
     formData.append("file", file);
 
-    const response = await fetch("/api/drive/upload", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const response = await fetch("/api/drive/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-    const data = await response.json();
-    if (data.error) {
-      setError(data.error);
-      return;
+      const data = await response.json();
+      if (data.error) {
+        setError(data.error);
+        return;
+      }
+
+      if (!ownerId) setId(data.id);
+      setSuccess(
+        ownerId
+          ? "Successfully created drive file"
+          : "Invited created successfully"
+      );
+
+      setName("");
+      setDescription("");
+      setOwnerId("");
+      setFile(null);
+    } catch (err) {
+      setError("Something went wrong");
     }
-
-    if (!ownerId) setId(data.id);
-    setSuccess(
-      ownerId
-        ? "Successfully created drive file"
-        : "Invited created successfully"
-    );
-
-    setName("");
-    setDescription("");
-    setOwnerId("");
-    setFile(null);
   }
 
   return (
-    <main>
-      <div className="text-center m-auto flex flex-col justify-center items-center content-center h-[500px] md:w-3/4 xl:w-1/2">
-        <h1 className="from-[#f1a900] to-[#fdeb77] text-transparent bg-clip-text bg-linear-to-r font-extrabold text-4xl mb-4">
+    <div className="flex justify-center items-center p-4">
+      <Card className="w-full max-w-md p-6 sm:p-8 text-left">
+        <h1 className="text-2xl font-semibold text-center text-white">
           Upload a new item
         </h1>
+        <p className="text-center text-sm text-gray-300 mt-1">
+          Share files with others
+        </p>
 
-        <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2">
-          {error && <p className="text-red-500">{error}</p>}
+        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+          <div className="space-y-1">
+            <label className="text-sm" htmlFor="name">
+              Name
+            </label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="Item name"
+              onChange={(e) => setName(e.target.value)}
+              required
+              value={name}
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-sm" htmlFor="description">
+              Description
+            </label>
+            <Input
+              id="description"
+              type="text"
+              placeholder="Item description"
+              onChange={(e) => setDescription(e.target.value)}
+              required
+              value={description}
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-sm" htmlFor="owner">
+              Owner (Optional)
+            </label>
+            <select
+              id="owner"
+              value={ownerId}
+              className="w-full rounded-md px-3 py-2 bg-transparent border border-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:border-white/20 transition-colors appearance-none"
+              onChange={(e) => setOwnerId(e.target.value)}
+            >
+              <option value="" className="bg-zinc-900">
+                Create an Invite
+              </option>
+              {users.map((user) => (
+                <option key={user.id} value={user.id} className="bg-zinc-900">
+                  {user.username}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-sm">File</label>
+            <input
+              type="file"
+              min={1}
+              max={1}
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              className="hidden"
+              ref={inputRef}
+            />
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={(e) => {
+                e.preventDefault();
+                inputRef.current?.click();
+              }}
+              className="w-full bg-transparent border border-white/10 hover:bg-white/5"
+            >
+              {file ? (
+                <>
+                  <Check className="mr-2 h-4 w-4" /> {file.name}
+                </>
+              ) : (
+                <>
+                  <UploadIcon className="mr-2 h-4 w-4" /> Select File
+                </>
+              )}
+            </Button>
+          </div>
+
+          {error && (
+            <div className="text-sm text-red-500" role="alert">
+              {error}
+            </div>
+          )}
+
           {success && (
-            <p className="text-primary flex items-center gap-1">
-              {success}{" "}
+            <div className="text-sm text-green-500 flex items-center gap-2 bg-green-500/10 p-3 rounded-md">
+              <span>{success}</span>
               {id && (
                 <button
+                  type="button"
+                  className="ml-auto hover:text-green-400"
                   onClick={(e) => {
                     e.preventDefault();
                     navigator.clipboard.writeText(
@@ -82,67 +179,17 @@ export default function Page({
                     );
                   }}
                 >
-                  <Clipboard />
+                  <Clipboard className="h-4 w-4" />
                 </button>
               )}
-            </p>
+            </div>
           )}
-          <input
-            type="text"
-            placeholder="Name"
-            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-hidden"
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Description"
-            className="rounded-xl bg-[#18181b] p-2 focus:border-2 focus:border-primary outline-hidden"
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-          <select
-            defaultValue={""}
-            className="rounded-xl bg-[#18181b] p-2 outline-hidden"
-          >
-            <option value="">Create an Invite</option>
-            {users.map((user) => (
-              <option
-                key={user.id}
-                value={user.id}
-                onClick={() => setOwnerId(user.id)}
-              >
-                {user.username}
-              </option>
-            ))}
-          </select>
-          <input
-            type="file"
-            min={1}
-            max={1}
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-            className="hidden"
-            ref={inputRef}
-          />
-          <div className="flex gap-2">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                inputRef.current?.click();
-              }}
-              className="rounded-xl border-2 border-primary p-2 w-full"
-            >
-              {file ? `Uploaded` : "Upload"}
-            </button>
-            <button
-              type="submit"
-              className="rounded-xl bg-primary text-black p-2 w-full"
-            >
-              Create
-            </button>
-          </div>
+
+          <Button type="submit" className="w-full">
+            Create Item
+          </Button>
         </form>
-      </div>
-    </main>
+      </Card>
+    </div>
   );
 }

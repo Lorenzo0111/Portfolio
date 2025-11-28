@@ -4,17 +4,14 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="mx-auto px-4 sm:px-6 lg:px-8 h-24 items-center flex w-full">
+    <nav className="mx-auto px-4 sm:px-6 lg:px-8 h-24 items-center flex md:w-full">
       <div className="flex flex-col space-x-4 md:flex-row items-center justify-center md:justify-start content-center w-full relative">
         <div className="w-full flex justify-between md:justify-start gap-4">
-          <Link className="hover:text-primary" href="/#home">
+          <Link className="hover:text-primary" href="/">
             Home
           </Link>
           <Link className="hover:text-primary" href="/#about">
             About
-          </Link>
-          <Link className="hover:text-primary" href="/#skills">
-            Skills
           </Link>
           <Link className="hover:text-primary" href="/projects">
             Projects

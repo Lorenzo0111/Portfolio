@@ -31,7 +31,7 @@ export async function GET(
       cacheStrategy: {
         ttl: 60,
         swr: 30,
-        tags: ["drive-files"],
+        tags: ["drive_files"],
       },
     });
 

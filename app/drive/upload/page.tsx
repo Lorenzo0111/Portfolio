@@ -4,8 +4,10 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 async function getData() {
+  const headersList = await headers();
+
   const session = await auth.api.getSession({
-    headers: await headers(),
+    headers: headersList,
   });
 
   if (!session?.user) {
@@ -14,6 +16,7 @@ async function getData() {
 
   const response = await auth.api.listUsers({
     query: {},
+    headers: headersList,
   });
 
   const transformedUsers = response.users.map((user) => {

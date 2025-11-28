@@ -3,6 +3,7 @@
 import type { VouchleyReview } from "@/lib/vouchley";
 import { StarIcon } from "lucide-react";
 import { useState } from "react";
+import { Card } from "../ui/card";
 
 export function StarRating({ rating }: { rating: number }) {
   return (
@@ -35,8 +36,9 @@ export function ReviewCard({ review }: { review: VouchleyReview }) {
       : review.message.slice(0, characterLimit) + "...";
 
   return (
-    <div
-      className={`bg-white/5 text-left backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-white/20 transition-all duration-200 flex flex-col ${
+    <Card
+      variant="glass"
+      className={`p-6 text-left flex flex-col ${
         shouldTruncate ? "cursor-pointer" : ""
       }`}
       onClick={() => shouldTruncate && setIsExpanded(!isExpanded)}
@@ -81,6 +83,6 @@ export function ReviewCard({ review }: { review: VouchleyReview }) {
           {formattedDate}
         </span>
       </div>
-    </div>
+    </Card>
   );
 }

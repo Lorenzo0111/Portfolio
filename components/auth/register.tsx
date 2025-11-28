@@ -7,8 +7,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useCallback, useState } from "react";
+import { Button } from "../ui/button";
+import { Card } from "../ui/card";
+import { Input } from "../ui/input";
 
-export default function SignUp() {
+export default function Register() {
   const router = useRouter();
   const search = useSearchParams();
   const redirectUrl = search.get("redirect_url") || "/";
@@ -67,7 +70,7 @@ export default function SignUp() {
 
   return (
     <div className="flex justify-center items-center p-4">
-      <div className="w-full max-w-md bg-white/5 text-left backdrop-blur-sm rounded-lg p-6 sm:p-8 border border-white/10 hover:border-white/20 transition-all duration-200">
+      <Card className="w-full max-w-md p-6 sm:p-8 text-left">
         <div className="flex justify-center mb-4">
           <Image
             src="/icon.png"
@@ -85,22 +88,24 @@ export default function SignUp() {
         </p>
 
         <div className="mt-4 grid grid-cols-2 gap-2">
-          <button
+          <Button
             type="button"
+            variant="secondary"
             onClick={() => onProvider("github")}
-            className="flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 rounded-md py-2 text-white"
             disabled={loading}
+            className="bg-transparent"
           >
-            <SiGithub width={18} /> Github
-          </button>
-          <button
+            <SiGithub width={18} className="mr-2" /> Github
+          </Button>
+          <Button
             type="button"
+            variant="secondary"
             onClick={() => onProvider("discord")}
-            className="flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 rounded-md py-2 text-white"
             disabled={loading}
+            className="bg-transparent"
           >
-            <SiDiscord width={18} /> Discord
-          </button>
+            <SiDiscord width={18} className="mr-2" /> Discord
+          </Button>
         </div>
 
         <form onSubmit={onSubmit} className="mt-4 space-y-4">
@@ -108,13 +113,12 @@ export default function SignUp() {
             <label className="text-sm" htmlFor="name">
               Name
             </label>
-            <input
+            <Input
               id="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full border border-white/10 rounded-md px-3 py-2 bg-transparent text-white placeholder:text-gray-400 focus:outline-none focus:border-white/20"
               placeholder="Your name"
             />
           </div>
@@ -122,13 +126,12 @@ export default function SignUp() {
             <label className="text-sm" htmlFor="email">
               Email
             </label>
-            <input
+            <Input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full border border-white/10 rounded-md px-3 py-2 bg-transparent text-white placeholder:text-gray-400 focus:outline-none focus:border-white/20"
               placeholder="you@example.com"
               autoComplete="email"
             />
@@ -147,13 +150,12 @@ export default function SignUp() {
                 {showPassword ? <EyeOff width={16} /> : <Eye width={16} />}
               </button>
             </div>
-            <input
+            <Input
               id="password"
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full border border-white/10 rounded-md px-3 py-2 bg-transparent text-white placeholder:text-gray-400 focus:outline-none focus:border-white/20"
               placeholder="••••••••"
               autoComplete="new-password"
             />
@@ -163,14 +165,10 @@ export default function SignUp() {
               {error}
             </div>
           )}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full flex items-center justify-center gap-2 bg-[#fcba03] text-black font-medium rounded-md py-2 hover:brightness-110 disabled:opacity-50"
-          >
-            {loading && <Loader2 className="animate-spin" width={16} />}
+          <Button type="submit" disabled={loading} className="w-full">
+            {loading && <Loader2 className="animate-spin mr-2" width={16} />}
             Create account
-          </button>
+          </Button>
         </form>
 
         <p className="text-sm text-center text-gray-300 mt-4">
@@ -179,7 +177,7 @@ export default function SignUp() {
             Sign in
           </Link>
         </p>
-      </div>
+      </Card>
     </div>
   );
 }
