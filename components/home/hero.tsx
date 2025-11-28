@@ -39,6 +39,7 @@ export default function Hero() {
           alt="Lorenzo"
           fill
           priority
+          draggable={false}
           className="object-cover rounded-full border-4 border-white/5 shadow-2xl"
         />
       </div>

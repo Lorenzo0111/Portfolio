@@ -56,7 +56,7 @@ export default function Projects({ embed }: { embed?: boolean }) {
   return (
     <div
       id="projects"
-      className="mx-auto text-center w-[90%] px-8 justify-center"
+      className="mx-auto text-center w-full md:w-[90%] px-8 justify-center"
     >
       <h1 className="font-extrabold mt-4 text-gradient text-3xl">
         My projects
@@ -68,7 +68,7 @@ export default function Projects({ embed }: { embed?: boolean }) {
       {loading && <span className="mt-6 loader"></span>}
       {projects ? (
         <div className="flex flex-col w-full justify-between">
-          <ul className="flex mx-auto text-center mt-2 mb-4 w-fit gap-2 justify-center">
+          <ul className="flex mx-auto text-center mt-2 mb-4 w-full md:w-fit gap-2 justify-center">
             <li>
               <button
                 onClick={(e) => runFilter("*")}
@@ -85,7 +85,7 @@ export default function Projects({ embed }: { embed?: boolean }) {
                 return (
                   <li key={category}>
                     <button
-                      onClick={(e) => runFilter(category)}
+                      onClick={() => runFilter(category)}
                       className={
                         "rounded-lg bg-white/5 px-6 text-white backdrop-blur-sm border border-white/10 hover:border-primary transition-all duration-200 flex h-10 w-full items-center justify-center " +
                         (filter === category ? "bg-primary!" : "")

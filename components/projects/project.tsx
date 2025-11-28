@@ -14,7 +14,7 @@ export default function Project({
       variant="glass"
       href={"/projects/" + project.id}
       className={
-        "flex flex-col h-60 w-[400px] min-w-[400px] relative p-0 " +
+        "flex flex-col h-60 w-full md:w-[400px] md:min-w-[400px] relative p-0 " +
         (embed ? " mr-8" : "")
       }
     >
