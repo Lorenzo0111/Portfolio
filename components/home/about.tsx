@@ -16,7 +16,7 @@ export default function About() {
           <IconBox className="mb-6 text-primary">
             <Terminal className="w-6 h-6" />
           </IconBox>
-          <h3 className="text-2xl font-bold mb-4">Software Developer</h3>
+          <h2 className="text-2xl font-bold mb-4">Software Developer</h2>
           <p className="text-gray-400 leading-relaxed mb-6">
             I love to create new experiences for people to enjoy. I mainly use
             Typescript and Java for my projects but I also know a lot of other

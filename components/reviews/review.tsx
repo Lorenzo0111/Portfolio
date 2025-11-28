@@ -50,9 +50,9 @@ export function ReviewCard({ review }: { review: VouchleyReview }) {
             <span className="badge">{review.product.description}</span>
           )}
         </div>
-        <h3 className="text-lg font-semibold mt-2 text-white">
+        <h2 className="text-lg font-semibold mt-2 text-white">
           {review.description}
-        </h3>
+        </h2>
       </div>
       <div className="flex flex-col h-full mt-auto">
         <p className="text-gray-300 leading-relaxed">{displayMessage}</p>
@@ -79,7 +79,7 @@ export function ReviewCard({ review }: { review: VouchleyReview }) {
           </div>
         )}
 
-        <span className="text-xs text-gray-500 mt-auto ml-auto">
+        <span className="text-xs text-gray-400 mt-auto ml-auto">
           {formattedDate}
         </span>
       </div>

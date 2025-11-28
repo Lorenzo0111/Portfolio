@@ -8,9 +8,9 @@ export default function Contact() {
       className="mt-20 p-12 rounded-3xl bg-linear-to-r from-primary/20 to-purple-500/20 border border-white/10 text-center relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-card/40 backdrop-blur-sm -z-10" />
-      <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      <h3 className="text-3xl md:text-4xl font-bold mb-6">
         Ready to start a project?
-      </h2>
+      </h3>
       <p className="text-gray-300 mb-8 max-w-xl mx-auto">
         I&apos;m ready to hear your ideas and help you bring them to life. Get
         in touch with me today and let&apos;s create something amazing together!

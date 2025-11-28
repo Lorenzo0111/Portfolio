@@ -46,7 +46,7 @@ export default function RootLayout({
           <SpeedInsights />
           <Navbar />
           <GradientBackground />
-          {children}
+          <main className="grow w-full">{children}</main>
           <Footer />
           <Analytics />
         </body>

@@ -1,8 +1,8 @@
 "use client";
 
+import type { Project as ProjectType } from "@/generated/client";
 import type { EventTypes } from "@/lib/plausible";
 import { useFetcher } from "@/utils/fetcher";
-import type { Project as ProjectType } from "@/generated/client";
 import { usePlausible } from "next-plausible";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -61,10 +61,10 @@ export default function Projects({ embed }: { embed?: boolean }) {
       <h1 className="font-extrabold mt-4 text-gradient text-3xl">
         My projects
       </h1>
-      <h2 className="text-lg">
+      <p className="text-lg">
         Select a category to view all the projects. Click on a project to get
         images and infos
-      </h2>
+      </p>
       {loading && <span className="mt-6 loader"></span>}
       {projects ? (
         <div className="flex flex-col w-full justify-between">
