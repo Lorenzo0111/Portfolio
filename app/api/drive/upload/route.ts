@@ -60,9 +60,11 @@ export async function POST(request: Request) {
     },
   });
 
-  await prisma.$accelerate.invalidate({
-    tags: ["drive_files"],
-  });
+  try {
+    await prisma.$accelerate.invalidate({
+      tags: ["drive_files"],
+    });
+  } catch {}
 
   const { error } = await supabase.storage
     .from("drive")
@@ -91,9 +93,11 @@ export async function POST(request: Request) {
     },
   });
 
-  await prisma.$accelerate.invalidate({
-    tags: ["drive_files"],
-  });
+  try {
+    await prisma.$accelerate.invalidate({
+      tags: ["drive_files"],
+    });
+  } catch {}
 
   return NextResponse.json({
     id: driveFile.id,

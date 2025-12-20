@@ -59,9 +59,11 @@ export async function POST(request: Request) {
       },
     });
 
-    await prisma.$accelerate.invalidate({
-      tags: ["drive_files"],
-    });
+    try {
+      await prisma.$accelerate.invalidate({
+        tags: ["drive_files"],
+      });
+    } catch {}
 
     return NextResponse.json({ success: true });
   } catch (error) {

@@ -65,9 +65,11 @@ export async function POST(request: Request) {
     },
   });
 
-  await prisma.$accelerate.invalidate({
-    tags: ["projects"],
-  });
+  try {
+    await prisma.$accelerate.invalidate({
+      tags: ["projects"],
+    });
+  } catch {}
 
   const fileUrls = [];
   let thumbnail;
@@ -104,9 +106,11 @@ export async function POST(request: Request) {
     },
   });
 
-  await prisma.$accelerate.invalidate({
-    tags: ["projects"],
-  });
+  try {
+    await prisma.$accelerate.invalidate({
+      tags: ["projects"],
+    });
+  } catch {}
 
   return NextResponse.json(project);
 }
