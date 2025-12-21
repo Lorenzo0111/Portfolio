@@ -61,7 +61,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="p-8 rounded-3xl bg-linear-to-r from-primary/20 to-purple-500/20 border border-white/10 relative overflow-hidden">
+        <div className="p-8 rounded-3xl bg-gradient-to-r from-primary/20 to-purple-500/20 border border-white/10 relative overflow-hidden">
           <div className="absolute inset-0 bg-card/40 backdrop-blur-sm -z-10" />
 
           <form onSubmit={handleSubmit} className="space-y-6">

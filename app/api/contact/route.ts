@@ -39,10 +39,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Create transporter
+    const port = parseInt(smtpPort);
     const transporter = nodemailer.createTransport({
       host: smtpHost,
-      port: parseInt(smtpPort),
-      secure: parseInt(smtpPort) === 465,
+      port: port,
+      secure: port === 465,
       auth: {
         user: smtpUser,
         pass: smtpPass,
@@ -50,6 +51,14 @@ export async function POST(request: NextRequest) {
     });
 
     // Send email
+    const escapeHtml = (unsafe: string) =>
+      unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
     await transporter.sendMail({
       from: smtpUser,
       to: supportEmail,
@@ -58,10 +67,10 @@ export async function POST(request: NextRequest) {
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
         <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, "<br>")}</p>
+        <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
       `,
     });
 
