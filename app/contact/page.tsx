@@ -27,7 +27,12 @@ export default function ContactPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          botId: process.env.NEXT_PUBLIC_VERCEL_BOT_ID,
+        }),
       });
 
       const data = await response.json();

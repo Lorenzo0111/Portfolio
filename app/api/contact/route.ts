@@ -4,7 +4,15 @@ import nodemailer from "nodemailer";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, message } = body;
+    const { name, email, message, botId } = body;
+
+    // Check for Vercel bot protection
+    if (botId !== process.env.VERCEL_BOT_ID) {
+      return NextResponse.json(
+        { error: "Invalid request" },
+        { status: 403 }
+      );
+    }
 
     // Validate input
     if (!name || !email || !message) {
