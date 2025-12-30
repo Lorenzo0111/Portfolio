@@ -3,6 +3,7 @@
 import { useFetcher } from "@/utils/fetcher";
 import { AlertCircle, File, Loader2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
+import posthog from "posthog-js";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
@@ -54,9 +55,15 @@ export default function Invite() {
           "Content-Type": "application/json",
         },
       });
+
+      posthog.capture("drive_invite_accepted", {
+        invite_id: id,
+        file_name: invite.data?.name,
+      });
       router.push("/drive");
     } catch (e) {
       console.error(e);
+      posthog.captureException(e);
       setAccepting(false);
     }
   };

@@ -1,12 +1,8 @@
 "use client";
 
 import type { Project } from "@/generated/client";
-import type { EventTypes } from "@/lib/plausible";
-import { usePlausible } from "next-plausible";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useEffect } from "react";
 
 const Carousel = dynamic(() => import("@/components/carousel"), {
   loading: () => (
@@ -32,19 +28,6 @@ function BasePage({ children }: { children: React.ReactNode }) {
 }
 
 export default function ProjectPage({ project }: { project: Project }) {
-  const { id } = useParams();
-  const plausible = usePlausible<EventTypes>();
-
-  useEffect(() => {
-    if (!id || typeof id !== "string") return;
-
-    plausible("view-project", {
-      props: {
-        id,
-      },
-    });
-  }, [id, plausible]);
-
   return (
     <BasePage>
       <h1 className="font-bold text-4xl">{project.name}</h1>

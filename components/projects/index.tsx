@@ -1,10 +1,9 @@
 "use client";
 
 import type { Project as ProjectType } from "@/generated/client";
-import type { EventTypes } from "@/lib/plausible";
 import { useFetcher } from "@/utils/fetcher";
-import { usePlausible } from "next-plausible";
 import dynamic from "next/dynamic";
+import posthog from "posthog-js";
 import { useEffect, useState } from "react";
 import Project from "./project";
 
@@ -13,7 +12,6 @@ const Marquee = dynamic(() => import("react-fast-marquee"), {
 });
 
 export default function Projects({ embed }: { embed?: boolean }) {
-  const plausible = usePlausible<EventTypes>();
   const { data: categories } = useFetcher("/api/categories");
   const { data: projects } = useFetcher("/api/projects");
   const [filter, setFilter] = useState<string>("*");
@@ -29,10 +27,8 @@ export default function Projects({ embed }: { embed?: boolean }) {
   }, [projects]);
 
   async function runFilter(category: string) {
-    plausible("filter-projects", {
-      props: {
-        filter: category,
-      },
+    posthog.capture("filter_projects", {
+      category,
     });
 
     if (category === "*") {

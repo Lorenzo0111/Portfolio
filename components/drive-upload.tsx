@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, Clipboard, Upload as UploadIcon } from "lucide-react";
+import posthog from "posthog-js";
 import { useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -49,10 +50,24 @@ export default function DriveUpload({
       const data = await response.json();
       if (data.error) {
         setError(data.error);
+        posthog.capture("drive_upload_failed", {
+          error: data.error,
+          is_invite: !ownerId,
+        });
         return;
       }
 
-      if (!ownerId) setId(data.id);
+      if (!ownerId) {
+        setId(data.id);
+        posthog.capture("drive_invite_created", {
+          file_name: name,
+        });
+      } else {
+        posthog.capture("drive_file_uploaded", {
+          file_name: name,
+          has_owner: true,
+        });
+      }
       setSuccess(
         ownerId
           ? "Successfully created drive file"
@@ -65,6 +80,7 @@ export default function DriveUpload({
       setFile(null);
     } catch (err) {
       setError("Something went wrong");
+      posthog.captureException(err);
     }
   }
 

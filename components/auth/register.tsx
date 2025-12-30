@@ -6,6 +6,7 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import posthog from "posthog-js";
 import { FormEvent, useCallback, useState } from "react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
@@ -35,15 +36,29 @@ export default function Register() {
           name,
           fetchOptions: {
             onSuccess: () => {
+              posthog.identify(email, {
+                email: email,
+                name: name,
+              });
+
+              posthog.capture("user_signed_up", {
+                method: "email",
+                email: email,
+              });
               router.push(redirectUrl);
             },
           },
         });
         if (signUpError) {
           setError(signUpError.message || "Unable to sign up");
+          posthog.capture("user_sign_up_failed", {
+            method: "email",
+            error: signUpError.message || "Unable to sign up",
+          });
         }
       } catch (err) {
         setError("Unexpected error. Please try again.");
+        posthog.captureException(err);
       } finally {
         setLoading(false);
       }
@@ -55,6 +70,10 @@ export default function Register() {
     async (provider: "github" | "discord") => {
       setError(null);
       setLoading(true);
+      // Capture social sign-up attempt
+      posthog.capture("user_signed_up", {
+        method: provider,
+      });
       try {
         await authClient.signIn.social({
           provider,
@@ -63,6 +82,11 @@ export default function Register() {
       } catch (err) {
         setLoading(false);
         setError("Social sign-up failed");
+        posthog.capture("user_sign_up_failed", {
+          method: provider,
+          error: "Social sign-up failed",
+        });
+        posthog.captureException(err);
       }
     },
     [redirectUrl]

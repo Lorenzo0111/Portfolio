@@ -1,7 +1,16 @@
+"use client";
+
 import { Mail } from "lucide-react";
 import Link from "next/link";
+import posthog from "posthog-js";
 
 export default function Contact() {
+  const handleContactClick = () => {
+    posthog.capture("contact_clicked", {
+      source: "home_cta",
+    });
+  };
+
   return (
     <div
       id="contact"
@@ -16,8 +25,9 @@ export default function Contact() {
         in touch with me today and let&apos;s create something amazing together!
       </p>
       <Link
-        href="mailto:contact@lorenzo0111.me"
+        href="mailto:hello@lorenzo0111.me"
         className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-black font-bold rounded-full hover:bg-primary/90 transition-colors"
+        onClick={handleContactClick}
       >
         Let&apos;s Talk <Mail className="w-5 h-5" />
       </Link>

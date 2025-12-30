@@ -1,5 +1,6 @@
 "use client";
 
+import posthog from "posthog-js";
 import { useRef, useState } from "react";
 
 export default function Upload() {
@@ -42,9 +43,19 @@ export default function Upload() {
     const data = await response.json();
     if (data.error) {
       setError(data.error);
+      posthog.capture("project_create_failed", {
+        error: data.error,
+      });
       return;
     }
 
+    posthog.capture("project_created", {
+      project_name: name,
+      category: category,
+      has_link: !!link,
+      has_youtube: !!youtube,
+      image_count: file?.length || 0,
+    });
     setSuccess("Successfully created project");
   }
 

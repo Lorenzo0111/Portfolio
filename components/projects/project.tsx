@@ -1,5 +1,8 @@
+"use client";
+
 import type { Project } from "@/generated/client";
 import Image from "next/image";
+import posthog from "posthog-js";
 import { Card } from "../ui/card";
 
 export default function Project({
@@ -9,6 +12,14 @@ export default function Project({
   project: Project;
   embed?: boolean;
 }) {
+  const handleProjectClick = () => {
+    posthog.capture("project_viewed", {
+      project_id: project.id,
+      project_name: project.name,
+      category: project.category,
+    });
+  };
+
   return (
     <Card
       variant="glass"
@@ -17,6 +28,7 @@ export default function Project({
         "flex flex-col h-60 w-full md:w-[400px] md:min-w-[400px] relative p-0 " +
         (embed ? " mr-8" : "")
       }
+      onClick={handleProjectClick}
     >
       {!project.thumbnail && <span className="mt-6 loader"></span>}
       {project.thumbnail && (

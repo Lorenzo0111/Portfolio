@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import { withPlausibleProxy } from "next-plausible";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -18,9 +17,19 @@ const nextConfig: NextConfig = {
     ],
     minimumCacheTTL: 7 * 24 * 60 * 60,
   },
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: "https://eu-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/ingest/:path*",
+        destination: "https://eu.i.posthog.com/:path*",
+      },
+    ];
+  },
+  skipTrailingSlashRedirect: true,
 };
 
-export default withPlausibleProxy({
-  subdirectory: "s",
-  customDomain: "https://s.lorenzo0111.me",
-})(nextConfig);
+export default nextConfig;

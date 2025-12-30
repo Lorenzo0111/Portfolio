@@ -6,7 +6,6 @@ import Navbar from "@/components/navbar";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata, Viewport } from "next";
-import PlausibleProvider from "next-plausible";
 import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
@@ -38,19 +37,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <PlausibleProvider domain="lorenzo0111.me" selfHosted trackOutboundLinks>
-      <html lang="en">
-        <body
-          className={"flex flex-col min-h-screen w-full " + inter.className}
-        >
-          <SpeedInsights />
-          <Navbar />
-          <GradientBackground />
-          <main className="grow w-full">{children}</main>
-          <Footer />
-          <Analytics />
-        </body>
-      </html>
-    </PlausibleProvider>
+    <html lang="en">
+      <body className={"flex flex-col min-h-screen w-full " + inter.className}>
+        <SpeedInsights />
+        <Navbar />
+        <GradientBackground />
+        <main className="grow w-full">{children}</main>
+        <Footer />
+        <Analytics />
+      </body>
+    </html>
   );
 }
