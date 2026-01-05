@@ -1,4 +1,3 @@
-import { initBotId } from "botid/client/core";
 import posthog from "posthog-js";
 
 posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
@@ -7,13 +6,4 @@ posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
   defaults: "2025-05-24",
   capture_exceptions: true,
   debug: process.env.NODE_ENV === "development",
-});
-
-initBotId({
-  protect: [
-    {
-      path: "/api/contact",
-      method: "POST",
-    },
-  ],
 });

@@ -37,6 +37,9 @@ export default function ContactPage() {
     } catch (err: any) {
       setError(err.message || "Something went wrong");
       posthog.captureException(err);
+      posthog.capture("contact_failed", {
+        error: err.message || "Something went wrong",
+      });
     } finally {
       setLoading(false);
     }

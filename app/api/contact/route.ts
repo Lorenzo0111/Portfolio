@@ -1,5 +1,4 @@
 import { resend } from "@/lib/resend";
-import { checkBotId } from "botid/server";
 import { NextResponse } from "next/server";
 
 function sanitizeString(input: string, maxLength: number = 1000): string {
@@ -8,11 +7,6 @@ function sanitizeString(input: string, maxLength: number = 1000): string {
 
 export async function POST(req: Request) {
   try {
-    const verification = await checkBotId();
-
-    if (verification.isBot)
-      return NextResponse.json({ error: "Access denied" }, { status: 403 });
-
     const formData = await req.formData();
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
