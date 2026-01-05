@@ -34,7 +34,7 @@ export default function Navbar() {
         <div className="flex items-center md:absolute right-0 gap-4">
           <Link
             className="hover:text-primary"
-            href="mailto:hello@lorenzo0111.me"
+            href="/contact"
             aria-label="Email"
             onClick={() => handleSocialClick("email")}
           >
