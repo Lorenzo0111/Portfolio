@@ -13,7 +13,10 @@ export async function POST(req: Request) {
     if (verification.isBot)
       return NextResponse.json({ error: "Access denied" }, { status: 403 });
 
-    const { name, email, body } = await req.json();
+    const formData = await req.formData();
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const body = formData.get("body") as string;
 
     if (!name || !email || !body)
       return NextResponse.json(

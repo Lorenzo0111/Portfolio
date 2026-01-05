@@ -20,19 +20,11 @@ export default function ContactPage() {
     posthog.capture("contact_submitted");
 
     const formData = new FormData(e.currentTarget);
-    const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      body: formData.get("body"),
-    };
 
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+        body: formData,
       });
 
       if (!res.ok) {
@@ -44,6 +36,7 @@ export default function ContactPage() {
       (e.target as HTMLFormElement).reset();
     } catch (err: any) {
       setError(err.message || "Something went wrong");
+      posthog.captureException(err);
     } finally {
       setLoading(false);
     }
