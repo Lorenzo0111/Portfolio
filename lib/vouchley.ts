@@ -9,6 +9,7 @@ export type VouchleyResponse = {
 export type VouchleyReview = {
   id: string;
   description: string;
+  pinned?: boolean;
   rating: number;
   message: string;
   time_sent: string;

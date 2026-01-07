@@ -5,6 +5,7 @@ import { useFetcher } from "@/utils/fetcher";
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 import posthog from "posthog-js";
+import { useMemo } from "react";
 import { ReviewCard, StarRating } from "./review";
 
 export default function Reviews({ embed }: { embed?: boolean }) {
@@ -16,14 +17,35 @@ export default function Reviews({ embed }: { embed?: boolean }) {
     }
   );
 
+  const shownReviews = useMemo(() => {
+    if (embed) {
+      const pinned = data?.reviews.filter((review) => review.pinned) ?? [];
+      if (pinned.length >= 3) return pinned;
+
+      const sorted =
+        data?.reviews
+          .filter((review) => !review.pinned)
+          .sort((a, b) => b.time_sent.localeCompare(a.time_sent))
+          .slice(0, 3 - pinned.length) ?? [];
+
+      return [...pinned, ...sorted];
+    }
+
+    return (
+      data?.reviews.sort((a, b) => b.time_sent.localeCompare(a.time_sent)) ?? []
+    );
+  }, [embed, data]);
+
   if (isLoading) {
     return (
       <div
         id="reviews"
-        className="mx-auto text-center w-[90%] px-8 justify-center"
+        className={`mx-auto text-center justify-center my-10 ${
+          embed ? "w-full" : "w-[90%]"
+        }`}
       >
         <h1 className="font-extrabold mt-4 text-gradient text-3xl">
-          Client Reviews
+          What they say about me
         </h1>
         <span className="mt-6 loader"></span>
       </div>
@@ -34,10 +56,12 @@ export default function Reviews({ embed }: { embed?: boolean }) {
     return (
       <div
         id="reviews"
-        className="mx-auto text-center w-[90%] px-8 justify-center"
+        className={`mx-auto text-center justify-center my-10 ${
+          embed ? "w-full" : "w-[90%]"
+        }`}
       >
         <h1 className="font-extrabold mt-4 text-gradient text-3xl">
-          Client Reviews
+          What they say about me
         </h1>
         <p className="text-red-400 mt-4">Failed to load reviews</p>
       </div>
@@ -73,18 +97,15 @@ export default function Reviews({ embed }: { embed?: boolean }) {
         </div>
       )}
 
-      {data.reviews.length > 0 ? (
+      {shownReviews.length > 0 ? (
         <div
           className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8${
             embed ? " grid-rows-1" : ""
           }`}
         >
-          {data.reviews
-            .sort((a, b) => b.time_sent.localeCompare(a.time_sent))
-            .slice(0, embed ? 3 : undefined)
-            .map((review) => (
-              <ReviewCard key={review.id} review={review} />
-            ))}
+          {shownReviews.map((review) => (
+            <ReviewCard key={review.id} review={review} />
+          ))}
         </div>
       ) : (
         <p className="text-gray-400 mt-8">No reviews available</p>

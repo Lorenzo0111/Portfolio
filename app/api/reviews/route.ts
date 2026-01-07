@@ -30,7 +30,17 @@ export async function GET() {
     return NextResponse.json({ error: "Failed to fetch reviews" });
   }
 
-  return NextResponse.json(data.user, {
+  const pinned = process.env.VOUCHLEY_PINNED_REVIEWS?.split(",") ?? [];
+
+  const user = {
+    ...data.user,
+    reviews: data.user.reviews.map((review) => ({
+      ...review,
+      pinned: pinned.includes(review.id),
+    })),
+  };
+
+  return NextResponse.json(user, {
     headers: {
       "Cache-Control": "public, max-age=3600, stale-while-revalidate=3600",
     },
