@@ -49,7 +49,11 @@ export default function Project({
           {project.name}
         </h1>
         <p className="text-ellipsis w-full text-gray-400 overflow-hidden whitespace-nowrap">
-          {project.category}
+          {project.category
+            .split(",")
+            .map((c) => c.trim())
+            .filter(Boolean)
+            .join(" · ")}
         </p>
       </div>
     </Card>

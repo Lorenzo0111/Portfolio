@@ -1,3 +1,4 @@
+import { parseCategoryCsv } from "@/lib/categories";
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
@@ -6,22 +7,19 @@ export async function GET(request: Request) {
     select: {
       category: true,
     },
-    orderBy: {
-      category: "asc",
-    },
     cacheStrategy: {
       ttl: 60 * 60 * 24,
       tags: ["projects"],
     },
   });
 
-  const categories: string[] = [];
-
+  const categorySet = new Set<string>();
   for (const project of projects) {
-    if (!categories.includes(project.category)) {
-      categories.push(project.category);
+    for (const token of parseCategoryCsv(project.category)) {
+      categorySet.add(token);
     }
   }
+  const categories = Array.from(categorySet).sort();
 
   return NextResponse.json(categories, {
     headers: {

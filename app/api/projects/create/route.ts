@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { normalizeCategoryCsv, parseCategoryCsv } from "@/lib/categories";
 import prisma from "@/lib/prismadb";
 import supabase from "@/lib/supabase";
 import { headers } from "next/headers";
@@ -35,6 +36,20 @@ export async function POST(request: Request) {
     });
   }
 
+  const categoryTokens = parseCategoryCsv(category);
+  if (categoryTokens.length === 0) {
+    return new Response(
+      JSON.stringify({ error: "At least one category is required" }),
+      {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+  }
+
+  const normalizedCategory = normalizeCategoryCsv(category);
   const newName = name.trim();
   let project = await prisma.project.findFirst({
     where: {
@@ -59,7 +74,7 @@ export async function POST(request: Request) {
     data: {
       name: newName,
       description,
-      category,
+      category: normalizedCategory,
       link,
       youtube,
     },
@@ -85,7 +100,7 @@ export async function POST(request: Request) {
         { error: error.message },
         {
           status: 500,
-        }
+        },
       );
     }
 

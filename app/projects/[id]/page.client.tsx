@@ -1,6 +1,7 @@
 "use client";
 
 import type { Project } from "@/generated/client";
+import { parseCategoryCsv } from "@/lib/categories";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
@@ -30,8 +31,20 @@ function BasePage({ children }: { children: React.ReactNode }) {
 export default function ProjectPage({ project }: { project: Project }) {
   return (
     <BasePage>
-      <h1 className="font-bold text-4xl">{project.name}</h1>
-      <p className="text-gray-400">{project.description}</p>
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-col flex-wrap gap-3">
+          {parseCategoryCsv(project.category).map((category) => (
+            <span
+              key={category}
+              className="px-3 py-1 w-fit text-xs font-medium uppercase tracking-wider text-primary border border-primary/20 bg-primary/10 rounded-full"
+            >
+              {category}
+            </span>
+          ))}
+          <h1 className="font-bold text-4xl">{project.name}</h1>
+        </div>
+        <p className="text-gray-400">{project.description}</p>
+      </div>
       {project.link && (
         <div className="flex w-full gap-4">
           <Link

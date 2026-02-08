@@ -1,5 +1,5 @@
-import prisma from "@/lib/prismadb";
 import type { Prisma } from "@/generated/client";
+import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -13,9 +13,7 @@ export async function GET(request: Request) {
   let filterObject: Prisma.ProjectWhereInput = {};
   if (filter && filter !== "*") {
     filterObject = {
-      category: {
-        contains: filter as string | undefined,
-      },
+      OR: [{ category: filter }, { category: { contains: filter } }],
     };
   }
 
