@@ -83,7 +83,7 @@ export default function Reviews({ embed }: { embed?: boolean }) {
         <div className="flex items-center justify-center gap-2 mt-4 mb-8">
           <StarRating rating={Math.round(parseFloat(data.average_rating))} />
           <Link
-            href="https://www.vouchley.com/user/lorenzo0111"
+            href="https://vouchley.com/user/lorenzo0111"
             target="_blank"
             className="text-md italic text-primary hover:text-primary/80 transition-colors underline"
             onClick={() =>

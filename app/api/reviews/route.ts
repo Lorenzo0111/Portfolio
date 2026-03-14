@@ -6,7 +6,7 @@ export async function GET() {
   if (!apiKey) return NextResponse.json({ error: "API key not found" });
 
   const response = await fetch(
-    "https://www.vouchley.com/api/v1/user?id=a84c1044-0371-4999-92db-3770429dc6ea",
+    "https://vouchley.com/api/v1/user?id=a84c1044-0371-4999-92db-3770429dc6ea",
     {
       headers: {
         Authorization: `Bearer ${apiKey}`,
