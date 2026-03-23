@@ -9,7 +9,11 @@ import { useEffect, useState } from "react";
 import Project from "./project";
 
 const Marquee = dynamic(() => import("react-fast-marquee"), {
-  loading: () => <span className="mt-6 loader"></span>,
+  loading: () => (
+    <div className="flex w-full items-center justify-center py-6">
+      <span className="loader"></span>
+    </div>
+  ),
 });
 
 export default function Projects({ embed }: { embed?: boolean }) {
@@ -73,7 +77,11 @@ export default function Projects({ embed }: { embed?: boolean }) {
         </p>
       </header>
 
-      {loading && <span className="mt-6 loader"></span>}
+      {loading && (
+        <div className="flex w-full items-center justify-center py-6">
+          <span className="loader"></span>
+        </div>
+      )}
 
       {projects ? (
         <div className="flex flex-col gap-6 mt-8">
@@ -143,7 +151,9 @@ export default function Projects({ embed }: { embed?: boolean }) {
           ) : null}
         </div>
       ) : (
-        <span className="mt-6 loader"></span>
+        <div className="flex w-full items-center justify-center py-6">
+          <span className="loader"></span>
+        </div>
       )}
     </div>
   );

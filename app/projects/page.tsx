@@ -10,7 +10,13 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <div>
-      <Suspense fallback={<span className="mt-6 loader"></span>}>
+      <Suspense
+        fallback={
+          <div className="flex min-h-[60vh] items-center justify-center">
+            <span className="loader"></span>
+          </div>
+        }
+      >
         <Projects />
       </Suspense>
     </div>
