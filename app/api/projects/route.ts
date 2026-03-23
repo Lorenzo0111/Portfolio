@@ -10,7 +10,9 @@ export async function GET(request: Request) {
   let limitNum = -1;
   if (limit && !isNaN(Number(limit))) limitNum = Number(limit);
 
-  let filterObject: Prisma.ProjectWhereInput = {};
+  let filterObject: Prisma.ProjectWhereInput = {
+    hidden: false,
+  };
   if (filter && filter !== "*") {
     filterObject = {
       OR: [{ category: filter }, { category: { contains: filter } }],
@@ -18,9 +20,7 @@ export async function GET(request: Request) {
   }
 
   const projects = await prisma.project.findMany({
-    orderBy: {
-      category: "asc",
-    },
+    orderBy: [{ top: "desc" }, { category: "asc" }, { order: "desc" }],
     where: filterObject,
     take: limitNum > -1 ? limitNum : undefined,
     cacheStrategy: {

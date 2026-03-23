@@ -40,6 +40,7 @@ export default function Hero() {
           fill
           priority
           draggable={false}
+          sizes="(max-width: 1023px) 256px, 384px"
           className="object-cover rounded-full border-4 border-white/5 shadow-2xl"
         />
       </div>

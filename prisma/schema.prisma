@@ -95,6 +95,9 @@ model Project {
   youtube     String?
   category    String
   link        String?
+  hidden      Boolean  @default(false)
+  order       Int      @default(0)
+  top         Boolean  @default(false)
   updatedAt   DateTime @default(now()) @updatedAt
 
   @@index([category])

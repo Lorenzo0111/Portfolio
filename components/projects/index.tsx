@@ -3,6 +3,7 @@
 import type { Project as ProjectType } from "@/generated/client";
 import { useFetcher } from "@/utils/fetcher";
 import dynamic from "next/dynamic";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import posthog from "posthog-js";
 import { useEffect, useState } from "react";
 import Project from "./project";
@@ -14,85 +15,107 @@ const Marquee = dynamic(() => import("react-fast-marquee"), {
 export default function Projects({ embed }: { embed?: boolean }) {
   const { data: categories } = useFetcher("/api/categories");
   const { data: projects } = useFetcher("/api/projects");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [filter, setFilter] = useState<string>("*");
   const [filtered, setFiltered] = useState<ProjectType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (projects) {
-      setFiltered(projects);
-      runFilter(filter);
-    }
+    if (!projects) return;
+
+    const categoryParam = searchParams.get("category") || "*";
+
+    setFilter(categoryParam);
+    setFiltered(projects);
+    runFilter(categoryParam, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projects]);
 
-  async function runFilter(category: string) {
+  function syncFilterParams(category: string) {
+    if (embed) return;
+    const params = new URLSearchParams(searchParams.toString());
+    if (category === "*") params.delete("category");
+    else params.set("category", category);
+
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname);
+  }
+
+  async function runFilter(category: string, persist = true) {
     posthog.capture("filter_projects", {
       category,
     });
 
-    if (category === "*") {
-      setFilter("*");
-    } else {
-      setFilter(category);
-    }
-
+    setFilter(category);
+    if (persist) syncFilterParams(category);
     setLoading(true);
 
-    const projects = await fetch(
-      "/api/projects?filter=" + encodeURIComponent(category)
+    const fetchedProjects = await fetch(
+      "/api/projects?filter=" + encodeURIComponent(category),
     ).then((res) => res.json());
 
-    setFiltered(projects);
+    setFiltered(fetchedProjects);
     setLoading(false);
   }
 
   if (embed && (!projects || loading)) return null;
 
   return (
-    <div
-      id="projects"
-      className="mx-auto text-center w-full md:w-[90%] px-8 justify-center"
-    >
-      <h1 className="font-extrabold mt-4 text-gradient text-3xl">
-        My projects
-      </h1>
-      <p className="text-lg">
-        Select a category to view all the projects. Click on a project to get
-        images and infos
-      </p>
+    <div id="projects" className="mx-auto w-full md:w-[90%] px-6 md:px-8 pb-10">
+      <header className="mx-auto max-w-5xl text-left">
+        <h1 className="font-extrabold mt-4 text-gradient text-4xl md:text-5xl">
+          Projects
+        </h1>
+        <p className="text-base md:text-lg text-white/75 mt-3 max-w-3xl">
+          Explore some of my best projects. Select one to view more details.
+        </p>
+      </header>
+
       {loading && <span className="mt-6 loader"></span>}
+
       {projects ? (
-        <div className="flex flex-col w-full justify-between">
-          <ul className="flex mx-auto text-center mt-2 mb-4 w-full md:w-fit gap-2 justify-center">
-            <li>
-              <button
-                onClick={(e) => runFilter("*")}
-                className={
-                  "rounded-lg bg-white/5 px-6 text-white backdrop-blur-sm border border-white/10 hover:border-primary transition-all duration-200 flex h-10 w-full items-center justify-center " +
-                  (filter === "*" ? "bg-primary!" : "")
-                }
-              >
-                All
-              </button>
-            </li>
-            {categories &&
-              categories.map((category: string) => {
-                return (
-                  <li key={category}>
+        <div className="flex flex-col gap-6 mt-8">
+          <section className="mx-auto max-w-5xl w-full rounded-2xl border border-white/10 bg-white/3 backdrop-blur-sm p-4 md:p-5">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => runFilter("*")}
+                  className={
+                    "rounded-lg px-4 md:px-5 text-sm md:text-base text-white border border-white/10 hover:border-primary transition-all duration-200 h-10 " +
+                    (filter === "*"
+                      ? "bg-primary text-black border-primary"
+                      : "bg-white/5")
+                  }
+                >
+                  All categories
+                </button>
+                {categories &&
+                  categories.map((category: string) => (
                     <button
+                      key={category}
                       onClick={() => runFilter(category)}
                       className={
-                        "rounded-lg bg-white/5 px-6 text-white backdrop-blur-sm border border-white/10 hover:border-primary transition-all duration-200 flex h-10 w-full items-center justify-center " +
-                        (filter === category ? "bg-primary!" : "")
+                        "rounded-lg px-4 md:px-5 text-sm md:text-base text-white border border-white/10 hover:border-primary transition-all duration-200 h-10 " +
+                        (filter === category
+                          ? "bg-primary text-black border-primary"
+                          : "bg-white/5")
                       }
                     >
                       {category}
                     </button>
-                  </li>
-                );
-              })}
-          </ul>
+                  ))}
+              </div>
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <p className="text-sm text-white/60">
+                  {filtered.length} project{filtered.length === 1 ? "" : "s"}{" "}
+                  shown
+                </p>
+              </div>
+            </div>
+          </section>
+
           {filtered ? (
             embed ? (
               <Marquee
@@ -106,11 +129,16 @@ export default function Projects({ embed }: { embed?: boolean }) {
                 ))}
               </Marquee>
             ) : (
-              <div className="flex text-center gap-8 w-full justify-center content-center items-center flex-wrap">
+              <section className="mx-auto max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-5">
                 {filtered.map((project: ProjectType) => (
                   <Project key={project.id} project={project} />
                 ))}
-              </div>
+                {!loading && filtered.length === 0 && (
+                  <div className="rounded-xl border border-dashed border-white/20 p-8 text-center text-white/70">
+                    No projects match these filters. Try another category.
+                  </div>
+                )}
+              </section>
             )
           ) : null}
         </div>

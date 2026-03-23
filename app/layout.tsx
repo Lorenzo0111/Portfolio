@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={"flex flex-col min-h-screen w-full " + inter.className}>
         <SpeedInsights />
         <Navbar />

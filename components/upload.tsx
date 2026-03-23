@@ -266,6 +266,7 @@ export default function Upload() {
                       src={URL.createObjectURL(file)}
                       alt="Preview"
                       fill
+                      sizes="(max-width: 1023px) 33vw, 340px"
                       className="object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                     <button
