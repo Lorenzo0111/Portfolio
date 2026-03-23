@@ -1,5 +1,6 @@
 import Projects from "@/components/projects";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <div>
-      <Projects />
+      <Suspense fallback={<span className="mt-6 loader"></span>}>
+        <Projects />
+      </Suspense>
     </div>
   );
 }
