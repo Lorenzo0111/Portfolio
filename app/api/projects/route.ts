@@ -14,13 +14,14 @@ export async function GET(request: Request) {
     hidden: false,
   };
   if (filter && filter !== "*") {
-    filterObject = {
-      OR: [{ category: filter }, { category: { contains: filter } }],
-    };
+    filterObject.OR = [
+      { category: filter },
+      { category: { contains: filter } },
+    ];
   }
 
   const projects = await prisma.project.findMany({
-    orderBy: [{ top: "desc" }, { category: "asc" }, { order: "desc" }],
+    orderBy: [{ top: "desc" }, { order: "desc" }],
     where: filterObject,
     take: limitNum > -1 ? limitNum : undefined,
     cacheStrategy: {

@@ -1,17 +1,23 @@
 import prisma from "@/lib/prismadb";
+import { normalizeName } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
 export async function GET(
-  request: Request,
-  props: { params: Promise<{ id: string }> }
+  _request: Request,
+  props: { params: Promise<{ id: string }> },
 ) {
   const params = await props.params;
   const { id } = params;
+  const normalizedId = normalizeName(id);
 
   try {
     const project = await prisma.project.findFirst({
       where: {
-        id,
+        OR: [
+          { id: normalizedId },
+          { name: { equals: normalizedId, mode: "insensitive" } },
+          { name: { equals: id, mode: "insensitive" } },
+        ],
       },
       cacheStrategy: {
         ttl: 60 * 60 * 24,

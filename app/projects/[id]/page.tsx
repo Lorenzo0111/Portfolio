@@ -15,7 +15,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project: Project | null = await fetch(
     `${
       process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
-    }/api/projects/${id}`
+    }/api/projects/${id}`,
+    {
+      next: {
+        revalidate: 60 * 60 * 24,
+        tags: [`project_${id}`],
+      },
+    },
   ).then((res) => res.json());
 
   if (!project) return notFound();
@@ -43,7 +49,7 @@ export default async function ProjectPage({ params }: Props) {
         revalidate: 3600,
         tags: [`project_${id}`],
       },
-    }
+    },
   )
     .then(async (res) => {
       if (!res.ok) return null;

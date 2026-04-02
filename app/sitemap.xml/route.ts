@@ -1,4 +1,5 @@
 import prisma from "@/lib/prismadb";
+import { nameAsId } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -6,7 +7,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://lorenzo0111.me";
   const buildInfo = await fetch(`${baseUrl}/api/build-info`).then((res) =>
-    res.json()
+    res.json(),
   );
   const buildTimestamp = new Date(buildInfo.buildTimestamp);
 
@@ -41,17 +42,11 @@ export async function GET() {
       changeFrequency: "yearly",
       priority: 0.3,
     },
-    {
-      url: `${baseUrl}/account`,
-      lastModified: buildTimestamp,
-      changeFrequency: "monthly",
-      priority: 0.4,
-    },
   ];
 
   const projects = await prisma.project.findMany({
     select: {
-      id: true,
+      name: true,
       updatedAt: true,
     },
     cacheStrategy: {
@@ -61,7 +56,7 @@ export async function GET() {
   });
 
   const projectRoutes = projects.map((project) => ({
-    url: `${baseUrl}/projects/${project.id}`,
+    url: `${baseUrl}/projects/${nameAsId(project.name)}`,
     lastModified: project.updatedAt,
     changeFrequency: "monthly",
     priority: 0.7,
@@ -78,7 +73,7 @@ ${allRoutes
     <lastmod>${route.lastModified.toISOString()}</lastmod>
     <changefreq>${route.changeFrequency}</changefreq>
     <priority>${route.priority}</priority>
-  </url>`
+  </url>`,
   )
   .join("\n")}
 </urlset>`;
