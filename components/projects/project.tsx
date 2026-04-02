@@ -2,6 +2,7 @@
 
 import type { Project } from "@/generated/client";
 import { parseCategoryCsv } from "@/lib/categories";
+import { nameAsId } from "@/lib/utils";
 import Image from "next/image";
 import posthog from "posthog-js";
 import { Card } from "../ui/card";
@@ -24,7 +25,7 @@ export default function Project({
   return (
     <Card
       variant="glass"
-      href={"/projects/" + project.id}
+      href={"/projects/" + nameAsId(project.name)}
       className={
         "relative p-0 rounded-2xl " +
         (embed

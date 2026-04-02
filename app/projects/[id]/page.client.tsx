@@ -27,6 +27,7 @@ function getHeroSrc(project: Project) {
 
 export default function ProjectPage({ project }: { project: Project }) {
   const heroSrc = getHeroSrc(project);
+  const descriptionText = project.description?.replaceAll("\\n", "\n") ?? "";
 
   return (
     <main className="w-full">
@@ -79,8 +80,8 @@ export default function ProjectPage({ project }: { project: Project }) {
                 {project.name}
               </h1>
 
-              <p className="text-white/70 mt-3 text-base md:text-lg">
-                {project.description}
+              <p className="text-white/70 mt-3 text-base md:text-lg whitespace-pre-line">
+                {descriptionText}
               </p>
             </div>
 

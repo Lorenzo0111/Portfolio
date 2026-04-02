@@ -20,7 +20,7 @@ export async function GET(request: Request) {
   }
 
   const projects = await prisma.project.findMany({
-    orderBy: [{ top: "desc" }, { category: "asc" }, { order: "desc" }],
+    orderBy: [{ top: "desc" }, { order: "desc" }],
     where: filterObject,
     take: limitNum > -1 ? limitNum : undefined,
     cacheStrategy: {
