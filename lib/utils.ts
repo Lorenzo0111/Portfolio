@@ -1,7 +1,10 @@
 export function normalizeName(name: string) {
-  return name.replaceAll("-", " ").toLowerCase();
+  return name
+    .trim()
+    .replace(/[\s-]+/g, " ")
+    .toLowerCase();
 }
 
 export function nameAsId(name: string) {
-  return name.replaceAll(" ", "-").toLowerCase();
+  return encodeURIComponent(normalizeName(name).replace(/ /g, "-"));
 }

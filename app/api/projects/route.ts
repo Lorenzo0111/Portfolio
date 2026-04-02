@@ -14,9 +14,10 @@ export async function GET(request: Request) {
     hidden: false,
   };
   if (filter && filter !== "*") {
-    filterObject = {
-      OR: [{ category: filter }, { category: { contains: filter } }],
-    };
+    filterObject.OR = [
+      { category: filter },
+      { category: { contains: filter } },
+    ];
   }
 
   const projects = await prisma.project.findMany({
