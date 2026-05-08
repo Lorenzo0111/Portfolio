@@ -24,12 +24,6 @@ export function ReviewCard({ review }: { review: VouchleyReview }) {
   const characterLimit = 150;
   const shouldTruncate = review.message.length > characterLimit;
 
-  const formattedDate = new Date(review.time_sent).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   const displayMessage =
     isExpanded || !shouldTruncate
       ? review.message
@@ -78,10 +72,6 @@ export function ReviewCard({ review }: { review: VouchleyReview }) {
             </svg>
           </div>
         )}
-
-        <span className="text-xs text-gray-400 mt-auto ml-auto">
-          {formattedDate}
-        </span>
       </div>
     </Card>
   );
