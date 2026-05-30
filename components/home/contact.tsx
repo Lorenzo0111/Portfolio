@@ -14,7 +14,7 @@ export default function Contact() {
   return (
     <div
       id="contact"
-      className="mt-20 p-12 rounded-3xl bg-linear-to-r from-primary/20 to-purple-500/20 border border-white/10 text-center relative overflow-hidden"
+      className="mt-20 p-12 rounded-3xl bg-linear-to-r from-primary/20 to-card/20 text-center relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-card/40 backdrop-blur-sm -z-10" />
       <h3 className="text-3xl md:text-4xl font-bold mb-6">

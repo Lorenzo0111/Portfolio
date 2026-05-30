@@ -33,7 +33,6 @@ export default function Hero() {
       </div>
 
       <div className="relative w-64 h-64 lg:w-96 lg:h-96 shrink-0">
-        <div className="absolute inset-0 bg-linear-to-tr from-primary to-purple-500 rounded-full blur-2xl opacity-20 animate-pulse" />
         <Image
           src={iconImage}
           alt="Lorenzo"
