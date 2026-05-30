@@ -1,6 +1,6 @@
+import { DriveFile } from "@/generated/client";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prismadb";
-import type { DriveFile } from "@/generated/client";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -20,23 +20,12 @@ export async function GET(_request: Request) {
 
   let files: DriveFile[] = [];
 
-  if (session.user.role !== "admin") {
-    files = await prisma.driveFile.findMany({
-      cacheStrategy: {
-        ttl: 60,
-        swr: 30,
-        tags: ["drive_files"],
-      },
-    });
+  if (session.user.role === "admin") {
+    files = await prisma.driveFile.findMany();
   } else {
     files = await prisma.driveFile.findMany({
       where: {
         userId: session.user.id,
-      },
-      cacheStrategy: {
-        ttl: 60,
-        swr: 30,
-        tags: ["drive_files"],
       },
     });
   }

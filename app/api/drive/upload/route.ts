@@ -5,12 +5,6 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const form = await request.formData();
-  const file = form.get("file") as File;
-  const name = form.get("name") as string;
-  const description = form.get("description") as string;
-  const ownerId = form.get("ownerId") as string;
-
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -24,7 +18,13 @@ export async function POST(request: Request) {
     });
   }
 
-  if (!file || !name || !description) {
+  const form = await request.formData();
+  const file = form.get("file") as File;
+  const name = form.get("name") as string;
+  const description = form.get("description") as string;
+  const ownerId = form.get("ownerId") as string;
+
+  if (!(file instanceof File) || !name || !description) {
     return new Response(JSON.stringify({ error: "Missing parameters" }), {
       status: 400,
       headers: {
@@ -60,12 +60,6 @@ export async function POST(request: Request) {
     },
   });
 
-  try {
-    await prisma.$accelerate.invalidate({
-      tags: ["drive_files"],
-    });
-  } catch {}
-
   const { error } = await supabase.storage
     .from("drive")
     .upload(driveFile.id, file, {
@@ -77,7 +71,7 @@ export async function POST(request: Request) {
       { error: error.message },
       {
         status: 500,
-      }
+      },
     );
   }
 
@@ -92,12 +86,6 @@ export async function POST(request: Request) {
       fileUrl: url,
     },
   });
-
-  try {
-    await prisma.$accelerate.invalidate({
-      tags: ["drive_files"],
-    });
-  } catch {}
 
   return NextResponse.json({
     id: driveFile.id,

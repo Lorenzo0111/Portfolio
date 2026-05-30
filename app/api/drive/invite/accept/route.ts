@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { id } = body;
 
-    if (!id) {
+    if (!id || typeof id !== "string") {
       return new Response(JSON.stringify({ error: "Missing parameters" }), {
         status: 400,
         headers: {
@@ -32,12 +32,7 @@ export async function POST(request: Request) {
 
     const file = await prisma.driveFile.findUnique({
       where: {
-        id: id as string,
-      },
-      cacheStrategy: {
-        ttl: 60,
-        swr: 30,
-        tags: ["drive_files"],
+        id,
       },
     });
 
@@ -50,20 +45,24 @@ export async function POST(request: Request) {
       });
     }
 
-    await prisma.driveFile.update({
+    const result = await prisma.driveFile.updateMany({
       where: {
         id: file.id,
+        userId: null,
       },
       data: {
         userId: session.user.id,
       },
     });
 
-    try {
-      await prisma.$accelerate.invalidate({
-        tags: ["drive_files"],
+    if (result.count !== 1) {
+      return new Response(JSON.stringify({ error: "Invite already claimed" }), {
+        status: 409,
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-    } catch {}
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

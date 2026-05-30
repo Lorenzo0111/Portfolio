@@ -1,42 +1,41 @@
 import { resend } from "@/lib/resend";
 import { NextResponse } from "next/server";
+import z from "zod";
 
-function sanitizeString(input: string, maxLength: number = 1000): string {
-  return input.trim().substring(0, maxLength).replace(/[<>]/g, "");
-}
+const bodySchema = z.object({
+  name: z
+    .string()
+    .min(1)
+    .max(100)
+    .transform((str) => str.replace(/<[^>]*>?/gm, "").trim()),
+  email: z.email(),
+  body: z.string().min(1).max(5000),
+});
 
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const body = formData.get("body") as string;
+    const body = bodySchema.safeParse({
+      name: formData.get("name"),
+      email: formData.get("email"),
+      body: formData.get("body"),
+    });
 
-    if (!name || !email || !body)
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-
-    const sanitizedName = sanitizeString(name, 100);
-    const sanitizedEmail = sanitizeString(email, 254);
-    const sanitizedBody = sanitizeString(body, 5000);
-
-    if (!sanitizedName || !sanitizedEmail || !sanitizedBody)
+    if (!body.success)
       return NextResponse.json(
         { error: "Invalid input data" },
-        { status: 400 }
+        { status: 400 },
       );
 
     const { error } = await resend.emails.send({
       to: [process.env.SUPPORT_EMAIL!],
-      replyTo: sanitizedEmail,
+      replyTo: body.data.email,
       template: {
         id: "contact-form",
         variables: {
-          TARGET_NAME: sanitizedName,
-          TARGET_EMAIL: sanitizedEmail,
-          TARGET_BODY: sanitizedBody,
+          TARGET_NAME: body.data.name,
+          TARGET_EMAIL: body.data.email,
+          TARGET_BODY: body.data.body,
         },
       },
     });
@@ -45,7 +44,7 @@ export async function POST(req: Request) {
       console.error("Error sending email:", error);
       return NextResponse.json(
         { error: "Failed to send email" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -54,7 +53,7 @@ export async function POST(req: Request) {
     console.error("Error sending email:", error);
     return NextResponse.json(
       { error: "Failed to send email" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -19,13 +19,14 @@
     "better-auth": "^1.6.11",
     "lucide-react": "^1.16.0",
     "next": "16.2.6",
-    "posthog-js": "^1.376.0",
+    "posthog-js": "^1.376.2",
     "react": "19.2.6",
     "react-dom": "19.2.6",
     "react-fast-marquee": "^1.6.5",
     "resend": "^6.12.4",
     "sharp": "^0.34.5",
-    "swr": "^2.4.1"
+    "swr": "^2.4.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.0",

@@ -36,7 +36,7 @@ importers:
         specifier: 16.2.6
         version: 16.2.6(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       posthog-js:
-        specifier: ^1.376.0
+        specifier: ^1.376.2
         version: 1.376.2
       react:
         specifier: 19.2.6
@@ -56,6 +56,9 @@ importers:
       swr:
         specifier: ^2.4.1
         version: 2.4.1(react@19.2.6)
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.3.0

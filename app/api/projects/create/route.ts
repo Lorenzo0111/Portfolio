@@ -6,14 +6,6 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const form = await request.formData();
-  const files = form.getAll("file") as File[];
-  const name = form.get("name") as string;
-  const description = form.get("description") as string;
-  const category = form.get("category") as string;
-  const link = form.get("link") as string;
-  const youtube = form.get("youtube") as string;
-
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -26,6 +18,14 @@ export async function POST(request: Request) {
       },
     });
   }
+
+  const form = await request.formData();
+  const files = form.getAll("file") as File[];
+  const name = form.get("name") as string;
+  const description = form.get("description") as string;
+  const category = form.get("category") as string;
+  const link = form.get("link") as string;
+  const youtube = form.get("youtube") as string;
 
   if (!files || files.length === 0 || !name || !description || !category) {
     return new Response(JSON.stringify({ error: "Missing parameters" }), {

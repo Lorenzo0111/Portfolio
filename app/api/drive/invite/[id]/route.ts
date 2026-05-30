@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   _request: Request,
-  props: { params: Promise<{ id: string }> }
+  props: { params: Promise<{ id: string }> },
 ) {
   const params = await props.params;
   const session = await auth.api.getSession({
@@ -27,11 +27,6 @@ export async function GET(
     const file = await prisma.driveFile.findUnique({
       where: {
         id: id as string,
-      },
-      cacheStrategy: {
-        ttl: 60,
-        swr: 30,
-        tags: ["drive_files"],
       },
     });
 
