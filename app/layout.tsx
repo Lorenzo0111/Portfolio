@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata: Metadata = {
   title: {
@@ -42,7 +43,9 @@ export default function RootLayout({
         <SpeedInsights />
         <Navbar />
         <GradientBackground />
-        <main className="grow w-full">{children}</main>
+        <NuqsAdapter>
+          <main className="grow w-full">{children}</main>
+        </NuqsAdapter>
         <Footer />
         <Analytics />
       </body>

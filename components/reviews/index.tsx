@@ -14,7 +14,7 @@ export default function Reviews({ embed }: { embed?: boolean }) {
     {
       fetcher: (url) =>
         fetch(url, { cache: "force-cache" }).then((res) => res.json()),
-    }
+    },
   );
 
   const shownReviews = useMemo(() => {
@@ -75,8 +75,8 @@ export default function Reviews({ embed }: { embed?: boolean }) {
         embed ? "w-full" : "w-[90%]"
       }`}
     >
-      <h1 className="font-extrabold mt-4 text-gradient text-3xl">
-        What they say about me
+      <h1 className="text-4xl font-black tracking-tight text-white leading-tight">
+        What they say <span className="text-gradient font-black">about me</span>
       </h1>
 
       {data.average_rating && (

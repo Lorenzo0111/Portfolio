@@ -5,15 +5,16 @@ import { parseCategoryCsv } from "@/lib/categories";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Carousel = dynamic(() => import("@/components/carousel"), {
   loading: () => (
     <div className="flex flex-row w-full gap-4 animate-pulse">
-      <div className="h-full w-1/4 max-h-[400px] flex flex-col gap-4">
-        <div className="w-full h-[100px] bg-gray-800 rounded-xl" />
-        <div className="w-full h-[100px] bg-gray-800 rounded-xl" />
+      <div className="h-full w-1/4 max-h-100 flex flex-col gap-4">
+        <div className="w-full h-25 bg-gray-800 rounded-xl" />
+        <div className="w-full h-25 bg-gray-800 rounded-xl" />
       </div>
-      <div className="h-full w-3/4 max-h-[400px] bg-gray-800 rounded-xl" />
+      <div className="h-full w-3/4 max-h-100 bg-gray-800 rounded-xl" />
     </div>
   ),
   ssr: false,
@@ -28,16 +29,17 @@ function getHeroSrc(project: Project) {
 export default function ProjectPage({ project }: { project: Project }) {
   const heroSrc = getHeroSrc(project);
   const descriptionText = project.description?.replaceAll("\\n", "\n") ?? "";
+  const router = useRouter();
 
   return (
     <main className="w-full">
       <div className="mx-auto w-full max-w-5xl px-4 md:px-0 md:mt-10 pb-16 pt-6">
-        <Link
-          href="/projects"
+        <button
+          onClick={() => router.back()}
           className="text-primary/90 text-sm font-medium pb-4 block"
         >
           &larr; Back to projects
-        </Link>
+        </button>
 
         <section
           className={
