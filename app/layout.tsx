@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import Footer from "@/components/footer";
 import GradientBackground from "@/components/gradient-background";
 import Navbar from "@/components/navbar";
+import { I18nProvider } from "@/lib/i18n";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata, Viewport } from "next";
@@ -40,13 +41,15 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body className={"flex flex-col min-h-screen w-full " + inter.className}>
-        <SpeedInsights />
-        <Navbar />
-        <GradientBackground />
-        <NuqsAdapter>
-          <main className="grow w-full">{children}</main>
-        </NuqsAdapter>
-        <Footer />
+        <I18nProvider>
+          <SpeedInsights />
+          <Navbar />
+          <GradientBackground />
+          <NuqsAdapter>
+            <main className="grow w-full">{children}</main>
+          </NuqsAdapter>
+          <Footer />
+        </I18nProvider>
         <Analytics />
       </body>
     </html>

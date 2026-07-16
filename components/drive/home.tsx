@@ -2,11 +2,13 @@
 
 import { useFetcher } from "@/utils/fetcher";
 import type { DriveFile } from "@/generated/client";
+import { useI18n } from "@/lib/i18n";
 import { File } from "lucide-react";
 import Link from "next/link";
 import posthog from "posthog-js";
 
 export default function Drive() {
+  const { t } = useI18n();
   const { data } = useFetcher("/api/drive/files");
 
   const handleDownloadClick = (file: DriveFile) => {
@@ -20,10 +22,10 @@ export default function Drive() {
     <main>
       <div className="m-auto flex flex-col content-center items-center justify-center text-center md:w-4/5">
         <h1 className="text-4xl font-extrabold">
-          Welcome to your <span className="text-gradient">drive</span>
+          {t("drive.title")} <span className="text-gradient">{t("drive.highlight")}</span>
         </h1>
         <p className="mt-4 text-xl">
-          This is where you can download your past commissions.
+          {t("drive.description")}
         </p>
         <div className="flex w-full flex-col gap-2 mt-8">
           {data?.files?.map((file: DriveFile) => {
@@ -43,7 +45,7 @@ export default function Drive() {
                     href={file.fileUrl}
                     onClick={() => handleDownloadClick(file)}
                   >
-                    Download
+                    {t("drive.download")}
                   </Link>
                 )}
               </div>

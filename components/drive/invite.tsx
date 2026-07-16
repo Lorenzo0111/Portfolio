@@ -1,6 +1,7 @@
 "use client";
 
 import { useFetcher } from "@/utils/fetcher";
+import { useI18n } from "@/lib/i18n";
 import { AlertCircle, File, Loader2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import posthog from "posthog-js";
@@ -9,6 +10,7 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 
 export default function Invite() {
+  const { t } = useI18n();
   const { id } = useParams();
   const invite = useFetcher(id ? "/api/drive/invite/" + id : null);
   const router = useRouter();
@@ -29,14 +31,16 @@ export default function Invite() {
           <div className="flex justify-center mb-4 text-red-500">
             <AlertCircle size={48} />
           </div>
-          <h1 className="text-2xl font-semibold text-white mb-2">Error</h1>
+          <h1 className="text-2xl font-semibold text-white mb-2">
+            {t("drive.inviteError")}
+          </h1>
           <p className="text-gray-300 mb-6">{invite.data.error}</p>
           <Button
             variant="secondary"
             className="w-full"
             onClick={() => router.push("/")}
           >
-            Go Home
+            {t("drive.goHome")}
           </Button>
         </Card>
       </div>
@@ -72,10 +76,10 @@ export default function Invite() {
     <div className="flex justify-center items-center p-4">
       <Card className="w-full max-w-md p-6 sm:p-8 text-center">
         <h1 className="text-2xl font-semibold text-white">
-          You&apos;ve been invited
+          {t("drive.invited")}
         </h1>
         <p className="text-sm text-gray-300 mt-1 mb-6">
-          to join{" "}
+          {t("drive.toJoin")}{" "}
           <span className="font-medium text-white">{invite.data.name}</span>
         </p>
 
@@ -95,7 +99,7 @@ export default function Invite() {
 
         <Button className="w-full" onClick={handleAccept} disabled={accepting}>
           {accepting && <Loader2 className="animate-spin mr-2" size={16} />}
-          {accepting ? "Accepting..." : "Accept Invitation"}
+          {accepting ? t("drive.accepting") : t("drive.accept")}
         </Button>
       </Card>
     </div>

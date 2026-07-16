@@ -1,6 +1,7 @@
 "use client";
 
 import type { VouchleyReview } from "@/lib/vouchley";
+import { useI18n } from "@/lib/i18n";
 import { StarIcon } from "lucide-react";
 import { useState } from "react";
 import { Card } from "../ui/card";
@@ -20,6 +21,7 @@ export function StarRating({ rating }: { rating: number }) {
 }
 
 export function ReviewCard({ review }: { review: VouchleyReview }) {
+  const { t } = useI18n();
   const [isExpanded, setIsExpanded] = useState(false);
   const characterLimit = 150;
   const shouldTruncate = review.message.length > characterLimit;
@@ -53,7 +55,7 @@ export function ReviewCard({ review }: { review: VouchleyReview }) {
         {shouldTruncate && (
           <div className="flex items-center mt-2">
             <span className="text-xs text-blue-400 hover:text-blue-300 transition-colors">
-              {isExpanded ? "Show less" : "Read more"}
+              {isExpanded ? t("reviews.showLess") : t("reviews.readMore")}
             </span>
             <svg
               className={`w-3 h-3 ml-1 text-blue-400 transition-transform ${

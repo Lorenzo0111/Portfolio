@@ -1,6 +1,7 @@
 "use client";
 
 import type { VouchleyResponse } from "@/lib/vouchley";
+import { useI18n } from "@/lib/i18n";
 import { useFetcher } from "@/utils/fetcher";
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
@@ -9,6 +10,7 @@ import { useMemo } from "react";
 import { ReviewCard, StarRating } from "./review";
 
 export default function Reviews({ embed }: { embed?: boolean }) {
+  const { t } = useI18n();
   const { data, error, isLoading } = useFetcher<VouchleyResponse["user"]>(
     "/api/reviews",
     {
@@ -45,7 +47,7 @@ export default function Reviews({ embed }: { embed?: boolean }) {
         }`}
       >
         <h1 className="font-extrabold mt-4 text-gradient text-3xl">
-          What they say about me
+          {t("reviews.loadingTitle")}
         </h1>
         <span className="mt-6 loader"></span>
       </div>
@@ -61,9 +63,9 @@ export default function Reviews({ embed }: { embed?: boolean }) {
         }`}
       >
         <h1 className="font-extrabold mt-4 text-gradient text-3xl">
-          What they say about me
+          {t("reviews.loadingTitle")}
         </h1>
-        <p className="text-red-400 mt-4">Failed to load reviews</p>
+        <p className="text-red-400 mt-4">{t("reviews.failed")}</p>
       </div>
     );
   }
@@ -76,7 +78,10 @@ export default function Reviews({ embed }: { embed?: boolean }) {
       }`}
     >
       <h1 className="text-4xl font-black tracking-tight text-white leading-tight">
-        What they say <span className="text-gradient font-black">about me</span>
+        {t("reviews.titleStart")}{" "}
+        <span className="text-gradient font-black">
+          {t("reviews.titleHighlight")}
+        </span>
       </h1>
 
       {data.average_rating && (
@@ -92,7 +97,7 @@ export default function Reviews({ embed }: { embed?: boolean }) {
               })
             }
           >
-            {parseFloat(data.average_rating).toFixed(1)} on Vouchley
+            {parseFloat(data.average_rating).toFixed(1)} {t("reviews.onVouchley")}
           </Link>
         </div>
       )}
@@ -108,7 +113,7 @@ export default function Reviews({ embed }: { embed?: boolean }) {
           ))}
         </div>
       ) : (
-        <p className="text-gray-400 mt-8">No reviews available</p>
+        <p className="text-gray-400 mt-8">{t("reviews.empty")}</p>
       )}
 
       {embed && (
@@ -116,7 +121,7 @@ export default function Reviews({ embed }: { embed?: boolean }) {
           href="/reviews"
           className="text-primary hover:text-primary/80 transition-colors mt-8 flex justify-center items-center gap-2"
         >
-          View all
+          {t("reviews.viewAll")}
           <ArrowRightIcon className="w-4 h-4" />
         </Link>
       )}

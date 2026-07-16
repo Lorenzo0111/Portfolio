@@ -2,6 +2,7 @@
 
 import type { Project as ProjectType } from "@/generated/client";
 import { parseCategoryCsv } from "@/lib/categories";
+import { useI18n, type TranslationKey } from "@/lib/i18n";
 import { useFetcher } from "@/utils/fetcher";
 import {
   ArrowLeft,
@@ -48,6 +49,9 @@ function CategoryCard({
   actionLabel,
   onClick,
 }: CategoryCardProps) {
+  const { locale, t } = useI18n();
+  const plural =
+    locale === "it" ? (count === 1 ? "o" : "i") : count === 1 ? "" : "s";
   return (
     <button
       onClick={onClick}
@@ -59,7 +63,7 @@ function CategoryCard({
             <IconComponent className="h-6 w-6" />
           </div>
           <span className="rounded-full border border-white/15 bg-white/3 px-3.5 py-1 text-xs font-semibold tracking-wider text-white/50">
-            {count} project{count === 1 ? "" : "s"}
+            {t("projects.count", { count, plural })}
           </span>
         </div>
         <h2 className="text-2xl font-black text-white">{title}</h2>
@@ -74,54 +78,53 @@ function CategoryCard({
   );
 }
 
-const getCategoryDesign = (categoryName: string): CategoryDesign => {
+const getCategoryDesign = (
+  categoryName: string,
+  t: (key: TranslationKey, params?: Record<string, string | number>) => string,
+): CategoryDesign => {
   if (categoryName === "Web") {
     return {
       icon: Globe,
-      description:
-        "Modern, responsive websites built to deliver clean design, smooth navigation, and practical functionality.",
+      description: t("projects.categoryWeb"),
     };
   }
 
   if (categoryName === "Mobile") {
     return {
       icon: Smartphone,
-      description:
-        "Mobile applications designed to provide useful features, intuitive interfaces, and smooth user experiences.",
+      description: t("projects.categoryMobile"),
     };
   }
 
   if (categoryName === "Plugin") {
     return {
       icon: Gamepad2,
-      description:
-        "Custom Minecraft plugins that add new gameplay features, server tools, and personalized player experiences.",
+      description: t("projects.categoryPlugin"),
     };
   }
 
   if (categoryName === "Bot") {
     return {
       icon: Bot,
-      description:
-        "Custom bots that automate tasks, enhance communities, and add interactive features to Discord servers.",
+      description: t("projects.categoryBot"),
     };
   }
 
   if (categoryName === "*") {
     return {
       icon: Sparkles,
-      description:
-        "Examine everything! Browse my entire catalog of projects and creations without filters.",
+      description: t("projects.categoryAll"),
     };
   }
 
   return {
     icon: Code,
-    description: `Specialized projects and dynamic solutions developed under the ${categoryName} category.`,
+    description: t("projects.categoryFallback", { category: categoryName }),
   };
 };
 
 export default function Projects({ embed }: { embed?: boolean }) {
+  const { t } = useI18n();
   const { data: categories } = useFetcher("/api/categories");
   const { data: projects } = useFetcher("/api/projects");
   const [filter, setFilter] = useQueryState("category");
@@ -169,10 +172,10 @@ export default function Projects({ embed }: { embed?: boolean }) {
       >
         <header className="mx-auto max-w-5xl text-left">
           <h1 className="font-extrabold mt-4 text-gradient text-4xl md:text-5xl">
-            Projects
+            {t("projects.title")}
           </h1>
           <p className="text-base md:text-lg text-white/75 mt-3 max-w-3xl">
-            Explore some of my best projects. Select one to view more details.
+            {t("projects.embedDescription")}
           </p>
         </header>
 
@@ -215,33 +218,35 @@ export default function Projects({ embed }: { embed?: boolean }) {
             <div className="animate-fade-in pb-8 md:pb-14">
               <header className="text-center max-w-3xl mx-auto mb-16">
                 <h1 className="text-4xl font-black tracking-tight text-white leading-tight">
-                  What are you{" "}
-                  <span className="text-gradient font-black">looking for</span>?
+                  {t("projects.questionPrefix")}{" "}
+                  <span className="text-gradient font-black">
+                    {t("projects.questionHighlight")}
+                  </span>
+                  {t("projects.questionSuffix")}
                 </h1>
                 <p className="text-white/60 text-lg md:text-xl leading-relaxed">
-                  Choose a category below to explore my projects, open-source
-                  work, and custom creations.
+                  {t("projects.description")}
                 </p>
               </header>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 {(() => {
-                  const design = getCategoryDesign("*");
+                  const design = getCategoryDesign("*", t);
 
                   return (
                     <CategoryCard
-                      title="All Projects"
+                      title={t("projects.all")}
                       description={design.description}
                       icon={design.icon}
                       count={getProjectCount("*")}
-                      actionLabel="View All"
+                      actionLabel={t("projects.viewAll")}
                       onClick={() => setFilter("*")}
                     />
                   );
                 })()}
 
                 {categories.map((categoryName: string) => {
-                  const design = getCategoryDesign(categoryName);
+                  const design = getCategoryDesign(categoryName, t);
                   const projectCount = getProjectCount(categoryName);
 
                   return (
@@ -251,7 +256,7 @@ export default function Projects({ embed }: { embed?: boolean }) {
                       description={design.description}
                       icon={design.icon}
                       count={projectCount}
-                      actionLabel="Explore Category"
+                      actionLabel={t("projects.exploreCategory")}
                       onClick={() => setFilter(categoryName)}
                     />
                   );
@@ -267,20 +272,19 @@ export default function Projects({ embed }: { embed?: boolean }) {
                     className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white/50 hover:text-white transition-colors group mb-3 cursor-pointer"
                   >
                     <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform duration-200" />
-                    Back to categories
+                    {t("projects.back")}
                   </button>
                   <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                    Explore{" "}
+                    {t("projects.explore")}{" "}
                     <span className="text-gradient">
                       {filter === "*" ? "All" : filter}
                     </span>{" "}
-                    Projects
+                    {t("projects.projectPlural")}
                   </h1>
                   <p className="text-white/60 text-sm sm:text-base mt-2">
-                    Browse through my collection of{" "}
                     {filter === "*"
-                      ? "projects across all categories"
-                      : `projects in the ${filter} category`}
+                      ? t("projects.browseAll")
+                      : t("projects.browseCategory", { category: filter })}
                   </p>
                 </div>
 
@@ -293,7 +297,7 @@ export default function Projects({ embed }: { embed?: boolean }) {
                         : "bg-white/5 text-white/70 border-white/10 hover:border-white/30 cursor-pointer"
                     }`}
                   >
-                    All ({getProjectCount("*")})
+                    {t("projects.allFilter")} ({getProjectCount("*")})
                   </button>
                   {categories.map((cat: string) => (
                     <button
@@ -325,7 +329,7 @@ export default function Projects({ embed }: { embed?: boolean }) {
                     </section>
                   ) : (
                     <div className="rounded-2xl border border-dashed border-white/20 p-12 text-center text-white/60 max-w-2xl mx-auto">
-                      No projects found matching the selected category.
+                      {t("projects.empty")}
                     </div>
                   )}
                 </div>

@@ -1,3 +1,6 @@
+"use client";
+
+import { useI18n } from "@/lib/i18n";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { ArrowRight, Code2, Layout, Terminal } from "lucide-react";
 import { Badge } from "../ui/badge";
@@ -5,6 +8,7 @@ import { Card } from "../ui/card";
 import { IconBox } from "../ui/icon-box";
 
 export default function About() {
+  const { t } = useI18n();
   return (
     <div
       id="about"
@@ -16,12 +20,9 @@ export default function About() {
           <IconBox className="mb-6 text-primary">
             <Terminal className="w-6 h-6" />
           </IconBox>
-          <h2 className="text-2xl font-bold mb-4">Software Developer</h2>
+          <h2 className="text-2xl font-bold mb-4">{t("about.title")}</h2>
           <p className="text-gray-400 leading-relaxed mb-6">
-            I love to create new experiences for people to enjoy. I mainly use
-            Typescript and Java for my projects but I also know a lot of other
-            technologies. I&apos;m always looking for new opportunities to learn
-            and grow as a developer.
+            {t("about.description")}
           </p>
           <div className="flex flex-wrap gap-2">
             {["Java", "TypeScript", "React", "Next.js", "PHP", "Flutter"].map(
@@ -44,10 +45,10 @@ export default function About() {
         </div>
         <div>
           <h3 className="text-xl font-bold mb-1 flex items-center gap-2">
-            Projects
+            {t("about.projects")}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </h3>
-          <p className="text-black/70 text-sm">Check out my latest work</p>
+          <p className="text-black/70 text-sm">{t("about.latest")}</p>
         </div>
       </Card>
 
@@ -57,7 +58,7 @@ export default function About() {
         </IconBox>
         <div>
           <div className="text-4xl font-bold text-white mb-1">5+</div>
-          <div className="text-sm text-gray-400">Years of Experience</div>
+          <div className="text-sm text-gray-400">{t("about.experience")}</div>
         </div>
       </Card>
 
@@ -73,7 +74,7 @@ export default function About() {
           </div>
           <div>
             <h3 className="text-xl font-bold text-white">GitHub</h3>
-            <p className="text-gray-400">Explore my open source projects</p>
+            <p className="text-gray-400">{t("about.github")}</p>
           </div>
         </div>
         <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all" />

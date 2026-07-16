@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import { useI18n } from "@/lib/i18n";
 import { SiDiscord, SiGithub } from "@icons-pack/react-simple-icons";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Image from "next/image";
@@ -13,6 +14,7 @@ import { Card } from "../ui/card";
 import { Input } from "../ui/input";
 
 export default function Login() {
+  const { t } = useI18n();
   const router = useRouter();
   const search = useSearchParams();
   const redirectUrl = search.get("redirect_url") || "/";
@@ -47,20 +49,20 @@ export default function Login() {
           },
         });
         if (signInError) {
-          setError(signInError.message || "Unable to sign in");
+          setError(signInError.message || t("auth.signInFailed"));
           posthog.capture("user_sign_in_failed", {
             method: "email",
-            error: signInError.message || "Unable to sign in",
+            error: signInError.message || t("auth.signInFailed"),
           });
         }
       } catch (err) {
-        setError("Unexpected error. Please try again.");
+        setError(t("auth.unexpected"));
         posthog.captureException(err);
       } finally {
         setLoading(false);
       }
     },
-    [email, password, redirectUrl, router]
+    [email, password, redirectUrl, router, t]
   );
 
   const onProvider = useCallback(
@@ -77,15 +79,15 @@ export default function Login() {
         });
       } catch (err) {
         setLoading(false);
-        setError("Social sign-in failed");
+        setError(t("auth.socialSignInFailed"));
         posthog.capture("user_sign_in_failed", {
           method: provider,
-          error: "Social sign-in failed",
+          error: t("auth.socialSignInFailed"),
         });
         posthog.captureException(err);
       }
     },
-    [redirectUrl]
+    [redirectUrl, t]
   );
 
   return (
@@ -101,9 +103,11 @@ export default function Login() {
           />
         </div>
         <h1 className="text-2xl font-semibold text-center text-white">
-          Sign in
+          {t("auth.signIn")}
         </h1>
-        <p className="text-center text-sm text-gray-300 mt-1">Welcome back</p>
+        <p className="text-center text-sm text-gray-300 mt-1">
+          {t("auth.welcomeBack")}
+        </p>
 
         <div className="mt-4 grid grid-cols-2 gap-2">
           <Button
@@ -129,7 +133,7 @@ export default function Login() {
         <form onSubmit={onSubmit} className="mt-4 space-y-4">
           <div className="space-y-1">
             <label className="text-sm" htmlFor="email">
-              Email
+              {t("auth.email")}
             </label>
             <Input
               id="email"
@@ -144,13 +148,15 @@ export default function Login() {
           <div className="space-y-1">
             <div className="flex items-center justify-between">
               <label className="text-sm" htmlFor="password">
-                Password
+                {t("auth.password")}
               </label>
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
                 className="text-xs text-zinc-400 hover:text-zinc-200"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-label={
+                  showPassword ? t("auth.hidePassword") : t("auth.showPassword")
+                }
               >
                 {showPassword ? <EyeOff width={16} /> : <Eye width={16} />}
               </button>
@@ -172,14 +178,14 @@ export default function Login() {
           )}
           <Button type="submit" disabled={loading} className="w-full">
             {loading && <Loader2 className="animate-spin mr-2" width={16} />}
-            Sign in
+            {t("auth.signIn")}
           </Button>
         </form>
 
         <p className="text-sm text-center text-gray-300 mt-4">
-          Don&apos;t have an account?{" "}
+          {t("auth.noAccount")}{" "}
           <Link className="underline" href="/register">
-            Sign up
+            {t("auth.signUp")}
           </Link>
         </p>
       </Card>

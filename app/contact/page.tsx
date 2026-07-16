@@ -3,10 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useI18n } from "@/lib/i18n";
 import posthog from "posthog-js";
 import { FormEvent, useState } from "react";
 
 export default function ContactPage() {
+  const { t } = useI18n();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -50,22 +52,22 @@ export default function ContactPage() {
       <div className="w-full max-w-md space-y-8">
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold tracking-tight text-white">
-            Contact Me
+            {t("contact.pageTitle")}
           </h1>
           <p className="text-gray-400">
-            Send me a message and I&apos;ll get back to you as soon as possible.
+            {t("contact.pageDescription")}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <label htmlFor="name" className="text-sm font-medium text-gray-200">
-              Name
+              {t("contact.name")}
             </label>
             <Input
               id="name"
               name="name"
-              placeholder="Your name"
+              placeholder={t("contact.namePlaceholder")}
               required
               disabled={loading}
             />
@@ -76,7 +78,7 @@ export default function ContactPage() {
               htmlFor="email"
               className="text-sm font-medium text-gray-200"
             >
-              Email
+              {t("contact.email")}
             </label>
             <Input
               id="email"
@@ -90,12 +92,12 @@ export default function ContactPage() {
 
           <div className="space-y-2">
             <label htmlFor="body" className="text-sm font-medium text-gray-200">
-              Message
+              {t("contact.message")}
             </label>
             <Textarea
               id="body"
               name="body"
-              placeholder="How can I help you?"
+              placeholder={t("contact.messagePlaceholder")}
               required
               disabled={loading}
               className="min-h-[150px]"
@@ -110,12 +112,12 @@ export default function ContactPage() {
 
           {success && (
             <div className="p-3 text-sm text-green-500 bg-green-500/10 border border-green-500/20 rounded-md">
-              Message sent successfully!
+              {t("contact.success")}
             </div>
           )}
 
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Sending..." : "Send Message"}
+            {loading ? t("contact.sending") : t("contact.send")}
           </Button>
         </form>
       </div>

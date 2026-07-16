@@ -2,6 +2,7 @@
 
 import type { Project } from "@/generated/client";
 import { parseCategoryCsv } from "@/lib/categories";
+import { localizeField, useI18n } from "@/lib/i18n";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,8 +28,11 @@ function getHeroSrc(project: Project) {
 }
 
 export default function ProjectPage({ project }: { project: Project }) {
+  const { locale, t } = useI18n();
   const heroSrc = getHeroSrc(project);
-  const descriptionText = project.description?.replaceAll("\\n", "\n") ?? "";
+  const projectName = localizeField(project.name, locale);
+  const descriptionText =
+    localizeField(project.description, locale).replaceAll("\\n", "\n") ?? "";
   const router = useRouter();
 
   return (
@@ -38,7 +42,7 @@ export default function ProjectPage({ project }: { project: Project }) {
           onClick={() => router.back()}
           className="text-primary/90 text-sm font-medium pb-4 block"
         >
-          &larr; Back to projects
+          &larr; {t("projects.backToProjects")}
         </button>
 
         <section
@@ -52,7 +56,7 @@ export default function ProjectPage({ project }: { project: Project }) {
               <div className="absolute inset-0">
                 <Image
                   src={heroSrc}
-                  alt={project.name}
+                  alt={projectName}
                   fill
                   className="h-full w-full object-cover"
                   placeholder="blur"
@@ -79,7 +83,7 @@ export default function ProjectPage({ project }: { project: Project }) {
               </div>
 
               <h1 className="font-extrabold text-2xl lg:text-4xl mt-4 leading-tight">
-                {project.name}
+                {projectName}
               </h1>
 
               <p className="text-white/70 mt-3 text-base md:text-lg whitespace-pre-line">
@@ -92,13 +96,22 @@ export default function ProjectPage({ project }: { project: Project }) {
                 <div className="flex items-start justify-between gap-4">
                   <div className="text-sm text-white/60">
                     <div className="font-semibold text-white/85">
-                      Project details
+                      {t("projects.details")}
                     </div>
 
                     <div className="mt-1">
-                      {project.images.length} attachment
-                      {project.images.length === 1 ? "" : "s"}
-                      {project.youtube ? " and a video" : ""}
+                      {t("projects.attachments", {
+                        count: project.images.length,
+                        plural:
+                          locale === "it"
+                            ? project.images.length === 1
+                              ? "o"
+                              : "i"
+                            : project.images.length === 1
+                              ? ""
+                              : "s",
+                      })}
+                      {project.youtube ? t("projects.andVideo") : ""}
                     </div>
                   </div>
                 </div>
@@ -111,10 +124,10 @@ export default function ProjectPage({ project }: { project: Project }) {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Visit{" "}
+                      {t("projects.visit")}{" "}
                       {project.link.startsWith("https://github.com")
                         ? "GitHub"
-                        : "Website"}
+                        : t("projects.website")}
                     </Link>
                   ) : null}
                 </div>
@@ -128,15 +141,15 @@ export default function ProjectPage({ project }: { project: Project }) {
             <div className="flex items-end justify-between gap-4 flex-wrap">
               <div>
                 <div className="text-xs uppercase tracking-widest text-primary/90 font-semibold">
-                  Gallery
+                  {t("projects.gallery")}
                 </div>
                 <h2 className="font-extrabold text-2xl md:text-3xl mt-2">
-                  Screens & highlights
+                  {t("projects.screens")}
                 </h2>
               </div>
 
               <div className="text-sm text-white/60">
-                Click a thumbnail to preview, then expand.
+                {t("projects.preview")}
               </div>
             </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import type { Project as ProjectType } from "@/generated/client";
+import { localizeField, useI18n } from "@/lib/i18n";
 import { parseCategoryCsv } from "@/lib/categories";
 import { nameAsId } from "@/lib/utils";
 import { Sparkles } from "lucide-react";
@@ -15,6 +16,9 @@ export default function Project({
   project: ProjectType;
   embed?: boolean;
 }) {
+  const { locale, t } = useI18n();
+  const projectName = localizeField(project.name, locale);
+  const projectDescription = localizeField(project.description, locale);
   const handleProjectClick = () => {
     posthog.capture("project_viewed", {
       project_id: project.id,
@@ -47,7 +51,7 @@ export default function Project({
           <div className="relative h-full w-full overflow-hidden">
             <Image
               src={project.thumbnail}
-              alt={project.name}
+              alt={projectName}
               fill
               sizes="(max-width: 1023px) 100vw, 360px"
               className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
@@ -59,14 +63,14 @@ export default function Project({
         <div className="relative flex flex-col justify-between p-4 w-full bg-black/75 min-h-24">
           <div>
             <h2 className="font-bold text-lg text-white line-clamp-1">
-              {project.name}
+              {projectName}
             </h2>
             <p className="text-white/60 mt-1 text-xs">
               {parseCategoryCsv(project.category).join(" · ")}
             </p>
           </div>
           <p className="text-primary mt-3 text-xs font-semibold flex items-center gap-1">
-            View details &rarr;
+            {t("projects.viewDetails")} &rarr;
           </p>
         </div>
       </Card>
@@ -89,7 +93,7 @@ export default function Project({
         {isFeatured && (
           <div className="absolute top-4 left-4 z-10 flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-black bg-primary rounded-full shadow-lg shadow-black/35">
             <Sparkles className="w-3 h-3 fill-black animate-pulse" />
-            Featured
+            {t("projects.featured")}
           </div>
         )}
 
@@ -100,7 +104,7 @@ export default function Project({
         ) : (
           <Image
             src={project.thumbnail}
-            alt={project.name}
+            alt={projectName}
             fill
             sizes="(max-width: 768px) 100vw, 480px"
             className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
@@ -125,19 +129,19 @@ export default function Project({
           </div>
 
           <h2 className="font-extrabold text-xl lg:text-2xl text-white group-hover:text-primary transition-colors duration-200 line-clamp-1 leading-snug">
-            {project.name}
+            {projectName}
           </h2>
 
-          {project.description && (
+          {projectDescription && (
             <p className="text-white/60 mt-3 text-sm line-clamp-2 leading-relaxed">
-              {project.description.replaceAll("\\n", " ")}
+              {projectDescription.replaceAll("\\n", " ")}
             </p>
           )}
         </div>
 
         <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
           <span className="text-primary text-sm font-bold flex items-center gap-1 transition-all duration-200 group-hover:gap-2">
-            View Details
+            {t("projects.viewDetailsCapital")}
             <span className="group-hover:translate-x-1 transition-transform duration-200">
               &rarr;
             </span>
