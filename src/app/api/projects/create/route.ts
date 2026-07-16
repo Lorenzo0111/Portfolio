@@ -1,0 +1,149 @@
+import { translateDescription } from "@/lib/ai";
+import { auth } from "@/lib/auth";
+import { normalizeCategoryCsv, parseCategoryCsv } from "@/lib/categories";
+import { defaultLocale, locales } from "@/lib/i18n";
+import prisma from "@/lib/prismadb";
+import supabase from "@/lib/supabase";
+import { headers } from "next/headers";
+import { NextResponse } from "next/server";
+
+export async function POST(request: Request) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user || session.user.role !== "admin") {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
+  const form = await request.formData();
+  const files = form.getAll("file") as File[];
+  const name = form.get("name") as string;
+  const description = form.get("description") as string;
+  const category = form.get("category") as string;
+  const link = form.get("link") as string;
+  const youtube = form.get("youtube") as string;
+
+  if (!files || files.length === 0 || !name || !description || !category) {
+    return new Response(JSON.stringify({ error: "Missing parameters" }), {
+      status: 400,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
+  const categoryTokens = parseCategoryCsv(category);
+  if (categoryTokens.length === 0) {
+    return new Response(
+      JSON.stringify({ error: "At least one category is required" }),
+      {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+  }
+
+  const normalizedCategory = normalizeCategoryCsv(category);
+  const newName = name.trim();
+  let project = await prisma.project.findFirst({
+    where: {
+      name: newName,
+    },
+    cacheStrategy: {
+      ttl: 60 * 60 * 24,
+      tags: ["projects"],
+    },
+  });
+
+  if (project) {
+    return new Response(JSON.stringify({ error: "Project already exists" }), {
+      status: 400,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
+  const translations = await Promise.all(
+    locales
+      .filter((l) => l !== defaultLocale)
+      .map(async (locale) => {
+        const translatedDescription = await translateDescription(
+          description,
+          locale,
+        );
+
+        return { locale, description: translatedDescription };
+      }),
+  );
+
+  project = await prisma.project.create({
+    data: {
+      name: newName,
+      description,
+      category: normalizedCategory,
+      link,
+      youtube,
+      translations: Object.fromEntries(
+        translations.map((t) => [t.locale, t.description]),
+      ),
+    },
+  });
+
+  try {
+    await prisma.$accelerate.invalidate({
+      tags: ["projects"],
+    });
+  } catch {}
+
+  const fileUrls = [];
+  let thumbnail;
+  for (const file of files) {
+    const { error, data } = await supabase.storage
+      .from("projects")
+      .upload(`${project.id}/${file.name.trim().replaceAll(" ", "-")}`, file, {
+        contentType: file.type,
+      });
+
+    if (error) {
+      return NextResponse.json(
+        { error: error.message },
+        {
+          status: 500,
+        },
+      );
+    }
+
+    const url = supabase.storage.from("projects").getPublicUrl(data.path)
+      .data.publicUrl;
+
+    if (file.name === "thumbnail.png") thumbnail = url;
+    else fileUrls.push(url);
+  }
+
+  await prisma.project.update({
+    where: {
+      id: project.id,
+    },
+    data: {
+      images: fileUrls,
+      thumbnail,
+    },
+  });
+
+  try {
+    await prisma.$accelerate.invalidate({
+      tags: ["projects"],
+    });
+  } catch {}
+
+  return NextResponse.json(project);
+}

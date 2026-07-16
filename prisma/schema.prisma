@@ -1,8 +1,12 @@
 generator client {
   provider               = "prisma-client"
-  output                 = "../generated"
+  output                 = "../src/generated"
   generatedFileExtension = "ts"
   importFileExtension    = "ts"
+}
+
+generator json {
+  provider = "prisma-json-types-generator"
 }
 
 datasource db {
@@ -87,18 +91,20 @@ model DriveFile {
 }
 
 model Project {
-  id          String   @id @default(cuid()) @map("_id")
-  name        String   @unique
-  description String?
-  thumbnail   String?
-  images      String[]
-  youtube     String?
-  category    String
-  link        String?
-  hidden      Boolean  @default(false)
-  order       Int      @default(0)
-  top         Boolean  @default(false)
-  updatedAt   DateTime @default(now()) @updatedAt
+  id           String   @id @default(cuid()) @map("_id")
+  name         String   @unique
+  description  String?
+  thumbnail    String?
+  images       String[]
+  youtube      String?
+  category     String
+  link         String?
+  hidden       Boolean  @default(false)
+  order        Int      @default(0)
+  top          Boolean  @default(false)
+  /// [Translations]
+  translations Json?
+  updatedAt    DateTime @default(now()) @updatedAt
 
   @@index([category])
 }
