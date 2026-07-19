@@ -41,19 +41,22 @@ export default async function Hero() {
           alt="Lorenzo"
           fill
           priority
+          fetchPriority="high"
           draggable={false}
-          sizes="(max-width: 1023px) 480px, 480px"
+          sizes="(max-width: 767px) 0px, 480px"
           className="object-cover hidden md:block"
         />
 
         <Image
           src={iconImage}
+          sizes="256px"
           alt="Lorenzo"
-          fill
-          priority
+          width={256}
+          height={256}
+          fetchPriority="high"
+          decoding="async"
           draggable={false}
-          sizes="(max-width: 1023px) 256px, 384px"
-          className="object-cover rounded-full border-4 border-white/5 shadow-2xl md:hidden"
+          className="object-cover rounded-full border-4 border-white/5 shadow-2xl md:hidden w-full h-full"
         />
       </div>
     </div>

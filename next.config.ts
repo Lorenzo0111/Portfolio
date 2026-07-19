@@ -15,7 +15,10 @@ const nextConfig: NextConfig = {
         pathname: "/vi/**",
       },
     ],
+    formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 7 * 24 * 60 * 60,
+    deviceSizes: [256, 384, 512, 640, 750, 828, 1080, 1200],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   async rewrites() {
     return [
@@ -26,6 +29,28 @@ const nextConfig: NextConfig = {
       {
         source: "/ingest/:path*",
         destination: "https://eu.i.posthog.com/:path*",
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: "/:path*.(webp|avif|png|jpg|jpeg|ico|svg)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/icon-:variant.webp",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
       },
     ];
   },
