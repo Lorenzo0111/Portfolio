@@ -24,10 +24,6 @@ export async function GET(request: Request) {
     orderBy: [{ top: "desc" }, { order: "desc" }],
     where: filterObject,
     take: limitNum > -1 ? limitNum : undefined,
-    cacheStrategy: {
-      ttl: 60 * 60 * 24,
-      tags: ["projects"],
-    },
   });
 
   return NextResponse.json(projects, {

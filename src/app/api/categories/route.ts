@@ -7,10 +7,6 @@ export async function GET(request: Request) {
     select: {
       category: true,
     },
-    cacheStrategy: {
-      ttl: 60 * 60 * 24,
-      tags: ["projects"],
-    },
   });
 
   const categorySet = new Set<string>();

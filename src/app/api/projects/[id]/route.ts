@@ -19,10 +19,6 @@ export async function GET(
           { name: { equals: id, mode: "insensitive" } },
         ],
       },
-      cacheStrategy: {
-        ttl: 60 * 60 * 24,
-        tags: ["projects"],
-      },
     });
 
     if (!project) {

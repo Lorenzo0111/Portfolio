@@ -6,6 +6,6 @@ export default defineConfig([
     extends: [...nextCoreWebVitals],
   },
   {
-    ignores: ["generated/**"],
+    ignores: ["src/generated/**"],
   },
 ]);

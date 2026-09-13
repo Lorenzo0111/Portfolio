@@ -49,10 +49,6 @@ export async function GET() {
       name: true,
       updatedAt: true,
     },
-    cacheStrategy: {
-      ttl: 60 * 60 * 24,
-      tags: ["projects"],
-    },
   });
 
   const projectRoutes = projects.map((project) => ({

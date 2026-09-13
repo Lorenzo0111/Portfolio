@@ -1,11 +1,13 @@
-import { withAccelerate } from "@prisma/extension-accelerate";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/client";
 import { Locale } from "./i18n";
 
 function getPrisma() {
+  const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+
   return new PrismaClient({
-    accelerateUrl: process.env.DATABASE_URL!,
-  }).$extends(withAccelerate());
+    adapter,
+  });
 }
 
 declare global {
