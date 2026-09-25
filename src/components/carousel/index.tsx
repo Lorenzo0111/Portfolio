@@ -38,7 +38,7 @@ function CarouselItem({
       width={preview ? 200 : 400}
       height={preview ? 100 : 400}
       placeholder="empty"
-      className="w-full h-full max-h-[400px] rounded-xl object-contain bg-black"
+      className="w-full h-full max-h-100 rounded-xl object-contain bg-black"
       draggable={false}
     />
   ) : preview ? (
@@ -53,11 +53,11 @@ function CarouselItem({
     />
   ) : (
     <iframe
-      src={`https://www.youtube-nocookie.com/embed/${item.src}`}
+      src={`https://www.youtube-nocookie.com/embed/${item.src}?rel=0`}
       allowFullScreen
       className={
         "w-full h-full object-contain rounded-xl bg-black " +
-        (!preview ? "min-h-[400px]" : "")
+        (!preview ? "min-h-100" : "")
       }
     />
   );
@@ -100,13 +100,13 @@ export default function Carousel({ project }: { project: Project }) {
 
   return (
     <div className="flex flex-col md:flex-row w-full gap-4">
-      <div className="w-full md:w-1/4 max-h-[140px] md:max-h-[400px] overflow-x-auto overflow-y-hidden md:overflow-y-auto md:overflow-x-hidden md:pr-2 flex flex-row md:flex-col gap-3 md:gap-4 pb-1 md:pb-0">
+      <div className="w-full md:w-1/4 max-h-35 md:max-h-100 overflow-x-auto overflow-y-hidden md:overflow-y-auto md:overflow-x-hidden md:pr-2 flex flex-row md:flex-col gap-3 md:gap-4 pb-1 md:pb-0">
         {items.map((item, index) => (
           <button
             key={item.src}
             onClick={() => setCurrentIndex(index)}
             className={
-              "shrink-0 w-[150px] md:w-full h-[96px] md:h-[104px] rounded-xl border border-transparent bg-black/40 p-1 hover:border-primary/60 transition-all " +
+              "shrink-0 w-37.5 md:w-full h-24 md:h-26 rounded-xl border border-transparent bg-black/40 p-1 hover:border-primary/60 transition-all " +
               (currentIndex === index ? "border" : "")
             }
           >
@@ -118,7 +118,7 @@ export default function Carousel({ project }: { project: Project }) {
       </div>
       <div className="w-full md:w-3/4 flex flex-col gap-4">
         <button
-          className="relative w-full h-[280px] md:h-full max-h-[400px] rounded-xl cursor-pointer group bg-black/60 border border-white/10 overflow-hidden"
+          className="relative w-full h-70 md:h-full max-h-100 rounded-xl cursor-pointer group bg-black/60 border border-white/10 overflow-hidden"
           onClick={() => {
             if (items[currentIndex].type !== "image") return;
             setExpanded(true);
@@ -148,9 +148,11 @@ export default function Carousel({ project }: { project: Project }) {
               <Image
                 src={items[currentIndex].src}
                 alt={project.name}
-                width={400}
-                height={400}
+                width={1920}
+                height={1080}
                 placeholder="empty"
+                className="max-w-full max-h-full w-auto h-auto object-contain"
+                sizes="100vw"
               />
             </div>
           </div>
