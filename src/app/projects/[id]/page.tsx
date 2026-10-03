@@ -1,9 +1,7 @@
-import type { Project } from "@/generated/client";
+import { getCachedProject } from "@/lib/projects";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ProjectPageClient from "./page.client";
-
-export const revalidate = 3600;
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -12,18 +10,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
 
-  const project: Project | null = await fetch(
-    `${
-      process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
-    }/api/projects/${id}`,
-    {
-      next: {
-        revalidate: 60 * 60 * 24,
-        tags: [`project_${id}`],
-      },
-    },
-  ).then((res) => res.json());
-
+  const project = await getCachedProject(id);
   if (!project) return notFound();
 
   const images = project.images.filter((image) => image.endsWith(".png"));
@@ -40,23 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProjectPage({ params }: Props) {
   const { id } = await params;
 
-  const project: Project | null = await fetch(
-    `${
-      process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
-    }/api/projects/${id}`,
-    {
-      next: {
-        revalidate: 3600,
-        tags: [`project_${id}`],
-      },
-    },
-  )
-    .then(async (res) => {
-      if (!res.ok) return null;
-      return res.json();
-    })
-    .catch(() => null);
-
+  const project = await getCachedProject(id);
   if (!project) return notFound();
 
   return <ProjectPageClient project={project} />;

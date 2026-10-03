@@ -1,47 +1,30 @@
-import prisma from "@/lib/prismadb";
-import { normalizeName } from "@/lib/utils";
+import { findProject } from "@/lib/projects";
 import { NextResponse } from "next/server";
 
 export async function GET(
   _request: Request,
   props: { params: Promise<{ id: string }> },
 ) {
-  const params = await props.params;
-  const { id } = params;
-  const normalizedId = normalizeName(id);
+  const { id } = await props.params;
 
   try {
-    const project = await prisma.project.findFirst({
-      where: {
-        OR: [
-          { id: normalizedId },
-          { name: { equals: normalizedId, mode: "insensitive" } },
-          { name: { equals: id, mode: "insensitive" } },
-        ],
-      },
-    });
+    const project = await findProject(id);
 
     if (!project) {
-      return new Response(JSON.stringify({ error: "Project not found" }), {
-        status: 404,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
 
     return NextResponse.json(project, {
       headers: {
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control":
+          "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
       },
     });
   } catch (err) {
     console.error(err);
-    return new Response(JSON.stringify({ error: "Project not found" }), {
-      status: 404,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return NextResponse.json(
+      { error: "Failed to load project" },
+      { status: 500 },
+    );
   }
 }

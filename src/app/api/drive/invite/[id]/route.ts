@@ -7,45 +7,39 @@ export async function GET(
   _request: Request,
   props: { params: Promise<{ id: string }> },
 ) {
-  const params = await props.params;
+  const { id } = await props.params;
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
   if (!session?.user) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const { id } = params;
-
-    const file = await prisma.driveFile.findUnique({
+    // Only pending invites are visible, and never the file URL itself
+    const file = await prisma.driveFile.findFirst({
       where: {
-        id: id as string,
+        id,
+        userId: null,
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
       },
     });
 
     if (!file) {
-      return new Response(JSON.stringify({ error: "File not found" }), {
-        status: 404,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      return NextResponse.json(
+        { error: "Invite not found or already claimed" },
+        { status: 404 },
+      );
     }
 
     return NextResponse.json(file);
   } catch (error) {
-    return new Response(JSON.stringify({ error: "File not found" }), {
-      status: 404,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    console.error(error);
+    return NextResponse.json({ error: "Invite not found" }, { status: 404 });
   }
 }

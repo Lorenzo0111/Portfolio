@@ -15,7 +15,7 @@ import {
 import dynamic from "next/dynamic";
 import { useQueryState } from "nuqs";
 import posthog from "posthog-js";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "../i18n-provider";
 import Project from "./project";
 
@@ -126,29 +126,19 @@ export default function Projects({ embed }: { embed?: boolean }) {
   const { data: categories } = useFetcher("/api/categories");
   const { data: projects } = useFetcher("/api/projects");
   const [filter, setFilter] = useQueryState("category");
-  const [filtered, setFiltered] = useState<ProjectType[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const filtered: ProjectType[] = useMemo(() => {
+    if (!projects) return [];
+    if (embed || filter === "*") return projects;
+    if (!filter) return [];
 
-  async function runFilter(category: string) {
-    posthog.capture("filter_projects", { category });
-
-    setLoading(true);
-
-    const fetchedProjects = await fetch(
-      "/api/projects?filter=" + encodeURIComponent(category),
-    ).then((res) => res.json());
-
-    setFiltered(fetchedProjects);
-    setLoading(false);
-  }
+    return projects.filter((p: ProjectType) =>
+      parseCategoryCsv(p.category ?? "").includes(filter),
+    );
+  }, [projects, filter, embed]);
 
   useEffect(() => {
-    if (!projects) return;
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setFiltered(filter ? projects : []);
-    if (filter) runFilter(filter);
-  }, [projects, filter]);
+    if (filter) posthog.capture("filter_projects", { category: filter });
+  }, [filter]);
 
   const getProjectCount = (catName: string) => {
     if (!projects) return 0;
@@ -162,7 +152,7 @@ export default function Projects({ embed }: { embed?: boolean }) {
   };
 
   if (embed) {
-    if (!projects || loading) return null;
+    if (!projects) return null;
     return (
       <div
         id="projects"
@@ -176,12 +166,6 @@ export default function Projects({ embed }: { embed?: boolean }) {
             {t("projects.browseAll")}
           </p>
         </header>
-
-        {loading && (
-          <div className="flex w-full items-center justify-center py-6">
-            <span className="loader"></span>
-          </div>
-        )}
 
         {filtered && (
           <div className="flex flex-col gap-6 mt-8">
@@ -317,25 +301,19 @@ export default function Projects({ embed }: { embed?: boolean }) {
                 </div>
               </header>
 
-              {loading ? (
-                <div className="flex w-full items-center justify-center py-20">
-                  <span className="loader"></span>
-                </div>
-              ) : (
-                <div className="w-full">
-                  {filtered && filtered.length > 0 ? (
-                    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                      {filtered.map((project: ProjectType) => (
-                        <Project key={project.id} project={project} />
-                      ))}
-                    </section>
-                  ) : (
-                    <div className="rounded-2xl border border-dashed border-white/20 p-12 text-center text-white/60 max-w-2xl mx-auto">
-                      {t("projects.empty")}
-                    </div>
-                  )}
-                </div>
-              )}
+              <div className="w-full">
+                {filtered.length > 0 ? (
+                  <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    {filtered.map((project: ProjectType) => (
+                      <Project key={project.id} project={project} />
+                    ))}
+                  </section>
+                ) : (
+                  <div className="rounded-2xl border border-dashed border-white/20 p-12 text-center text-white/60 max-w-2xl mx-auto">
+                    {t("projects.empty")}
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

@@ -8,7 +8,7 @@ export default async function DrivePage() {
     headers: await headers(),
   });
 
-  if (!session?.user) return redirect("/login");
+  if (!session?.user) return redirect("/login?redirect_url=/drive");
 
   return <Drive />;
 }

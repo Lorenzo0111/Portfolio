@@ -7,103 +7,138 @@ import supabase from "@/lib/supabase";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
+function isHttpUrl(value: string) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+function sanitizeFileName(name: string) {
+  return (
+    name
+      .trim()
+      .replaceAll(" ", "-")
+      .replace(/[^\w.-]/g, "")
+      .replace(/\.{2,}/g, ".") || "file"
+  );
+}
+
 export async function POST(request: Request) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
   if (!session?.user || session.user.role !== "admin") {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const form = await request.formData();
-  const files = form.getAll("file") as File[];
-  const name = form.get("name") as string;
-  const description = form.get("description") as string;
-  const category = form.get("category") as string;
-  const link = form.get("link") as string;
-  const youtube = form.get("youtube") as string;
+  const form = await request.formData().catch(() => null);
+  const files = (form?.getAll("file") ?? []).filter(
+    (file): file is File => file instanceof File,
+  );
+  const name = form?.get("name");
+  const description = form?.get("description");
+  const category = form?.get("category");
+  const link = form?.get("link") || null;
+  const youtube = form?.get("youtube") || null;
 
-  if (!files || files.length === 0 || !name || !description || !category) {
-    return new Response(JSON.stringify({ error: "Missing parameters" }), {
-      status: 400,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  if (
+    files.length === 0 ||
+    typeof name !== "string" ||
+    typeof description !== "string" ||
+    typeof category !== "string" ||
+    !name.trim() ||
+    !description
+  ) {
+    return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
   }
 
-  const categoryTokens = parseCategoryCsv(category);
-  if (categoryTokens.length === 0) {
-    return new Response(
-      JSON.stringify({ error: "At least one category is required" }),
-      {
-        status: 400,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+  if (link !== null && (typeof link !== "string" || !isHttpUrl(link))) {
+    return NextResponse.json(
+      { error: "Website must be a valid http(s) URL" },
+      { status: 400 },
+    );
+  }
+
+  if (
+    youtube !== null &&
+    (typeof youtube !== "string" || !/^[\w-]{11}$/.test(youtube))
+  ) {
+    return NextResponse.json(
+      { error: "YouTube must be a video ID, not a full URL" },
+      { status: 400 },
+    );
+  }
+
+  if (parseCategoryCsv(category).length === 0) {
+    return NextResponse.json(
+      { error: "At least one category is required" },
+      { status: 400 },
     );
   }
 
   const normalizedCategory = normalizeCategoryCsv(category);
   const newName = name.trim();
-  let project = await prisma.project.findFirst({
+  const existing = await prisma.project.findFirst({
     where: {
       name: newName,
     },
   });
 
-  if (project) {
-    return new Response(JSON.stringify({ error: "Project already exists" }), {
-      status: 400,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  if (existing) {
+    return NextResponse.json(
+      { error: "Project already exists" },
+      { status: 400 },
+    );
   }
 
   const translations = await Promise.all(
     locales
       .filter((l) => l !== defaultLocale)
       .map(async (locale) => {
-        const translatedDescription = await translateDescription(
-          description,
-          locale,
-        );
-
-        return { locale, description: translatedDescription };
+        try {
+          return [
+            locale,
+            await translateDescription(description, locale),
+          ] as const;
+        } catch (error) {
+          console.error(`Failed to translate description to ${locale}`, error);
+          return null;
+        }
       }),
   );
 
-  project = await prisma.project.create({
+  const project = await prisma.project.create({
     data: {
       name: newName,
       description,
       category: normalizedCategory,
       link,
       youtube,
-      translations: Object.fromEntries(
-        translations.map((t) => [t.locale, t.description]),
-      ),
+      translations: Object.fromEntries(translations.filter((t) => t !== null)),
     },
   });
 
   const fileUrls = [];
+  const uploadedPaths = [];
   let thumbnail;
   for (const file of files) {
     const { error, data } = await supabase.storage
       .from("projects")
-      .upload(`${project.id}/${file.name.trim().replaceAll(" ", "-")}`, file, {
+      .upload(`${project.id}/${sanitizeFileName(file.name)}`, file, {
         contentType: file.type,
       });
 
     if (error) {
+      if (uploadedPaths.length > 0)
+        await supabase.storage.from("projects").remove(uploadedPaths);
+      await prisma.project
+        .delete({ where: { id: project.id } })
+        .catch(console.error);
+
       return NextResponse.json(
         { error: error.message },
         {
@@ -112,6 +147,8 @@ export async function POST(request: Request) {
       );
     }
 
+    uploadedPaths.push(data.path);
+
     const url = supabase.storage.from("projects").getPublicUrl(data.path)
       .data.publicUrl;
 
@@ -119,7 +156,7 @@ export async function POST(request: Request) {
     else fileUrls.push(url);
   }
 
-  await prisma.project.update({
+  const updated = await prisma.project.update({
     where: {
       id: project.id,
     },
@@ -129,5 +166,5 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json(project);
+  return NextResponse.json(updated);
 }

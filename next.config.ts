@@ -1,6 +1,22 @@
 import type { NextConfig } from "next";
 
+const securityHeaders = [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=()",
+  },
+  {
+    key: "Content-Security-Policy",
+    // PostHog's heatmap viewer embeds the site in an iframe
+    value:
+      "frame-ancestors 'self' https://eu.posthog.com; base-uri 'self'; form-action 'self'; object-src 'none'",
+  },
+];
+
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   reactCompiler: true,
   reactStrictMode: true,
   images: {
@@ -34,6 +50,10 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        source: "/:path*",
+        headers: securityHeaders,
+      },
       {
         source: "/:path*.(webp|avif|png|jpg|jpeg|ico|svg)",
         headers: [

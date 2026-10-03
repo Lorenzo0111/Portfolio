@@ -43,7 +43,7 @@ function CarouselItem({
     />
   ) : preview ? (
     <Image
-      src={`https://img.youtube.com/vi/${item.src}/0.jpg`}
+      src={`https://img.youtube.com/vi/${encodeURIComponent(item.src)}/0.jpg`}
       alt={name}
       width={200}
       height={100}
@@ -53,7 +53,9 @@ function CarouselItem({
     />
   ) : (
     <iframe
-      src={`https://www.youtube-nocookie.com/embed/${item.src}?rel=0`}
+      src={`https://www.youtube-nocookie.com/embed/${encodeURIComponent(item.src)}?rel=0`}
+      title={name}
+      loading="lazy"
       allowFullScreen
       className={
         "w-full h-full object-contain rounded-xl bg-black " +

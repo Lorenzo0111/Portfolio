@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import { safeRedirectPath } from "@/lib/utils";
 import { SiDiscord, SiGithub } from "@icons-pack/react-simple-icons";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Image from "next/image";
@@ -15,7 +16,7 @@ import { Input } from "../ui/input";
 export default function Login() {
   const router = useRouter();
   const search = useSearchParams();
-  const redirectUrl = search.get("redirect_url") || "/";
+  const redirectUrl = safeRedirectPath(search.get("redirect_url"));
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -178,7 +179,14 @@ export default function Login() {
 
         <p className="text-sm text-center text-gray-300 mt-4">
           Don&apos;t have an account?{" "}
-          <Link className="underline" href="/register">
+          <Link
+            className="underline"
+            href={
+              redirectUrl === "/"
+                ? "/register"
+                : "/register?redirect_url=" + encodeURIComponent(redirectUrl)
+            }
+          >
             Sign up
           </Link>
         </p>

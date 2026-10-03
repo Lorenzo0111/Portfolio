@@ -13,6 +13,7 @@ export default function Invite() {
   const invite = useFetcher(id ? "/api/drive/invite/" + id : null);
   const router = useRouter();
   const [accepting, setAccepting] = useState(false);
+  const [acceptError, setAcceptError] = useState("");
 
   if (invite.isLoading) {
     return (
@@ -22,7 +23,7 @@ export default function Invite() {
     );
   }
 
-  if (invite.data?.error) {
+  if (invite.error || !invite.data || invite.data.error) {
     return (
       <div className="flex justify-center items-center p-4">
         <Card className="w-full max-w-md p-6 sm:p-8 text-center border-red-500/20">
@@ -30,7 +31,9 @@ export default function Invite() {
             <AlertCircle size={48} />
           </div>
           <h1 className="text-2xl font-semibold text-white mb-2">Error</h1>
-          <p className="text-gray-300 mb-6">{invite.data.error}</p>
+          <p className="text-gray-300 mb-6">
+            {invite.data?.error ?? "Failed to load invite"}
+          </p>
           <Button
             variant="secondary"
             className="w-full"
@@ -45,8 +48,9 @@ export default function Invite() {
 
   const handleAccept = async () => {
     setAccepting(true);
+    setAcceptError("");
     try {
-      await fetch("/api/drive/invite/accept", {
+      const response = await fetch("/api/drive/invite/accept", {
         method: "POST",
         body: JSON.stringify({
           id: id,
@@ -56,6 +60,13 @@ export default function Invite() {
         },
       });
 
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        setAcceptError(data?.error ?? "Failed to accept invite");
+        setAccepting(false);
+        return;
+      }
+
       posthog.capture("drive_invite_accepted", {
         invite_id: id,
         file_name: invite.data?.name,
@@ -64,6 +75,7 @@ export default function Invite() {
     } catch (e) {
       console.error(e);
       posthog.captureException(e);
+      setAcceptError("Failed to accept invite");
       setAccepting(false);
     }
   };
@@ -92,6 +104,12 @@ export default function Invite() {
             </p>
           )}
         </div>
+
+        {acceptError && (
+          <div className="text-sm text-red-500 mb-4" role="alert">
+            {acceptError}
+          </div>
+        )}
 
         <Button className="w-full" onClick={handleAccept} disabled={accepting}>
           {accepting && <Loader2 className="animate-spin mr-2" size={16} />}

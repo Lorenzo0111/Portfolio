@@ -13,8 +13,14 @@ const bodySchema = z.object({
 });
 
 export async function POST(req: Request) {
+  const formData = await req.formData().catch(() => null);
+  if (!formData)
+    return NextResponse.json({ error: "Invalid input data" }, { status: 400 });
+
+  // Honeypot: real users never fill the hidden "website" field
+  if (formData.get("website")) return NextResponse.json({ success: true });
+
   try {
-    const formData = await req.formData();
     const body = bodySchema.safeParse({
       name: formData.get("name"),
       email: formData.get("email"),

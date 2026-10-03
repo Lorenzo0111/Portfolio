@@ -10,53 +10,46 @@ export async function POST(request: Request) {
   });
 
   if (!session?.user || session.user.role !== "admin") {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const form = await request.formData();
-  const file = form.get("file") as File;
-  const name = form.get("name") as string;
-  const description = form.get("description") as string;
-  const ownerId = form.get("ownerId") as string;
+  const form = await request.formData().catch(() => null);
+  const file = form?.get("file");
+  const name = form?.get("name");
+  const description = form?.get("description");
+  const ownerId = form?.get("ownerId");
 
-  if (!(file instanceof File) || !name || !description) {
-    return new Response(JSON.stringify({ error: "Missing parameters" }), {
-      status: 400,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  if (
+    !(file instanceof File) ||
+    typeof name !== "string" ||
+    typeof description !== "string" ||
+    !name.trim() ||
+    !description.trim()
+  ) {
+    return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
   }
 
   if (ownerId) {
-    try {
-      await auth.api.getUser({
-        query: {
-          id: ownerId,
-        },
-      });
-    } catch (e) {
-      return new Response(JSON.stringify({ error: "Owner not found" }), {
-        status: 404,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    const owner =
+      typeof ownerId === "string"
+        ? await prisma.user.findUnique({
+            where: { id: ownerId },
+            select: { id: true },
+          })
+        : null;
+
+    if (!owner) {
+      return NextResponse.json({ error: "Owner not found" }, { status: 404 });
     }
   }
 
   const driveFile = await prisma.driveFile.create({
     data: {
-      name,
+      name: name.trim(),
       fileName: file.name,
       mimeType: file.type,
-      description,
-      userId: ownerId ? ownerId : null,
+      description: description.trim(),
+      userId: typeof ownerId === "string" && ownerId ? ownerId : null,
     },
   });
 
@@ -67,6 +60,11 @@ export async function POST(request: Request) {
     });
 
   if (error) {
+    // Don't leave a record pointing at a file that was never stored
+    await prisma.driveFile
+      .delete({ where: { id: driveFile.id } })
+      .catch(console.error);
+
     return NextResponse.json(
       { error: error.message },
       {

@@ -10,12 +10,7 @@ export async function GET(_request: Request) {
   });
 
   if (!session?.user) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   let files: DriveFile[] = [];

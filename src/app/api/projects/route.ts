@@ -5,10 +5,10 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const filter = searchParams.get("filter");
-  const limit = searchParams.get("limit");
+  const limit = Number(searchParams.get("limit"));
 
-  let limitNum = -1;
-  if (limit && !isNaN(Number(limit))) limitNum = Number(limit);
+  const take =
+    Number.isInteger(limit) && limit > 0 ? Math.min(limit, 100) : undefined;
 
   let filterObject: Prisma.ProjectWhereInput = {
     hidden: false,
@@ -23,12 +23,13 @@ export async function GET(request: Request) {
   const projects = await prisma.project.findMany({
     orderBy: [{ top: "desc" }, { order: "desc" }],
     where: filterObject,
-    take: limitNum > -1 ? limitNum : undefined,
+    take,
   });
 
   return NextResponse.json(projects, {
     headers: {
-      "Cache-Control": "public, max-age=3600",
+      "Cache-Control":
+        "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
     },
   });
 }

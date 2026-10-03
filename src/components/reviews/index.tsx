@@ -15,27 +15,30 @@ export default function Reviews({ embed }: { embed?: boolean }) {
     "/api/reviews",
     {
       fetcher: (url) =>
-        fetch(url, { cache: "force-cache" }).then((res) => res.json()),
+        fetch(url).then((res) => {
+          if (!res.ok) throw new Error("Failed to load reviews");
+          return res.json();
+        }),
     },
   );
 
   const shownReviews = useMemo(() => {
+    const reviews = Array.isArray(data?.reviews) ? data.reviews : [];
+
     if (embed) {
-      const pinned = data?.reviews.filter((review) => review.pinned) ?? [];
+      const pinned = reviews.filter((review) => review.pinned);
       if (pinned.length >= 3) return pinned;
 
-      const sorted =
-        data?.reviews
-          .filter((review) => !review.pinned)
-          .sort((a, b) => b.time_sent.localeCompare(a.time_sent))
-          .slice(0, 3 - pinned.length) ?? [];
+      const sorted = reviews
+        .filter((review) => !review.pinned)
+        .sort((a, b) => b.time_sent.localeCompare(a.time_sent))
+        .slice(0, 3 - pinned.length);
 
       return [...pinned, ...sorted];
     }
 
-    return (
-      data?.reviews.sort((a, b) => b.time_sent.localeCompare(a.time_sent)) ?? []
-    );
+    // Copy before sorting: the array is owned by the SWR cache
+    return [...reviews].sort((a, b) => b.time_sent.localeCompare(a.time_sent));
   }, [embed, data]);
 
   if (isLoading) {
@@ -54,7 +57,7 @@ export default function Reviews({ embed }: { embed?: boolean }) {
     );
   }
 
-  if (error || !data) {
+  if (error || !data || !Array.isArray(data.reviews)) {
     return (
       <div
         id="reviews"

@@ -6,10 +6,11 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://lorenzo0111.me";
-  const buildInfo = await fetch(`${baseUrl}/api/build-info`).then((res) =>
-    res.json(),
-  );
-  const buildTimestamp = new Date(buildInfo.buildTimestamp);
+  const buildTimestamp = await fetch(`${baseUrl}/api/build-info`)
+    .then((res) => res.json())
+    .then((buildInfo) => new Date(buildInfo.buildTimestamp))
+    .then((date) => (isNaN(date.getTime()) ? new Date() : date))
+    .catch(() => new Date());
 
   const staticRoutes = [
     {
@@ -31,6 +32,12 @@ export async function GET() {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/contact`,
+      lastModified: buildTimestamp,
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
       url: `${baseUrl}/login`,
       lastModified: buildTimestamp,
       changeFrequency: "yearly",
@@ -45,6 +52,9 @@ export async function GET() {
   ];
 
   const projects = await prisma.project.findMany({
+    where: {
+      hidden: false,
+    },
     select: {
       name: true,
       updatedAt: true,

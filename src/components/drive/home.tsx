@@ -3,7 +3,6 @@
 import type { DriveFile } from "@/generated/client";
 import { useFetcher } from "@/utils/fetcher";
 import { File } from "lucide-react";
-import Link from "next/link";
 import posthog from "posthog-js";
 
 export default function Drive() {
@@ -38,13 +37,13 @@ export default function Drive() {
                   <p className="text-[#505050]">{file.description}</p>
                 </div>
                 {file.fileUrl && (
-                  <Link
+                  <a
                     className="text-primary"
-                    href={file.fileUrl}
+                    href={`/api/drive/files/${file.id}/download`}
                     onClick={() => handleDownloadClick(file)}
                   >
                     Download
-                  </Link>
+                  </a>
                 )}
               </div>
             );

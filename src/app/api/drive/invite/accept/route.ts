@@ -9,45 +9,20 @@ export async function POST(request: Request) {
   });
 
   if (!session?.user) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const body = await request.json().catch(() => null);
+  const id = body?.id;
+
+  if (!id || typeof id !== "string") {
+    return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
   }
 
   try {
-    const body = await request.json();
-    const { id } = body;
-
-    if (!id || typeof id !== "string") {
-      return new Response(JSON.stringify({ error: "Missing parameters" }), {
-        status: 400,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    }
-
-    const file = await prisma.driveFile.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!file) {
-      return new Response(JSON.stringify({ error: "File not found" }), {
-        status: 404,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    }
-
     const result = await prisma.driveFile.updateMany({
       where: {
-        id: file.id,
+        id,
         userId: null,
       },
       data: {
@@ -56,21 +31,18 @@ export async function POST(request: Request) {
     });
 
     if (result.count !== 1) {
-      return new Response(JSON.stringify({ error: "Invite already claimed" }), {
-        status: 409,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      return NextResponse.json(
+        { error: "Invite not found or already claimed" },
+        { status: 409 },
+      );
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "File not found" }), {
-      status: 404,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    console.error(error);
+    return NextResponse.json(
+      { error: "Failed to accept invite" },
+      { status: 500 },
+    );
   }
 }

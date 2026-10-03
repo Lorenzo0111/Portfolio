@@ -54,8 +54,6 @@ export default function Project({
               fill
               sizes="(max-width: 1023px) 100vw, 360px"
               className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-              placeholder="blur"
-              blurDataURL="LD71s6}j^I-m~V^G==-m^$=r-P%0"
             />
           </div>
         )}
@@ -107,8 +105,6 @@ export default function Project({
             fill
             sizes="(max-width: 768px) 100vw, 480px"
             className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-            placeholder="blur"
-            blurDataURL="LD71s6}j^I-m~V^G==-m^$=r-P%0"
           />
         )}
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

@@ -61,8 +61,6 @@ export default function ProjectPage({ project }: { project: Project }) {
                   alt={project.name}
                   fill
                   className="h-full w-full object-cover"
-                  placeholder="blur"
-                  blurDataURL="LD71s6}j^I-m~V^G==-m^$=r-P%0"
                 />
               </div>
               <div className="absolute inset-0 bg-black/60 to-transparent" />

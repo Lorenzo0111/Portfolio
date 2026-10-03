@@ -24,11 +24,18 @@ export default function Upload() {
   const [link, setLink] = useState<string>("");
   const [youtube, setYoutube] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const addFiles = useCallback((newFiles: File[]) => {
+    const urls = newFiles.map((file) => URL.createObjectURL(file));
+    setFiles((prev) => [...prev, ...newFiles]);
+    setPreviews((prev) => [...prev, ...urls]);
+  }, []);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -40,25 +47,30 @@ export default function Upload() {
     setIsDragging(false);
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
 
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const newFiles = Array.from(e.dataTransfer.files);
-      setFiles((prev) => [...prev, ...newFiles]);
-    }
-  }, []);
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        addFiles(Array.from(e.dataTransfer.files));
+      }
+    },
+    [addFiles],
+  );
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const newFiles = Array.from(e.target.files);
-      setFiles((prev) => [...prev, ...newFiles]);
+      addFiles(Array.from(e.target.files));
+      // Allow selecting the same file again after removing it
+      e.target.value = "";
     }
   };
 
   const removeFile = (index: number) => {
+    URL.revokeObjectURL(previews[index]);
     setFiles((prev) => prev.filter((_, i) => i !== index));
+    setPreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -67,7 +79,7 @@ export default function Upload() {
     setError("");
     setSuccess("");
 
-    if (!name || !description || files.length === 0) {
+    if (!name || !description || !category || files.length === 0) {
       setError(
         "Please fill in all required fields and upload at least one image",
       );
@@ -113,6 +125,8 @@ export default function Upload() {
       setLink("");
       setYoutube("");
       setFiles([]);
+      previews.forEach((url) => URL.revokeObjectURL(url));
+      setPreviews([]);
     } catch (err: any) {
       setError(err.message || "Something went wrong");
       posthog.capture("project_create_failed", {
@@ -257,19 +271,21 @@ export default function Upload() {
 
             {files.length > 0 && (
               <div className="grid grid-cols-3 gap-3 max-h-[300px] overflow-y-auto p-2 custom-scrollbar">
-                {files.map((file, idx) => (
+                {files.map((_, idx) => (
                   <div
                     key={idx}
                     className="relative group aspect-square rounded-lg overflow-hidden border border-white/10 bg-black/20"
                   >
                     <Image
-                      src={URL.createObjectURL(file)}
+                      src={previews[idx]}
                       alt="Preview"
                       fill
                       sizes="(max-width: 1023px) 33vw, 340px"
                       className="object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                     <button
+                      type="button"
+                      aria-label="Remove image"
                       onClick={() => removeFile(idx)}
                       className="absolute top-1 right-1 p-1 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500/80"
                     >

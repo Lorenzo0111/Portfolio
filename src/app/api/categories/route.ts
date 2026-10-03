@@ -2,8 +2,11 @@ import { parseCategoryCsv } from "@/lib/categories";
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET() {
   const projects = await prisma.project.findMany({
+    where: {
+      hidden: false,
+    },
     select: {
       category: true,
     },
@@ -19,7 +22,8 @@ export async function GET(request: Request) {
 
   return NextResponse.json(categories, {
     headers: {
-      "Cache-Control": "public, max-age=3600",
+      "Cache-Control":
+        "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
     },
   });
 }

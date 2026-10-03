@@ -21,7 +21,8 @@ export default function ContactPage() {
 
     posthog.capture("contact_submitted");
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
     try {
       const res = await fetch("/api/contact", {
@@ -35,7 +36,7 @@ export default function ContactPage() {
       }
 
       setSuccess(true);
-      (e.target as HTMLFormElement).reset();
+      form.reset();
     } catch (err: any) {
       setError(err.message || "Something went wrong");
       posthog.captureException(err);
@@ -58,6 +59,15 @@ export default function ContactPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
+
           <div className="space-y-2">
             <label htmlFor="name" className="text-sm font-medium text-gray-200">
               {t("contact.label.name")}
@@ -65,6 +75,7 @@ export default function ContactPage() {
             <Input
               id="name"
               name="name"
+              maxLength={100}
               placeholder={t("contact.placeholder.name")}
               required
               disabled={loading}
@@ -95,6 +106,7 @@ export default function ContactPage() {
             <Textarea
               id="body"
               name="body"
+              maxLength={5000}
               placeholder={t("contact.placeholder.message")}
               required
               disabled={loading}
