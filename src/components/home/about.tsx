@@ -53,7 +53,7 @@ export default async function About() {
         </div>
       </Card>
 
-      <Card className="flex flex-col justify-between">
+      <Card href="/experience" className="flex flex-col justify-between">
         <IconBox className="mb-4 text-blue-400">
           <Code2 className="w-6 h-6" />
         </IconBox>
@@ -63,6 +63,10 @@ export default async function About() {
           </div>
           <div className="text-sm text-gray-400">
             {t("about.experienceTitle")}
+          </div>
+          <div className="mt-3 flex items-center gap-1 text-xs font-bold text-primary">
+            {t("about.experienceLink")}
+            <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
       </Card>

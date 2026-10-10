@@ -10,6 +10,7 @@ export const translations = {
     "nav.home": "Home",
     "nav.about": "About",
     "nav.projects": "Projects",
+    "nav.experience": "Experience",
     "nav.reviews": "Reviews",
 
     // Footer
@@ -116,6 +117,75 @@ export const translations = {
     "project.visitGithub": "Visit GitHub",
     "project.visitWebsite": "Visit Website",
 
+    // Experience Page
+    "exp.title": "My",
+    "exp.titleHighlight": "journey",
+    "exp.subtitle":
+      "I have been building software since I was 13. Today I maintain open source projects with over 20 million downloads, have delivered 100+ freelance projects and build backend, frontend and mobile solutions.",
+    "exp.timeline": "Timeline",
+    "exp.current": "Ongoing",
+    "exp.type.work": "Work",
+    "exp.type.education": "Education",
+    "exp.type.award": "Awards",
+    "exp.stat.downloads.value": "20M+",
+    "exp.stat.downloads.label": "Open source downloads",
+    "exp.stat.projects.value": "100+",
+    "exp.stat.projects.label": "Freelance projects delivered",
+    "exp.stat.rating.value": "5★",
+    "exp.stat.rating.label": "Average client rating",
+    "exp.stat.grade.value": "100/100",
+    "exp.stat.grade.label": "Diploma grade, with honors",
+    "exp.university.date": "2026 - Present",
+    "exp.university.title": "Computer Science, University",
+    "exp.university.desc":
+      "Currently studying for a bachelor's degree in Computer Science.",
+    "exp.freelance.date": "2025 - Present",
+    "exp.freelance.title": "Freelance Developer",
+    "exp.freelance.desc":
+      "Worked on more than 100 projects for different clients while keeping a 5-star average rating. Strong focus on client communication, meeting deadlines and delivering high-quality experiences.",
+    "exp.hackathons.date": "2025 - 2026",
+    "exp.hackathons.title": "Hackathons",
+    "exp.hackathons.desc":
+      "Won various hackathons, building solutions to real-world problems. Gained experience in critical thinking, rapid prototyping and pitching ideas to an audience.",
+    "exp.internships.date": "Jul 2025 - Feb 2026",
+    "exp.internships.title": "Software Development Internships",
+    "exp.internships.desc":
+      "Three internships at a software company, focused on mobile and web apps for logistics. Worked with Flutter, APIs and databases, contributing to delivery and order management features as part of a team.",
+    "exp.erasmus.date": "Feb - Mar 2025",
+    "exp.erasmus.title": "Erasmus+ Internship in Spain",
+    "exp.erasmus.desc":
+      "Two-week internship in Spain through the Erasmus+ programme at an agency specialized in website SEO. Hands-on experience with content optimization and digital strategy analysis.",
+    "exp.highschool.date": "2021 - 2026",
+    "exp.highschool.title": "High School Diploma in Computer Science",
+    "exp.highschool.desc":
+      "Five-year technical high school programme in Computer Science, completed with the highest possible grade.",
+    "exp.highschool.grade": "with honors (cum laude)",
+    "exp.skills": "Skills",
+    "exp.skill.backend": "Backend",
+    "exp.skill.frontend": "Frontend",
+    "exp.skill.mobile": "Mobile",
+    "exp.skill.frameworks": "Frameworks",
+    "exp.skill.minecraft": "Minecraft",
+    "exp.skill.databases": "Databases",
+    "exp.skill.systems": "Systems",
+    "exp.languages": "Languages",
+    "exp.lang.italian": "Italian",
+    "exp.lang.italian.level": "Native",
+    "exp.lang.english": "English",
+    "exp.lang.english.level": "C1 - Cambridge certification",
+    "exp.softSkills": "Soft Skills",
+    "exp.soft.communication": "Client Communication",
+    "exp.soft.communication.desc":
+      "Kept a 5-star rating across 100+ freelance projects.",
+    "exp.soft.problemSolving": "Problem Solving",
+    "exp.soft.problemSolving.desc": "Won various hackathons.",
+    "exp.soft.speaking": "Public Speaking",
+    "exp.soft.speaking.desc":
+      "Presented solutions to judges and audiences at several events.",
+    "exp.soft.driven": "Driven",
+    "exp.soft.driven.desc": "Building software since I was 13.",
+    "about.experienceLink": "See my journey",
+
     // Metadata
     "meta.home.title": "Home - Lorenzo0111",
     "meta.home.desc":
@@ -129,12 +199,16 @@ export const translations = {
       "Send me a message and I'll get back to you as soon as possible.",
     "meta.login.title": "Login",
     "meta.login.desc": "Sign in to your account",
+    "meta.experience.title": "Experience",
+    "meta.experience.desc":
+      "Work experience, education and skills of Lorenzo0111",
   },
   it: {
     // Navbar
     "nav.home": "Home",
     "nav.about": "Chi Sono",
     "nav.projects": "Progetti",
+    "nav.experience": "Esperienze",
     "nav.reviews": "Recensioni",
 
     // Footer
@@ -242,6 +316,76 @@ export const translations = {
     "project.visitGithub": "Visita GitHub",
     "project.visitWebsite": "Visita Sito Web",
 
+    // Experience Page
+    "exp.title": "Il mio",
+    "exp.titleHighlight": "percorso",
+    "exp.subtitle":
+      "Sviluppo software dall'età di 13 anni. Oggi gestisco progetti open source con oltre 20 milioni di download, ho portato a termine più di 100 progetti come freelance e sviluppo soluzioni per backend, frontend e dispositivi mobili.",
+    "exp.timeline": "Timeline",
+    "exp.current": "In corso",
+    "exp.type.work": "Lavoro",
+    "exp.type.education": "Istruzione",
+    "exp.type.award": "Premi",
+    "exp.stat.downloads.value": "20M+",
+    "exp.stat.downloads.label": "Download open source",
+    "exp.stat.projects.value": "100+",
+    "exp.stat.projects.label": "Progetti freelance completati",
+    "exp.stat.rating.value": "5★",
+    "exp.stat.rating.label": "Valutazione media dei clienti",
+    "exp.stat.grade.value": "100/100",
+    "exp.stat.grade.label": "Voto di diploma, con lode",
+    "exp.university.date": "2026 - Ora",
+    "exp.university.title": "Informatica, Università",
+    "exp.university.desc":
+      "Attualmente frequento il corso di laurea triennale in Informatica.",
+    "exp.freelance.date": "2025 - Ora",
+    "exp.freelance.title": "Sviluppatore Freelance",
+    "exp.freelance.desc":
+      "Ho lavorato a più di 100 progetti per diversi clienti mantenendo una valutazione media di 5 stelle. Forte attenzione alla comunicazione con i clienti, al rispetto delle scadenze e al fornire esperienze di alta qualità.",
+    "exp.hackathons.date": "2025 - 2026",
+    "exp.hackathons.title": "Hackathon",
+    "exp.hackathons.desc":
+      "Ho vinto vari hackathon, creando soluzioni per risolvere problemi del mondo reale. Ho acquisito esperienza nel pensiero critico, nella prototipazione rapida e nella presentazione di idee a un pubblico.",
+    "exp.internships.date": "Lug 2025 - Feb 2026",
+    "exp.internships.title": "Tirocini di Sviluppo Software",
+    "exp.internships.desc":
+      "Tre tirocini presso un'azienda di software, focalizzati sullo sviluppo di app mobile e web per la logistica. Esperienza con Flutter, API e database, contribuendo alle funzionalità di gestione delle consegne e degli ordini all'interno di un team.",
+    "exp.erasmus.date": "Feb - Mar 2025",
+    "exp.erasmus.title": "Tirocinio Erasmus+ in Spagna",
+    "exp.erasmus.desc":
+      "Tirocinio di due settimane in Spagna attraverso il programma Erasmus+ presso un'agenzia specializzata in SEO per siti web. Esperienza pratica nell'ottimizzazione dei contenuti e nell'analisi delle strategie digitali.",
+    "exp.highschool.date": "2021 - 2026",
+    "exp.highschool.title": "Diploma in Informatica",
+    "exp.highschool.desc":
+      "Percorso quinquennale di istituto tecnico a indirizzo Informatica, concluso con il massimo dei voti.",
+    "exp.highschool.grade": "e lode",
+    "exp.skills": "Competenze",
+    "exp.skill.backend": "Backend",
+    "exp.skill.frontend": "Frontend",
+    "exp.skill.mobile": "Mobile",
+    "exp.skill.frameworks": "Framework",
+    "exp.skill.minecraft": "Minecraft",
+    "exp.skill.databases": "Database",
+    "exp.skill.systems": "Sistemi",
+    "exp.languages": "Lingue",
+    "exp.lang.italian": "Italiano",
+    "exp.lang.italian.level": "Madrelingua",
+    "exp.lang.english": "Inglese",
+    "exp.lang.english.level": "C1 - Certificazione Cambridge",
+    "exp.softSkills": "Competenze Trasversali",
+    "exp.soft.communication": "Comunicazione con i Clienti",
+    "exp.soft.communication.desc":
+      "Ho mantenuto un rating di 5 stelle in oltre 100 progetti freelance.",
+    "exp.soft.problemSolving": "Problem Solving",
+    "exp.soft.problemSolving.desc":
+      "Ho vinto vari hackathon.",
+    "exp.soft.speaking": "Public Speaking",
+    "exp.soft.speaking.desc":
+      "Ho presentato soluzioni a giudici e pubblici in diversi eventi.",
+    "exp.soft.driven": "Determinato",
+    "exp.soft.driven.desc": "Sviluppo software da quando avevo 13 anni.",
+    "about.experienceLink": "Scopri il mio percorso",
+
     // Metadata
     "meta.home.title": "Home - Lorenzo0111",
     "meta.home.desc":
@@ -256,12 +400,16 @@ export const translations = {
       "Inviami un messaggio e ti risponderò il prima possibile.",
     "meta.login.title": "Accedi",
     "meta.login.desc": "Accedi al tuo account",
+    "meta.experience.title": "Esperienze",
+    "meta.experience.desc":
+      "Esperienze lavorative, istruzione e competenze di Lorenzo0111",
   },
   es: {
     // Navbar
     "nav.home": "Inicio",
     "nav.about": "Sobre mí",
     "nav.projects": "Proyectos",
+    "nav.experience": "Experiencia",
     "nav.reviews": "Reseñas",
 
     // Footer
@@ -369,6 +517,76 @@ export const translations = {
     "project.visitGithub": "Visitar GitHub",
     "project.visitWebsite": "Visitar Sitio Web",
 
+    // Experience Page
+    "exp.title": "Mi",
+    "exp.titleHighlight": "trayectoria",
+    "exp.subtitle":
+      "Desarrollo software desde los 13 años. Hoy mantengo proyectos de código abierto con más de 20 millones de descargas, he completado más de 100 proyectos como freelance y desarrollo soluciones de backend, frontend y móviles.",
+    "exp.timeline": "Cronología",
+    "exp.current": "En curso",
+    "exp.type.work": "Trabajo",
+    "exp.type.education": "Educación",
+    "exp.type.award": "Premios",
+    "exp.stat.downloads.value": "20M+",
+    "exp.stat.downloads.label": "Descargas de código abierto",
+    "exp.stat.projects.value": "100+",
+    "exp.stat.projects.label": "Proyectos freelance entregados",
+    "exp.stat.rating.value": "5★",
+    "exp.stat.rating.label": "Valoración media de los clientes",
+    "exp.stat.grade.value": "100/100",
+    "exp.stat.grade.label": "Nota del diploma, con honores",
+    "exp.university.date": "2026 - Actualidad",
+    "exp.university.title": "Informática, Universidad",
+    "exp.university.desc":
+      "Actualmente curso el grado universitario en Informática.",
+    "exp.freelance.date": "2025 - Actualidad",
+    "exp.freelance.title": "Desarrollador Freelance",
+    "exp.freelance.desc":
+      "He trabajado en más de 100 proyectos para distintos clientes manteniendo una valoración media de 5 estrellas. Gran atención a la comunicación con los clientes, al cumplimiento de los plazos y a ofrecer experiencias de alta calidad.",
+    "exp.hackathons.date": "2025 - 2026",
+    "exp.hackathons.title": "Hackathones",
+    "exp.hackathons.desc":
+      "Gané varios hackathon, creando soluciones a problemas del mundo real. Adquirí experiencia en pensamiento crítico, prototipado rápido y presentación de ideas ante un público.",
+    "exp.internships.date": "Jul 2025 - Feb 2026",
+    "exp.internships.title": "Prácticas de Desarrollo de Software",
+    "exp.internships.desc":
+      "Tres prácticas en una empresa de software, centradas en el desarrollo de apps móviles y web para logística. Experiencia con Flutter, APIs y bases de datos, contribuyendo a las funciones de gestión de entregas y pedidos dentro de un equipo.",
+    "exp.erasmus.date": "Feb - Mar 2025",
+    "exp.erasmus.title": "Prácticas Erasmus+ en España",
+    "exp.erasmus.desc":
+      "Prácticas de dos semanas en España a través del programa Erasmus+ en una agencia especializada en SEO para sitios web. Experiencia práctica en optimización de contenidos y análisis de estrategias digitales.",
+    "exp.highschool.date": "2021 - 2026",
+    "exp.highschool.title": "Diploma de Bachillerato Técnico en Informática",
+    "exp.highschool.desc":
+      "Programa de cinco años de instituto técnico en Informática, finalizado con la máxima nota posible.",
+    "exp.highschool.grade": "con matrícula de honor",
+    "exp.skills": "Habilidades",
+    "exp.skill.backend": "Backend",
+    "exp.skill.frontend": "Frontend",
+    "exp.skill.mobile": "Móvil",
+    "exp.skill.frameworks": "Frameworks",
+    "exp.skill.minecraft": "Minecraft",
+    "exp.skill.databases": "Bases de datos",
+    "exp.skill.systems": "Sistemas",
+    "exp.languages": "Idiomas",
+    "exp.lang.italian": "Italiano",
+    "exp.lang.italian.level": "Nativo",
+    "exp.lang.english": "Inglés",
+    "exp.lang.english.level": "C1 - Certificación Cambridge",
+    "exp.softSkills": "Habilidades Blandas",
+    "exp.soft.communication": "Comunicación con Clientes",
+    "exp.soft.communication.desc":
+      "He mantenido una valoración de 5 estrellas en más de 100 proyectos freelance.",
+    "exp.soft.problemSolving": "Resolución de Problemas",
+    "exp.soft.problemSolving.desc":
+      "He ganado varios hackathones.",
+    "exp.soft.speaking": "Hablar en Público",
+    "exp.soft.speaking.desc":
+      "He presentado soluciones ante jueces y público en varios eventos.",
+    "exp.soft.driven": "Determinado",
+    "exp.soft.driven.desc": "Desarrollo software desde los 13 años.",
+    "about.experienceLink": "Descubre mi trayectoria",
+
     // Metadata
     "meta.home.title": "Inicio - Lorenzo0111",
     "meta.home.desc":
@@ -382,12 +600,16 @@ export const translations = {
     "meta.contact.desc": "Envíame un mensaje y te responderé lo antes posible.",
     "meta.login.title": "Iniciar sesión",
     "meta.login.desc": "Inicia sesión en tu cuenta",
+    "meta.experience.title": "Experiencia",
+    "meta.experience.desc":
+      "Experiencia laboral, educación y habilidades de Lorenzo0111",
   },
   fr: {
     // Navbar
     "nav.home": "Accueil",
     "nav.about": "À propos",
     "nav.projects": "Projets",
+    "nav.experience": "Expérience",
     "nav.reviews": "Avis",
 
     // Footer
@@ -496,6 +718,77 @@ export const translations = {
     "project.visitGithub": "Visiter GitHub",
     "project.visitWebsite": "Visiter le site Web",
 
+    // Experience Page
+    "exp.title": "Mon",
+    "exp.titleHighlight": "parcours",
+    "exp.subtitle":
+      "Je développe des logiciels depuis l'âge de 13 ans. Aujourd'hui, je maintiens des projets open source totalisant plus de 20 millions de téléchargements, j'ai mené à bien plus de 100 projets en freelance et je développe des solutions backend, frontend et mobiles.",
+    "exp.timeline": "Chronologie",
+    "exp.current": "En cours",
+    "exp.type.work": "Travail",
+    "exp.type.education": "Formation",
+    "exp.type.award": "Prix",
+    "exp.stat.downloads.value": "20M+",
+    "exp.stat.downloads.label": "Téléchargements open source",
+    "exp.stat.projects.value": "100+",
+    "exp.stat.projects.label": "Projets freelance livrés",
+    "exp.stat.rating.value": "5★",
+    "exp.stat.rating.label": "Note moyenne des clients",
+    "exp.stat.grade.value": "100/100",
+    "exp.stat.grade.label": "Note du diplôme, avec les félicitations",
+    "exp.university.date": "2026 - Aujourd'hui",
+    "exp.university.title": "Informatique, Université",
+    "exp.university.desc":
+      "Je prépare actuellement une licence en informatique.",
+    "exp.freelance.date": "2025 - Aujourd'hui",
+    "exp.freelance.title": "Développeur Freelance",
+    "exp.freelance.desc":
+      "J'ai travaillé sur plus de 100 projets pour différents clients en conservant une note moyenne de 5 étoiles. Une grande attention portée à la communication avec les clients, au respect des délais et à la qualité des réalisations.",
+    "exp.hackathons.date": "2025 - 2026",
+    "exp.hackathons.title": "Hackathons",
+    "exp.hackathons.desc":
+      "J'ai remporté un hackathon régional et deux hackathons scolaires, en créant des solutions à des problèmes concrets. J'y ai acquis de l'expérience en esprit critique, en prototypage rapide et en présentation d'idées devant un public.",
+    "exp.internships.date": "Juil. 2025 - Fév. 2026",
+    "exp.internships.title": "Stages en Développement Logiciel",
+    "exp.internships.desc":
+      "Trois stages dans une entreprise de logiciels, axés sur le développement d'applications mobiles et web pour la logistique. Expérience avec Flutter, les API et les bases de données, en contribuant aux fonctionnalités de gestion des livraisons et des commandes au sein d'une équipe.",
+    "exp.erasmus.date": "Fév. - Mars 2025",
+    "exp.erasmus.title": "Stage Erasmus+ en Espagne",
+    "exp.erasmus.desc":
+      "Stage de deux semaines en Espagne dans le cadre du programme Erasmus+, au sein d'une agence spécialisée dans le SEO de sites web. Expérience pratique de l'optimisation de contenus et de l'analyse de stratégies digitales.",
+    "exp.highschool.date": "2021 - 2026",
+    "exp.highschool.title": "Diplôme de Lycée Technique en Informatique",
+    "exp.highschool.desc":
+      "Cursus de cinq ans en lycée technique, spécialité informatique, obtenu avec la note maximale.",
+    "exp.highschool.grade": "avec les félicitations",
+    "exp.skills": "Compétences",
+    "exp.skill.backend": "Backend",
+    "exp.skill.frontend": "Frontend",
+    "exp.skill.mobile": "Mobile",
+    "exp.skill.frameworks": "Frameworks",
+    "exp.skill.minecraft": "Minecraft",
+    "exp.skill.databases": "Bases de données",
+    "exp.skill.systems": "Systèmes",
+    "exp.languages": "Langues",
+    "exp.lang.italian": "Italien",
+    "exp.lang.italian.level": "Langue maternelle",
+    "exp.lang.english": "Anglais",
+    "exp.lang.english.level": "C1 - Certification Cambridge",
+    "exp.softSkills": "Compétences Transversales",
+    "exp.soft.communication": "Communication Client",
+    "exp.soft.communication.desc":
+      "Une note de 5 étoiles maintenue sur plus de 100 projets freelance.",
+    "exp.soft.problemSolving": "Résolution de Problèmes",
+    "exp.soft.problemSolving.desc":
+      "Vainqueur de hackathons régionaux et scolaires.",
+    "exp.soft.speaking": "Prise de Parole en Public",
+    "exp.soft.speaking.desc":
+      "J'ai présenté des solutions devant des jurys et des publics lors de plusieurs événements.",
+    "exp.soft.driven": "Déterminé",
+    "exp.soft.driven.desc":
+      "Je développe des logiciels depuis l'âge de 13 ans.",
+    "about.experienceLink": "Découvrir mon parcours",
+
     // Metadata
     "meta.home.title": "Accueil - Lorenzo0111",
     "meta.home.desc":
@@ -510,6 +803,9 @@ export const translations = {
       "Envoyez-moi un message et je vous répondrai dès que possible.",
     "meta.login.title": "Se connecter",
     "meta.login.desc": "Connectez-vous à votre compte",
+    "meta.experience.title": "Expérience",
+    "meta.experience.desc":
+      "Expérience professionnelle, formation et compétences de Lorenzo0111",
   },
 } as const;
 

@@ -57,11 +57,14 @@ export default function Navbar() {
           <Link className="hover:text-primary" href="/">
             {t("nav.home")}
           </Link>
-          <Link className="hover:text-primary" href="/#about">
+          <Link className="hidden sm:inline hover:text-primary" href="/#about">
             {t("nav.about")}
           </Link>
           <Link className="hover:text-primary" href="/projects">
             {t("nav.projects")}
+          </Link>
+          <Link className="hover:text-primary" href="/experience">
+            {t("nav.experience")}
           </Link>
           <Link className="hover:text-primary" href="/reviews">
             {t("nav.reviews")}
