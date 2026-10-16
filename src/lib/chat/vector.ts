@@ -10,7 +10,7 @@ type Metadata = Pick<KnowledgeDoc, "type" | "title" | "url">;
 let index: Index<Metadata> | null = null;
 
 /**
- * Upstash Vector index. It must be created with a built-in embedding model 
+ * Upstash Vector index. It must be created with a built-in embedding model
  * so we can upsert and query raw text.
  */
 function getIndex() {

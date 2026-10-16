@@ -6,6 +6,11 @@ import {
 } from "@/lib/chat/prompt";
 import { consumeChatQuota, isRateLimitConfigured } from "@/lib/chat/ratelimit";
 import {
+  isTurnstileConfigured,
+  TURNSTILE_FIELD,
+  verifyTurnstile,
+} from "@/lib/chat/turnstile";
+import {
   chatTools,
   type ChatMessage,
   type ChatMetadata,
@@ -22,7 +27,6 @@ import {
   streamText,
   toUIMessageStream,
 } from "ai";
-import { checkBotId } from "botid/server";
 import { NextResponse } from "next/server";
 import z from "zod";
 import { ipAddress } from "@vercel/functions";
@@ -33,6 +37,7 @@ const MAX_MESSAGE_LENGTH = 1000;
 const MAX_HISTORY = 12;
 
 const bodySchema = z.object({
+  [TURNSTILE_FIELD]: z.string().max(2048).optional(),
   locale: z.enum(locales).catch(defaultLocale),
   messages: z
     .array(
@@ -93,7 +98,11 @@ async function isOnTopic(messages: ModelMessage[]) {
 }
 
 export async function POST(req: Request) {
-  if (!process.env.OPENROUTER_API_KEY || !isRateLimitConfigured())
+  if (
+    !process.env.OPENROUTER_API_KEY ||
+    !isRateLimitConfigured() ||
+    !isTurnstileConfigured()
+  )
     return error("unavailable", 503);
 
   const parsed = bodySchema.safeParse(await req.json().catch(() => null));
@@ -106,10 +115,15 @@ export async function POST(req: Request) {
   if (!last || last.role !== "user") return error("invalid", 400);
   if (last.content.length > MAX_MESSAGE_LENGTH) return error("too_long", 400);
 
-  const verification = await checkBotId();
-  if (verification.isBot) return error("bot", 403);
+  const ip = ipAddress(req);
 
-  const quota = await consumeChatQuota(ipAddress(req) ?? "unknown");
+  // Checked before the quota so bots can't drain the global limit
+  // Behind the Cloudflare proxy Vercel only sees Cloudflare's address
+  const visitorIp = req.headers.get("cf-connecting-ip") ?? ip;
+  if (!(await verifyTurnstile(parsed.data[TURNSTILE_FIELD], visitorIp)))
+    return error("bot", 403);
+
+  const quota = await consumeChatQuota(ip ?? "unknown");
   if (!quota.ok) {
     if (quota.reason === "global") return error("unavailable", 503);
     return error("rate_limited", 429, { reset: quota.reset });

@@ -1,6 +1,7 @@
 "use client";
 
 import type { ChatMessage } from "@/lib/chat/tools";
+import { TURNSTILE_ACTION, TURNSTILE_FIELD } from "@/lib/chat/turnstile";
 import { type TranslationKey } from "@/lib/i18n";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
@@ -25,6 +26,7 @@ import {
   TypingIndicator,
 } from "./chat-message";
 import type { ChatStatus } from "./chat-widget";
+import { useTurnstile } from "./use-turnstile";
 
 type AvailableStatus = Extract<ChatStatus, { available: true }>;
 
@@ -67,6 +69,14 @@ export default function ChatPanel({
   const [input, setInput] = useState("");
   const [initialMessages] = useState(loadMessages);
   const [now, setNow] = useState(() => Date.now());
+  // Text of the message waiting for a Turnstile token
+  const [verifying, setVerifying] = useState<string | null>(null);
+  const [verifyFailed, setVerifyFailed] = useState(false);
+  const {
+    containerRef: turnstileRef,
+    getToken,
+    interactive: turnstileInteractive,
+  } = useTurnstile(TURNSTILE_ACTION);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -168,7 +178,8 @@ export default function ChatPanel({
     },
   });
 
-  const busy = chatStatus === "submitted" || chatStatus === "streaming";
+  const busy =
+    chatStatus === "submitted" || chatStatus === "streaming" || !!verifying;
   const parsedError = parseError(error);
   const rateLimited =
     parsedError?.code === "rate_limited" || status.remaining <= 0;
@@ -206,15 +217,42 @@ export default function ChatPanel({
     el.style.height = `${Math.min(el.scrollHeight, 140)}px`;
   }, [input]);
 
-  const send = (text: string, source: "typed" | "suggestion" = "typed") => {
+  /**
+   * Every request needs a fresh single-use Turnstile token.
+   * Returns null when the visitor couldn't be verified.
+   */
+  const requestBody = async () => {
+    const token = await getToken();
+    if (token === null) {
+      setVerifyFailed(true);
+      track("chat_error", { code: "turnstile", turn: countTurns(messages) });
+      return null;
+    }
+    return { locale, [TURNSTILE_FIELD]: token };
+  };
+
+  const send = async (
+    text: string,
+    source: "typed" | "suggestion" = "typed",
+  ) => {
     const trimmed = text.trim();
     if (!trimmed || busy || rateLimited || trimmed.length > MAX_LENGTH) return;
 
     stickToBottom.current = true;
-    markRequestStart();
     clearError();
-    sendMessage({ text: trimmed }, { body: { locale } });
+    setVerifyFailed(false);
     setInput("");
+    setVerifying(trimmed);
+
+    const body = await requestBody();
+    setVerifying(null);
+    if (!body) {
+      setInput(trimmed);
+      return;
+    }
+
+    markRequestStart();
+    sendMessage({ text: trimmed }, { body });
     track("chat_message_sent", {
       length: trimmed.length,
       source,
@@ -224,10 +262,15 @@ export default function ChatPanel({
     });
   };
 
-  const retry = () => {
+  const retry = async () => {
+    clearError();
+    setVerifyFailed(false);
+    const body = await requestBody();
+    if (!body) return;
+
     markRequestStart();
     track("chat_retry", { turn: countTurns(messages) });
-    regenerate({ body: { locale } });
+    regenerate({ body });
   };
 
   const onLinkClick: LinkClickHandler = (link) => {
@@ -245,6 +288,7 @@ export default function ChatPanel({
     stop();
     setMessages([]);
     clearError();
+    setVerifyFailed(false);
     saveMessages([]);
     inputRef.current?.focus();
   };
@@ -351,13 +395,29 @@ export default function ChatPanel({
           />
         ))}
 
-        {waiting && <TypingIndicator />}
+        {verifying && (
+          <div className="flex justify-end">
+            <div className="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-md bg-primary/70 px-4 py-2.5 text-sm text-black">
+              {verifying}
+            </div>
+          </div>
+        )}
+
+        {(waiting || verifying) && <TypingIndicator />}
+
+        {verifyFailed && (
+          <div className="rounded-2xl border border-red-500/20 bg-red-500/5 px-4 py-2.5 text-sm text-red-300">
+            {t("chat.verifyFailed")}
+          </div>
+        )}
 
         {error && !rateLimited && parsedError?.code !== "unavailable" && (
           <div className="flex items-center justify-between gap-3 rounded-2xl border border-red-500/20 bg-red-500/5 px-4 py-2.5 text-sm text-red-300">
             {parsedError?.code === "too_long"
               ? t("chat.tooLong")
-              : t("chat.error")}
+              : parsedError?.code === "bot"
+                ? t("chat.verifyFailed")
+                : t("chat.error")}
             {parsedError?.code !== "too_long" && (
               <button
                 type="button"
@@ -372,6 +432,12 @@ export default function ChatPanel({
       </div>
 
       <div className="px-3 pb-3 pt-2 border-t border-white/5 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+        {/* Invisible unless Cloudflare asks the visitor to interact */}
+        <div
+          ref={turnstileRef}
+          className={turnstileInteractive ? "mb-2" : undefined}
+        />
+
         {rateLimited ? (
           <div className="flex items-start gap-3 rounded-2xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-gray-200">
             <Clock className="w-4 h-4 mt-0.5 shrink-0 text-primary" />

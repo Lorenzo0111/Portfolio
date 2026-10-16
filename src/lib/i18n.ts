@@ -225,6 +225,8 @@ export const translations = {
     "chat.tooLong": "Your message is too long, try to shorten it.",
     "chat.error": "Something went wrong. Please try again.",
     "chat.retry": "Retry",
+    "chat.verifyFailed":
+      "We couldn't verify that you're human. Please try again.",
     "chat.tool.searchPortfolio": "Searching the portfolio",
     "chat.tool.listProjects": "Browsing projects",
     "chat.tool.getProjectDetails": "Reading project details",
@@ -253,7 +255,7 @@ export const translations = {
       "When you send a message, your name, email and message are emailed to me through Resend so that I can reply. They are kept only as long as needed to handle your request. Legal basis: your request.",
     "privacy.assistant.title": "AI assistant",
     "privacy.assistant.body":
-      "Your questions are sent to OpenRouter and the AI model provider (OpenAI) only to generate an answer. Zero data retention is requested, so they are not stored or used for training. The conversation is kept only in your browser for the current session. Your IP address is stored for up to 24 hours from Upstash to apply usage limits, and Vercel BotID checks requests to block bots. Please don't share personal information in the chat. Legal basis: legitimate interest in providing the feature and preventing abuse.",
+      "Your questions are sent to OpenRouter and the AI model provider (OpenAI) only to generate an answer. Zero data retention is requested, so they are not stored or used for training. The conversation is kept only in your browser for the current session. Your IP address is stored for up to 24 hours from Upstash to apply usage limits, and Cloudflare Turnstile checks requests to block bots. Please don't share personal information in the chat. Legal basis: legitimate interest in providing the feature and preventing abuse.",
     "privacy.analytics.title": "Analytics",
     "privacy.analytics.body":
       "Only if you accept, PostHog (EU servers) collects usage data such as visited pages, clicks and how the AI assistant is used, never the text of your questions, using cookies and local storage. Vercel Web Analytics and Speed Insights collect anonymous, aggregated visit and performance data without cookies. Legal basis: your consent for PostHog, legitimate interest for Vercel.",
@@ -491,6 +493,8 @@ export const translations = {
     "chat.tooLong": "Il messaggio è troppo lungo, prova ad accorciarlo.",
     "chat.error": "Qualcosa è andato storto. Riprova.",
     "chat.retry": "Riprova",
+    "chat.verifyFailed":
+      "Non siamo riusciti a verificare che tu sia umano. Riprova.",
     "chat.tool.searchPortfolio": "Cerco nel portfolio",
     "chat.tool.listProjects": "Sfoglio i progetti",
     "chat.tool.getProjectDetails": "Leggo i dettagli del progetto",
@@ -519,7 +523,7 @@ export const translations = {
       "Quando invii un messaggio, il tuo nome, la tua email e il messaggio mi vengono inviati via email tramite Resend per poterti rispondere. Vengono conservati solo per il tempo necessario a gestire la tua richiesta.",
     "privacy.assistant.title": "Assistente AI",
     "privacy.assistant.body":
-      "Le tue domande vengono inviate a OpenRouter e al fornitore del modello AI (OpenAI) solo per generare una risposta. È richiesta la conservazione zero dei dati, quindi non vengono salvate né usate per l'addestramento. La conversazione resta solo nel tuo browser per la sessione corrente. Il tuo indirizzo IP viene conservato per massimo 24 ore da Upstash per applicare i limiti di utilizzo, e Vercel BotID controlla le richieste per bloccare i bot. Non condividere dati personali nella chat.",
+      "Le tue domande vengono inviate a OpenRouter e al fornitore del modello AI (OpenAI) solo per generare una risposta. È richiesta la conservazione zero dei dati, quindi non vengono salvate né usate per l'addestramento. La conversazione resta solo nel tuo browser per la sessione corrente. Il tuo indirizzo IP viene conservato per massimo 24 ore da Upstash per applicare i limiti di utilizzo, e Cloudflare Turnstile controlla le richieste per bloccare i bot. Non condividere dati personali nella chat.",
     "privacy.analytics.title": "Statistiche",
     "privacy.analytics.body":
       "Solo se accetti, PostHog con server in UE raccoglie dati di utilizzo come pagine visitate, clic e uso dell'assistente AI, mai il testo delle tue domande, tramite cookie e local storage. Vercel Web Analytics e Speed Insights raccolgono dati anonimi e aggregati su visite e prestazioni senza cookie.",
@@ -757,6 +761,8 @@ export const translations = {
     "chat.tooLong": "Tu mensaje es demasiado largo, intenta acortarlo.",
     "chat.error": "Algo salió mal. Inténtalo de nuevo.",
     "chat.retry": "Reintentar",
+    "chat.verifyFailed":
+      "No pudimos verificar que eres humano. Inténtalo de nuevo.",
     "chat.tool.searchPortfolio": "Buscando en el portfolio",
     "chat.tool.listProjects": "Revisando proyectos",
     "chat.tool.getProjectDetails": "Leyendo detalles del proyecto",
@@ -785,7 +791,7 @@ export const translations = {
       "Cuando envías un mensaje, tu nombre, tu email y el mensaje me llegan por email a través de Resend para poder responderte. Se conservan solo el tiempo necesario para gestionar tu solicitud. Base jurídica: tu solicitud.",
     "privacy.assistant.title": "Asistente IA",
     "privacy.assistant.body":
-      "Tus preguntas se envían a OpenRouter y al proveedor del modelo de IA (OpenAI) solo para generar una respuesta. Se solicita retención cero de datos, por lo que no se guardan ni se usan para entrenamiento. La conversación se guarda solo en tu navegador durante la sesión actual. Tu dirección IP se guarda hasta 24 horas de Upstash para aplicar límites de uso, y Vercel BotID revisa las solicitudes para bloquear bots. No compartas datos personales en el chat. Base jurídica: interés legítimo en ofrecer la función y prevenir abusos.",
+      "Tus preguntas se envían a OpenRouter y al proveedor del modelo de IA (OpenAI) solo para generar una respuesta. Se solicita retención cero de datos, por lo que no se guardan ni se usan para entrenamiento. La conversación se guarda solo en tu navegador durante la sesión actual. Tu dirección IP se guarda hasta 24 horas de Upstash para aplicar límites de uso, y Cloudflare Turnstile revisa las solicitudes para bloquear bots. No compartas datos personales en el chat. Base jurídica: interés legítimo en ofrecer la función y prevenir abusos.",
     "privacy.analytics.title": "Estadísticas",
     "privacy.analytics.body":
       "Solo si aceptas, PostHog con servidores en la UE recoge datos de uso como páginas visitadas, clics y uso del asistente IA, nunca el texto de tus preguntas, mediante cookies y almacenamiento local. Vercel Web Analytics y Speed Insights recogen datos anónimos y agregados de visitas y rendimiento sin cookies. Base jurídica: tu consentimiento para PostHog, interés legítimo para Vercel.",
@@ -1027,6 +1033,8 @@ export const translations = {
     "chat.tooLong": "Ton message est trop long, essaie de le raccourcir.",
     "chat.error": "Une erreur est survenue. Réessaie.",
     "chat.retry": "Réessayer",
+    "chat.verifyFailed":
+      "Nous n'avons pas pu vérifier que tu es humain. Réessaie.",
     "chat.tool.searchPortfolio": "Recherche dans le portfolio",
     "chat.tool.listProjects": "Parcours des projets",
     "chat.tool.getProjectDetails": "Lecture du projet",
@@ -1055,7 +1063,7 @@ export const translations = {
       "Quand tu envoies un message, ton nom, ton email et ton message me sont envoyés par email via Resend afin que je puisse te répondre. Ils sont conservés uniquement le temps nécessaire pour traiter ta demande. Base légale : ta demande.",
     "privacy.assistant.title": "Assistant IA",
     "privacy.assistant.body":
-      "Tes questions sont envoyées à OpenRouter et au fournisseur du modèle d'IA (OpenAI) uniquement pour générer une réponse. Une conservation zéro des données est demandée, elles ne sont donc ni stockées ni utilisées pour l'entraînement. La conversation reste uniquement dans ton navigateur pour la session en cours. Ton adresse IP est conservée jusqu'à 24 heures par Upstash pour appliquer les limites d'utilisation, et Vercel BotID vérifie les requêtes pour bloquer les bots. Ne partage pas de données personnelles dans le chat. Base légale : intérêt légitime à fournir la fonctionnalité et à prévenir les abus.",
+      "Tes questions sont envoyées à OpenRouter et au fournisseur du modèle d'IA (OpenAI) uniquement pour générer une réponse. Une conservation zéro des données est demandée, elles ne sont donc ni stockées ni utilisées pour l'entraînement. La conversation reste uniquement dans ton navigateur pour la session en cours. Ton adresse IP est conservée jusqu'à 24 heures par Upstash pour appliquer les limites d'utilisation, et Cloudflare Turnstile vérifie les requêtes pour bloquer les bots. Ne partage pas de données personnelles dans le chat. Base légale : intérêt légitime à fournir la fonctionnalité et à prévenir les abus.",
     "privacy.analytics.title": "Statistiques",
     "privacy.analytics.body":
       "Uniquement si tu acceptes, PostHog avec serveurs dans l'UE collecte des données d'utilisation comme les pages visitées, les clics et l'utilisation de l'assistant IA, jamais le texte de tes questions, à l'aide de cookies et du stockage local. Vercel Web Analytics et Speed Insights collectent des données anonymes et agrégées sur les visites et les performances sans cookies. Base légale : ton consentement pour PostHog, intérêt légitime pour Vercel.",
