@@ -1,57 +1,9 @@
-import type { VouchleyResponse } from "@/lib/vouchley";
+import { fetchReviews, VouchleyError } from "@/lib/vouchley";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const apiKey = process.env.VOUCHLEY_API_KEY;
-  if (!apiKey) {
-    console.error("VOUCHLEY_API_KEY is not set");
-    return NextResponse.json(
-      { error: "Failed to fetch reviews" },
-      { status: 500 },
-    );
-  }
-
   try {
-    const response = await fetch(
-      "https://vouchley.com/api/v1/user?id=a84c1044-0371-4999-92db-3770429dc6ea",
-      {
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-        },
-        next: {
-          revalidate: 60 * 60 * 24,
-        },
-      },
-    );
-
-    if (!response.ok) {
-      const error = await response.text();
-
-      console.error("Failed to fetch reviews", error);
-      return NextResponse.json(
-        { error: "Failed to fetch reviews" },
-        { status: 502 },
-      );
-    }
-
-    const data: VouchleyResponse = await response.json();
-    if (data.error || !Array.isArray(data.user?.reviews)) {
-      console.error("Failed to fetch reviews", data.error);
-      return NextResponse.json(
-        { error: "Failed to fetch reviews" },
-        { status: 502 },
-      );
-    }
-
-    const pinned = process.env.VOUCHLEY_PINNED_REVIEWS?.split(",") ?? [];
-
-    const user = {
-      ...data.user,
-      reviews: data.user.reviews.map((review) => ({
-        ...review,
-        pinned: pinned.includes(review.id),
-      })),
-    };
+    const user = await fetchReviews();
 
     return NextResponse.json(user, {
       headers: {
@@ -63,7 +15,7 @@ export async function GET() {
     console.error("Failed to fetch reviews", error);
     return NextResponse.json(
       { error: "Failed to fetch reviews" },
-      { status: 502 },
+      { status: error instanceof VouchleyError ? error.status : 502 },
     );
   }
 }

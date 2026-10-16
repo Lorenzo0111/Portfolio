@@ -16,56 +16,25 @@ import { Badge } from "../ui/badge";
 import { Card } from "../ui/card";
 import { CountUp } from "../ui/count-up";
 import { IconBox } from "../ui/icon-box";
+import {
+  languages,
+  skills,
+  softSkills,
+  timeline,
+  type TimelineType,
+} from "@/lib/experience";
 
-type TimelineType = "work" | "education" | "award";
-
-interface TimelineItem {
-  id: string;
-  type: TimelineType;
-  icon: React.ComponentType<{ className?: string }>;
-  current?: boolean;
-  highlight?: boolean;
-  tags?: string[];
-}
-
-const timeline: TimelineItem[] = [
-  {
-    id: "university",
-    type: "education",
-    icon: GraduationCap,
-    current: true,
-  },
-  {
-    id: "freelance",
-    type: "work",
-    icon: Briefcase,
-    current: true,
-    tags: ["Minecraft Plugins", "Discord Bots", "Web"],
-  },
-  {
-    id: "hackathons",
-    type: "award",
-    icon: Trophy,
-  },
-  {
-    id: "internships",
-    type: "work",
-    icon: Building2,
-    tags: ["Flutter", "REST API", "Databases"],
-  },
-  {
-    id: "erasmus",
-    type: "work",
-    icon: Plane,
-    tags: ["SEO", "Erasmus+"],
-  },
-  {
-    id: "highschool",
-    type: "education",
-    icon: GraduationCap,
-    highlight: true,
-  },
-];
+const timelineIcons: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
+  university: GraduationCap,
+  freelance: Briefcase,
+  hackathons: Trophy,
+  internships: Building2,
+  erasmus: Plane,
+  highschool: GraduationCap,
+};
 
 const typeStyles: Record<TimelineType, string> = {
   work: "text-primary",
@@ -79,19 +48,6 @@ const stats = [
   { id: "rating", icon: Star, className: "text-emerald-400" },
   { id: "grade", icon: GraduationCap, className: "text-purple-400" },
 ] as const;
-
-const skills = [
-  { id: "backend", items: ["Java", "Kotlin", "PHP", "TypeScript"] },
-  { id: "frontend", items: ["React", "HTML", "Tailwind"] },
-  { id: "mobile", items: ["React Native", "Flutter"] },
-  { id: "frameworks", items: ["Next.js", "Laravel", "Prisma"] },
-  { id: "minecraft", items: ["Paper", "NMS", "Velocity", "BungeeCord"] },
-  { id: "databases", items: ["MySQL", "Postgres", "MongoDB"] },
-  { id: "systems", items: ["GitHub", "Docker"] },
-] as const;
-
-const softSkills = ["communication", "problemSolving", "speaking", "driven"];
-const languages = ["italian", "english"];
 
 export default async function Experience() {
   const { t: translate } = await getTranslationsServer();
@@ -129,8 +85,9 @@ export default async function Experience() {
 
       <h2 className="text-3xl font-bold mb-10">{t("exp.timeline")}</h2>
       <ol className="relative mb-24 ml-6 border-l border-white/10">
-        {timeline.map(
-          ({ id, type, icon: Icon, current, highlight, tags }) => (
+        {timeline.map(({ id, type, current, highlight, tags }) => {
+          const Icon = timelineIcons[id] ?? Briefcase;
+          return (
             <li key={id} className="relative pl-10 pb-10 last:pb-0">
               <div
                 className={`absolute -left-6 top-0 w-12 h-12 rounded-2xl bg-[#1c1c1c] border border-white/10 flex items-center justify-center ${typeStyles[type]}`}
@@ -181,8 +138,8 @@ export default async function Experience() {
                 )}
               </Card>
             </li>
-          ),
-        )}
+          );
+        })}
       </ol>
 
       <h2 className="text-3xl font-bold mb-10">{t("exp.skills")}</h2>

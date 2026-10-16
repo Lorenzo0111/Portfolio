@@ -38,6 +38,12 @@ export async function GET() {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/privacy`,
+      lastModified: buildTimestamp,
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
+    {
       url: `${baseUrl}/contact`,
       lastModified: buildTimestamp,
       changeFrequency: "yearly",

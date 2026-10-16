@@ -1,5 +1,7 @@
 import "@/styles/globals.css";
 
+import ChatWidget from "@/components/chat/chat-widget";
+import ConsentBanner from "@/components/consent-banner";
 import Footer from "@/components/footer";
 import GradientBackground from "@/components/gradient-background";
 import { LanguageProvider } from "@/components/i18n-provider";
@@ -52,6 +54,8 @@ export default async function RootLayout({
             <main className="grow w-full">{children}</main>
           </NuqsAdapter>
           <Footer />
+          <ChatWidget />
+          <ConsentBanner />
         </LanguageProvider>
         <Analytics />
       </body>

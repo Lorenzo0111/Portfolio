@@ -202,6 +202,72 @@ export const translations = {
     "meta.experience.title": "Experience",
     "meta.experience.desc":
       "Work experience, education and skills of Lorenzo0111",
+
+    // Chat
+    "chat.open": "Ask AI",
+    "chat.title": "Ask about Lorenzo",
+    "chat.subtitle": "AI assistant",
+    "chat.greeting":
+      "Hi! 👋 Ask me anything about Lorenzo's projects, skills or experience.",
+    "chat.suggestion1": "What are his best projects?",
+    "chat.suggestion2": "What's his tech stack?",
+    "chat.suggestion3": "Has he built mobile apps?",
+    "chat.suggestion4": "How can I work with him?",
+    "chat.placeholder": "Ask a question…",
+    "chat.send": "Send",
+    "chat.stop": "Stop",
+    "chat.reset": "New chat",
+    "chat.close": "Close",
+    "chat.disclaimer": "AI can make mistakes. Don't share personal info.",
+    "chat.remaining": "{count} messages left today",
+    "chat.rateLimited":
+      "You've reached your daily limit of {limit} messages. You can ask again in {time}.",
+    "chat.tooLong": "Your message is too long, try to shorten it.",
+    "chat.error": "Something went wrong. Please try again.",
+    "chat.retry": "Retry",
+    "chat.tool.searchPortfolio": "Searching the portfolio",
+    "chat.tool.listProjects": "Browsing projects",
+    "chat.tool.getProjectDetails": "Reading project details",
+    "chat.tool.getProfile": "Checking the profile",
+    "chat.tool.getExperience": "Checking experience",
+    "chat.tool.getSkills": "Checking skills",
+    "chat.tool.getReviews": "Reading client reviews",
+    "chat.tool.showProjects": "Picking projects",
+
+    // Privacy
+    "chat.privacy": "Privacy",
+    "footer.privacy": "Privacy",
+    "consent.text":
+      "I use optional analytics cookies to understand how the site is used. You can accept or decline them.",
+    "consent.accept": "Accept",
+    "consent.decline": "Decline",
+    "consent.learnMore": "Privacy policy",
+    "meta.privacy.title": "Privacy Policy",
+    "meta.privacy.desc": "How this website handles your data",
+    "privacy.title": "Privacy Policy",
+    "privacy.updated": "Last updated: {date}",
+    "privacy.intro":
+      "This website is the personal portfolio of Lorenzo (Lorenzo0111), based in Italy, who is responsible for your data. This page explains what is collected when you use it and why.",
+    "privacy.contact.title": "Contact form",
+    "privacy.contact.body":
+      "When you send a message, your name, email and message are emailed to me through Resend so that I can reply. They are kept only as long as needed to handle your request. Legal basis: your request.",
+    "privacy.assistant.title": "AI assistant",
+    "privacy.assistant.body":
+      "Your questions are sent to OpenRouter and the AI model provider (OpenAI) only to generate an answer. Zero data retention is requested, so they are not stored or used for training. The conversation is kept only in your browser for the current session. Your IP address is stored for up to 24 hours from Upstash to apply usage limits, and Vercel BotID checks requests to block bots. Please don't share personal information in the chat. Legal basis: legitimate interest in providing the feature and preventing abuse.",
+    "privacy.analytics.title": "Analytics",
+    "privacy.analytics.body":
+      "Only if you accept, PostHog (EU servers) collects usage data such as visited pages, clicks and how the AI assistant is used, never the text of your questions, using cookies and local storage. Vercel Web Analytics and Speed Insights collect anonymous, aggregated visit and performance data without cookies. Legal basis: your consent for PostHog, legitimate interest for Vercel.",
+    "privacy.cookies.title": "Cookies",
+    "privacy.cookies.body":
+      "Technical cookies are always used to remember your language and keep you signed in. Analytics cookies are used only after your consent, and you can change your choice at any time.",
+    "privacy.providers.title": "Providers and transfers",
+    "privacy.providers.body":
+      "The website is hosted on Vercel and uses the providers listed above: Vercel, Supabase, Resend, PostHog, Upstash, OpenRouter and OpenAI. Some of them are based in the United States, transfers rely on the EU-US Data Privacy Framework or on Standard Contractual Clauses.",
+    "privacy.rights.title": "Your rights",
+    "privacy.rights.body":
+      "You can ask to access, correct or delete your data, object to its processing or withdraw your consent at any time through the contact page.",
+    "privacy.manageConsent": "Change cookie preferences",
+    "privacy.contactMe": "Contact me",
   },
   it: {
     // Navbar
@@ -377,8 +443,7 @@ export const translations = {
     "exp.soft.communication.desc":
       "Ho mantenuto un rating di 5 stelle in oltre 100 progetti freelance.",
     "exp.soft.problemSolving": "Problem Solving",
-    "exp.soft.problemSolving.desc":
-      "Ho vinto vari hackathon.",
+    "exp.soft.problemSolving.desc": "Ho vinto vari hackathon.",
     "exp.soft.speaking": "Public Speaking",
     "exp.soft.speaking.desc":
       "Ho presentato soluzioni a giudici e pubblici in diversi eventi.",
@@ -403,6 +468,72 @@ export const translations = {
     "meta.experience.title": "Esperienze",
     "meta.experience.desc":
       "Esperienze lavorative, istruzione e competenze di Lorenzo0111",
+
+    // Chat
+    "chat.open": "Chiedi all'AI",
+    "chat.title": "Chiedi di Lorenzo",
+    "chat.subtitle": "Assistente AI",
+    "chat.greeting":
+      "Ciao! 👋 Chiedimi qualsiasi cosa su progetti, competenze o esperienza di Lorenzo.",
+    "chat.suggestion1": "Quali sono i suoi progetti migliori?",
+    "chat.suggestion2": "Quali tecnologie usa?",
+    "chat.suggestion3": "Ha sviluppato app mobile?",
+    "chat.suggestion4": "Come posso lavorare con lui?",
+    "chat.placeholder": "Fai una domanda…",
+    "chat.send": "Invia",
+    "chat.stop": "Ferma",
+    "chat.reset": "Nuova chat",
+    "chat.close": "Chiudi",
+    "chat.disclaimer": "L'AI può sbagliare. Non condividere dati personali.",
+    "chat.remaining": "{count} messaggi rimasti oggi",
+    "chat.rateLimited":
+      "Hai raggiunto il limite giornaliero di {limit} messaggi. Potrai chiedere di nuovo tra {time}.",
+    "chat.tooLong": "Il messaggio è troppo lungo, prova ad accorciarlo.",
+    "chat.error": "Qualcosa è andato storto. Riprova.",
+    "chat.retry": "Riprova",
+    "chat.tool.searchPortfolio": "Cerco nel portfolio",
+    "chat.tool.listProjects": "Sfoglio i progetti",
+    "chat.tool.getProjectDetails": "Leggo i dettagli del progetto",
+    "chat.tool.getProfile": "Controllo il profilo",
+    "chat.tool.getExperience": "Controllo l'esperienza",
+    "chat.tool.getSkills": "Controllo le competenze",
+    "chat.tool.getReviews": "Leggo le recensioni",
+    "chat.tool.showProjects": "Scelgo i progetti",
+
+    // Privacy
+    "chat.privacy": "Privacy",
+    "footer.privacy": "Privacy",
+    "consent.text":
+      "Uso cookie analitici facoltativi per capire come viene usato il sito. Puoi accettarli o rifiutarli.",
+    "consent.accept": "Accetta",
+    "consent.decline": "Rifiuta",
+    "consent.learnMore": "Privacy policy",
+    "meta.privacy.title": "Privacy Policy",
+    "meta.privacy.desc": "Come questo sito tratta i tuoi dati",
+    "privacy.title": "Privacy Policy",
+    "privacy.updated": "Ultimo aggiornamento: {date}",
+    "privacy.intro":
+      "Questo sito è il portfolio personale di Lorenzo (Lorenzo0111), con sede in Italia, titolare del trattamento dei tuoi dati. Questa pagina spiega quali dati vengono raccolti quando lo usi e perché.",
+    "privacy.contact.title": "Modulo di contatto",
+    "privacy.contact.body":
+      "Quando invii un messaggio, il tuo nome, la tua email e il messaggio mi vengono inviati via email tramite Resend per poterti rispondere. Vengono conservati solo per il tempo necessario a gestire la tua richiesta.",
+    "privacy.assistant.title": "Assistente AI",
+    "privacy.assistant.body":
+      "Le tue domande vengono inviate a OpenRouter e al fornitore del modello AI (OpenAI) solo per generare una risposta. È richiesta la conservazione zero dei dati, quindi non vengono salvate né usate per l'addestramento. La conversazione resta solo nel tuo browser per la sessione corrente. Il tuo indirizzo IP viene conservato per massimo 24 ore da Upstash per applicare i limiti di utilizzo, e Vercel BotID controlla le richieste per bloccare i bot. Non condividere dati personali nella chat.",
+    "privacy.analytics.title": "Statistiche",
+    "privacy.analytics.body":
+      "Solo se accetti, PostHog con server in UE raccoglie dati di utilizzo come pagine visitate, clic e uso dell'assistente AI, mai il testo delle tue domande, tramite cookie e local storage. Vercel Web Analytics e Speed Insights raccolgono dati anonimi e aggregati su visite e prestazioni senza cookie.",
+    "privacy.cookies.title": "Cookie",
+    "privacy.cookies.body":
+      "I cookie tecnici vengono sempre usati per ricordare la lingua e mantenere l'accesso. I cookie analitici vengono usati solo dopo il tuo consenso, e puoi cambiare la tua scelta in qualsiasi momento.",
+    "privacy.providers.title": "Fornitori e trasferimenti",
+    "privacy.providers.body":
+      "Il sito è ospitato su Vercel e usa i fornitori elencati sopra: Vercel, Supabase, Resend, PostHog, Upstash, OpenRouter e OpenAI. Alcuni hanno sede negli Stati Uniti, i trasferimenti si basano sull'EU-US Data Privacy Framework o sulle Clausole Contrattuali Standard.",
+    "privacy.rights.title": "I tuoi diritti",
+    "privacy.rights.body":
+      "Puoi chiedere di accedere, correggere o cancellare i tuoi dati, opporti al trattamento o revocare il consenso in qualsiasi momento tramite la pagina contatti.",
+    "privacy.manageConsent": "Modifica preferenze cookie",
+    "privacy.contactMe": "Contattami",
   },
   es: {
     // Navbar
@@ -578,8 +709,7 @@ export const translations = {
     "exp.soft.communication.desc":
       "He mantenido una valoración de 5 estrellas en más de 100 proyectos freelance.",
     "exp.soft.problemSolving": "Resolución de Problemas",
-    "exp.soft.problemSolving.desc":
-      "He ganado varios hackathones.",
+    "exp.soft.problemSolving.desc": "He ganado varios hackathones.",
     "exp.soft.speaking": "Hablar en Público",
     "exp.soft.speaking.desc":
       "He presentado soluciones ante jueces y público en varios eventos.",
@@ -603,6 +733,73 @@ export const translations = {
     "meta.experience.title": "Experiencia",
     "meta.experience.desc":
       "Experiencia laboral, educación y habilidades de Lorenzo0111",
+
+    // Chat
+    "chat.open": "Pregunta a la IA",
+    "chat.title": "Pregunta sobre Lorenzo",
+    "chat.subtitle": "Asistente IA",
+    "chat.greeting":
+      "¡Hola! 👋 Pregúntame lo que quieras sobre los proyectos, habilidades o experiencia de Lorenzo.",
+    "chat.suggestion1": "¿Cuáles son sus mejores proyectos?",
+    "chat.suggestion2": "¿Qué tecnologías usa?",
+    "chat.suggestion3": "¿Ha creado apps móviles?",
+    "chat.suggestion4": "¿Cómo puedo trabajar con él?",
+    "chat.placeholder": "Haz una pregunta…",
+    "chat.send": "Enviar",
+    "chat.stop": "Detener",
+    "chat.reset": "Nuevo chat",
+    "chat.close": "Cerrar",
+    "chat.disclaimer":
+      "La IA puede equivocarse. No compartas datos personales.",
+    "chat.remaining": "Te quedan {count} mensajes hoy",
+    "chat.rateLimited":
+      "Has alcanzado tu límite diario de {limit} mensajes. Podrás preguntar de nuevo en {time}.",
+    "chat.tooLong": "Tu mensaje es demasiado largo, intenta acortarlo.",
+    "chat.error": "Algo salió mal. Inténtalo de nuevo.",
+    "chat.retry": "Reintentar",
+    "chat.tool.searchPortfolio": "Buscando en el portfolio",
+    "chat.tool.listProjects": "Revisando proyectos",
+    "chat.tool.getProjectDetails": "Leyendo detalles del proyecto",
+    "chat.tool.getProfile": "Revisando el perfil",
+    "chat.tool.getExperience": "Revisando la experiencia",
+    "chat.tool.getSkills": "Revisando habilidades",
+    "chat.tool.getReviews": "Leyendo reseñas",
+    "chat.tool.showProjects": "Eligiendo proyectos",
+
+    // Privacy
+    "chat.privacy": "Privacidad",
+    "footer.privacy": "Privacidad",
+    "consent.text":
+      "Uso cookies analíticas opcionales para entender cómo se usa el sitio. Puedes aceptarlas o rechazarlas.",
+    "consent.accept": "Aceptar",
+    "consent.decline": "Rechazar",
+    "consent.learnMore": "Política de privacidad",
+    "meta.privacy.title": "Política de privacidad",
+    "meta.privacy.desc": "Cómo este sitio trata tus datos",
+    "privacy.title": "Política de privacidad",
+    "privacy.updated": "Última actualización: {date}",
+    "privacy.intro":
+      "Este sitio es el portfolio personal de Lorenzo (Lorenzo0111), con sede en Italia, responsable del tratamiento de tus datos. Esta página explica qué datos se recogen cuando lo usas y por qué.",
+    "privacy.contact.title": "Formulario de contacto",
+    "privacy.contact.body":
+      "Cuando envías un mensaje, tu nombre, tu email y el mensaje me llegan por email a través de Resend para poder responderte. Se conservan solo el tiempo necesario para gestionar tu solicitud. Base jurídica: tu solicitud.",
+    "privacy.assistant.title": "Asistente IA",
+    "privacy.assistant.body":
+      "Tus preguntas se envían a OpenRouter y al proveedor del modelo de IA (OpenAI) solo para generar una respuesta. Se solicita retención cero de datos, por lo que no se guardan ni se usan para entrenamiento. La conversación se guarda solo en tu navegador durante la sesión actual. Tu dirección IP se guarda hasta 24 horas de Upstash para aplicar límites de uso, y Vercel BotID revisa las solicitudes para bloquear bots. No compartas datos personales en el chat. Base jurídica: interés legítimo en ofrecer la función y prevenir abusos.",
+    "privacy.analytics.title": "Estadísticas",
+    "privacy.analytics.body":
+      "Solo si aceptas, PostHog con servidores en la UE recoge datos de uso como páginas visitadas, clics y uso del asistente IA, nunca el texto de tus preguntas, mediante cookies y almacenamiento local. Vercel Web Analytics y Speed Insights recogen datos anónimos y agregados de visitas y rendimiento sin cookies. Base jurídica: tu consentimiento para PostHog, interés legítimo para Vercel.",
+    "privacy.cookies.title": "Cookies",
+    "privacy.cookies.body":
+      "Las cookies técnicas se usan siempre para recordar tu idioma y mantener la sesión iniciada. Las cookies analíticas solo se usan tras tu consentimiento, y puedes cambiar tu elección en cualquier momento.",
+    "privacy.providers.title": "Proveedores y transferencias",
+    "privacy.providers.body":
+      "El sitio está alojado en Vercel y usa los proveedores indicados arriba: Vercel, Supabase, Resend, PostHog, Upstash, OpenRouter y OpenAI. Algunos tienen sede en Estados Unidos, las transferencias se basan en el EU-US Data Privacy Framework o en Cláusulas Contractuales Tipo.",
+    "privacy.rights.title": "Tus derechos",
+    "privacy.rights.body":
+      "Puedes pedir acceder, corregir o eliminar tus datos, oponerte a su tratamiento o retirar tu consentimiento en cualquier momento a través de la página de contacto.",
+    "privacy.manageConsent": "Cambiar preferencias de cookies",
+    "privacy.contactMe": "Contáctame",
   },
   fr: {
     // Navbar
@@ -806,6 +1003,73 @@ export const translations = {
     "meta.experience.title": "Expérience",
     "meta.experience.desc":
       "Expérience professionnelle, formation et compétences de Lorenzo0111",
+
+    // Chat
+    "chat.open": "Demander à l'IA",
+    "chat.title": "Questions sur Lorenzo",
+    "chat.subtitle": "Assistant IA",
+    "chat.greeting":
+      "Salut ! 👋 Pose-moi tes questions sur les projets, compétences ou l'expérience de Lorenzo.",
+    "chat.suggestion1": "Quels sont ses meilleurs projets ?",
+    "chat.suggestion2": "Quelles technologies utilise-t-il ?",
+    "chat.suggestion3": "A-t-il créé des apps mobiles ?",
+    "chat.suggestion4": "Comment travailler avec lui ?",
+    "chat.placeholder": "Pose une question…",
+    "chat.send": "Envoyer",
+    "chat.stop": "Arrêter",
+    "chat.reset": "Nouveau chat",
+    "chat.close": "Fermer",
+    "chat.disclaimer":
+      "L'IA peut se tromper. Ne partage pas de données personnelles.",
+    "chat.remaining": "Il te reste {count} messages aujourd'hui",
+    "chat.rateLimited":
+      "Tu as atteint ta limite quotidienne de {limit} messages. Tu pourras redemander dans {time}.",
+    "chat.tooLong": "Ton message est trop long, essaie de le raccourcir.",
+    "chat.error": "Une erreur est survenue. Réessaie.",
+    "chat.retry": "Réessayer",
+    "chat.tool.searchPortfolio": "Recherche dans le portfolio",
+    "chat.tool.listProjects": "Parcours des projets",
+    "chat.tool.getProjectDetails": "Lecture du projet",
+    "chat.tool.getProfile": "Consultation du profil",
+    "chat.tool.getExperience": "Consultation de l'expérience",
+    "chat.tool.getSkills": "Consultation des compétences",
+    "chat.tool.getReviews": "Lecture des avis",
+    "chat.tool.showProjects": "Sélection des projets",
+
+    // Privacy
+    "chat.privacy": "Confidentialité",
+    "footer.privacy": "Confidentialité",
+    "consent.text":
+      "J'utilise des cookies analytiques facultatifs pour comprendre comment le site est utilisé. Tu peux les accepter ou les refuser.",
+    "consent.accept": "Accepter",
+    "consent.decline": "Refuser",
+    "consent.learnMore": "Politique de confidentialité",
+    "meta.privacy.title": "Politique de confidentialité",
+    "meta.privacy.desc": "Comment ce site traite tes données",
+    "privacy.title": "Politique de confidentialité",
+    "privacy.updated": "Dernière mise à jour : {date}",
+    "privacy.intro":
+      "Ce site est le portfolio personnel de Lorenzo (Lorenzo0111), basé en Italie, responsable du traitement de tes données. Cette page explique quelles données sont collectées lorsque tu l'utilises et pourquoi.",
+    "privacy.contact.title": "Formulaire de contact",
+    "privacy.contact.body":
+      "Quand tu envoies un message, ton nom, ton email et ton message me sont envoyés par email via Resend afin que je puisse te répondre. Ils sont conservés uniquement le temps nécessaire pour traiter ta demande. Base légale : ta demande.",
+    "privacy.assistant.title": "Assistant IA",
+    "privacy.assistant.body":
+      "Tes questions sont envoyées à OpenRouter et au fournisseur du modèle d'IA (OpenAI) uniquement pour générer une réponse. Une conservation zéro des données est demandée, elles ne sont donc ni stockées ni utilisées pour l'entraînement. La conversation reste uniquement dans ton navigateur pour la session en cours. Ton adresse IP est conservée jusqu'à 24 heures par Upstash pour appliquer les limites d'utilisation, et Vercel BotID vérifie les requêtes pour bloquer les bots. Ne partage pas de données personnelles dans le chat. Base légale : intérêt légitime à fournir la fonctionnalité et à prévenir les abus.",
+    "privacy.analytics.title": "Statistiques",
+    "privacy.analytics.body":
+      "Uniquement si tu acceptes, PostHog avec serveurs dans l'UE collecte des données d'utilisation comme les pages visitées, les clics et l'utilisation de l'assistant IA, jamais le texte de tes questions, à l'aide de cookies et du stockage local. Vercel Web Analytics et Speed Insights collectent des données anonymes et agrégées sur les visites et les performances sans cookies. Base légale : ton consentement pour PostHog, intérêt légitime pour Vercel.",
+    "privacy.cookies.title": "Cookies",
+    "privacy.cookies.body":
+      "Des cookies techniques sont toujours utilisés pour retenir ta langue et te garder connecté. Les cookies analytiques ne sont utilisés qu'après ton consentement, et tu peux modifier ton choix à tout moment.",
+    "privacy.providers.title": "Fournisseurs et transferts",
+    "privacy.providers.body":
+      "Le site est hébergé sur Vercel et utilise les fournisseurs cités ci-dessus : Vercel, Supabase, Resend, PostHog, Upstash, OpenRouter et OpenAI. Certains sont basés aux États-Unis, les transferts reposent sur l'EU-US Data Privacy Framework ou sur les Clauses Contractuelles Types.",
+    "privacy.rights.title": "Tes droits",
+    "privacy.rights.body":
+      "Tu peux demander à accéder à tes données, les corriger ou les supprimer, t'opposer à leur traitement ou retirer ton consentement à tout moment via la page de contact.",
+    "privacy.manageConsent": "Modifier les préférences cookies",
+    "privacy.contactMe": "Me contacter",
   },
 } as const;
 

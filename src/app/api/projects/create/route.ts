@@ -1,11 +1,12 @@
 import { translateDescription } from "@/lib/ai";
+import { indexKnowledge } from "@/lib/chat/vector";
 import { auth } from "@/lib/auth";
 import { normalizeCategoryCsv, parseCategoryCsv } from "@/lib/categories";
 import { defaultLocale, locales } from "@/lib/i18n";
 import prisma from "@/lib/prismadb";
 import supabase from "@/lib/supabase";
 import { headers } from "next/headers";
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 
 function isHttpUrl(value: string) {
   try {
@@ -165,6 +166,13 @@ export async function POST(request: Request) {
       thumbnail,
     },
   });
+
+  // Keep the chatbot knowledge in sync with the new project
+  after(() =>
+    indexKnowledge().catch((error) =>
+      console.error("Failed to index knowledge", error),
+    ),
+  );
 
   return NextResponse.json(updated);
 }
