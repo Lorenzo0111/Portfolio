@@ -5,6 +5,7 @@ import { parseCategoryCsv } from "@/lib/categories";
 import { useFetcher } from "@/utils/fetcher";
 import {
   ArrowLeft,
+  ArrowRight,
   Bot,
   Code,
   Gamepad2,
@@ -32,50 +33,48 @@ interface CategoryDesign {
   description: string;
 }
 
-interface CategoryCardProps {
+interface CategoryRowProps {
   title: string;
   description: string;
   icon: React.ComponentType<any>;
   count: number;
-  actionLabel: string;
   onClick: () => void;
   projectLabel: string;
   projectsLabel: string;
 }
 
-function CategoryCard({
+function CategoryRow({
   title,
   description,
   icon: IconComponent,
   count,
-  actionLabel,
   onClick,
   projectLabel,
   projectsLabel,
-}: CategoryCardProps) {
+}: CategoryRowProps) {
   return (
-    <button
-      onClick={onClick}
-      className="relative flex min-h-55 flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 text-left transition-colors duration-200 hover:border-primary"
-    >
-      <div>
-        <div className="mb-6 flex items-center justify-between">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 text-white">
-            <IconComponent className="h-6 w-6" />
-          </div>
-          <span className="rounded-full border border-white/15 bg-white/3 px-3.5 py-1 text-xs font-semibold tracking-wider text-white/50">
+    <li>
+      <button
+        onClick={onClick}
+        className="group grid w-full cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-1 border-b border-white/10 py-6 text-left transition-colors hover:bg-white/3 focus-visible:bg-white/5 focus-visible:outline-none sm:gap-x-8 sm:px-4 md:grid-cols-[auto_14rem_1fr_auto] lg:py-8"
+      >
+        <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white/80 transition-colors group-hover:border-primary/50 group-hover:text-primary">
+          <IconComponent className="h-5 w-5" />
+        </span>
+        <span className="flex flex-col">
+          <span className="text-2xl font-bold tracking-tight text-white transition-colors group-hover:text-primary sm:text-3xl">
+            {title}
+          </span>
+          <span className="text-sm tabular-nums text-white/45">
             {count} {count === 1 ? projectLabel : projectsLabel}
           </span>
-        </div>
-        <h2 className="text-2xl font-black text-white">{title}</h2>
-        <p className="mt-3 text-sm leading-relaxed text-white/65">
+        </span>
+        <span className="col-start-2 col-end-4 max-w-xl text-sm leading-relaxed text-white/60 md:col-start-3 md:col-end-4 md:row-start-1 md:text-base">
           {description}
-        </p>
-      </div>
-      <div className="mt-6 flex items-center gap-1 text-xs font-bold text-primary">
-        {actionLabel}
-      </div>
-    </button>
+        </span>
+        <ArrowRight className="col-start-3 row-start-1 h-5 w-5 text-white/30 transition-all group-hover:translate-x-1 group-hover:text-primary md:col-start-4" />
+      </button>
+    </li>
   );
 }
 
@@ -185,135 +184,132 @@ export default function Projects({ embed }: { embed?: boolean }) {
     );
   }
 
+  const filterButton = (value: string, label: string) => {
+    const active = filter === value;
+    return (
+      <button
+        key={value}
+        onClick={() => setFilter(value)}
+        aria-pressed={active}
+        className={`flex shrink-0 cursor-pointer items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-primary ${
+          active
+            ? "bg-primary text-black"
+            : "text-white/65 hover:bg-white/5 hover:text-white"
+        }`}
+      >
+        {label}
+        <span
+          className={`tabular-nums text-xs ${active ? "text-black/60" : "text-white/35"}`}
+        >
+          {getProjectCount(value)}
+        </span>
+      </button>
+    );
+  };
+
   return (
     <div
       id="projects"
-      className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pb-20 pt-10"
+      className="mx-auto w-full max-w-6xl px-4 sm:px-6 pb-20 pt-10 lg:pt-16"
     >
       {!projects || !categories ? (
         <div className="flex min-h-[60vh] items-center justify-center">
           <span className="loader"></span>
         </div>
+      ) : !filter ? (
+        <div className="pb-8 md:pb-14">
+          <header className="mb-10 max-w-3xl lg:mb-14">
+            <h1 className="mb-5 text-5xl font-bold tracking-tight text-white lg:text-7xl">
+              {t("projects.title")}{" "}
+              <span className="text-gradient">
+                {t("projects.titleHighlight")}
+              </span>
+              ?
+            </h1>
+            <p className="text-lg leading-relaxed text-white/60 lg:text-xl">
+              {t("projects.subtitle")}
+            </p>
+          </header>
+
+          <ul className="border-t border-white/10">
+            {(() => {
+              const design = getCategoryDesign("*", t);
+              return (
+                <CategoryRow
+                  title={t("projects.allTitle")}
+                  description={design.description}
+                  icon={design.icon}
+                  count={getProjectCount("*")}
+                  onClick={() => setFilter("*")}
+                  projectLabel={t("projects.projectLabel")}
+                  projectsLabel={t("projects.projectsLabel")}
+                />
+              );
+            })()}
+
+            {categories.map((categoryName: string) => {
+              const design = getCategoryDesign(categoryName, t);
+              return (
+                <CategoryRow
+                  key={categoryName}
+                  title={categoryName}
+                  description={design.description}
+                  icon={design.icon}
+                  count={getProjectCount(categoryName)}
+                  onClick={() => setFilter(categoryName)}
+                  projectLabel={t("projects.projectLabel")}
+                  projectsLabel={t("projects.projectsLabel")}
+                />
+              );
+            })}
+          </ul>
+        </div>
       ) : (
-        <div className="w-full">
-          {!filter ? (
-            <div className="animate-fade-in pb-8 md:pb-14">
-              <header className="text-center max-w-3xl mx-auto mb-16">
-                <h1 className="text-4xl font-black tracking-tight text-white leading-tight">
-                  {t("projects.title")}{" "}
-                  <span className="text-gradient font-black">
-                    {t("projects.titleHighlight")}
-                  </span>
-                  ?
-                </h1>
-                <p className="text-white/60 text-lg md:text-xl leading-relaxed">
-                  {t("projects.subtitle")}
-                </p>
-              </header>
+        <div>
+          <header className="mb-10 lg:mb-12">
+            <button
+              onClick={() => setFilter(null)}
+              className="group mb-6 flex cursor-pointer items-center gap-2 text-sm font-medium text-white/50 transition-colors hover:text-white"
+            >
+              <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" />
+              {t("projects.backToCategories")}
+            </button>
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+              {t("projects.explore")}{" "}
+              <span className="text-gradient">
+                {filter === "*" ? t("projects.allLabel") : filter}
+              </span>{" "}
+              {t("projects.projectsSuffix")}
+            </h1>
+            <p className="mt-3 max-w-2xl text-base text-white/60 sm:text-lg">
+              {filter === "*"
+                ? t("projects.browseAll")
+                : getCategoryDesign(filter, t).description}
+            </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                {(() => {
-                  const design = getCategoryDesign("*", t);
-
-                  return (
-                    <CategoryCard
-                      title={t("projects.allTitle")}
-                      description={design.description}
-                      icon={design.icon}
-                      count={getProjectCount("*")}
-                      actionLabel={t("projects.viewAll")}
-                      onClick={() => setFilter("*")}
-                      projectLabel={t("projects.projectLabel")}
-                      projectsLabel={t("projects.projectsLabel")}
-                    />
-                  );
-                })()}
-
-                {categories.map((categoryName: string) => {
-                  const design = getCategoryDesign(categoryName, t);
-                  const projectCount = getProjectCount(categoryName);
-
-                  return (
-                    <CategoryCard
-                      key={categoryName}
-                      title={categoryName}
-                      description={design.description}
-                      icon={design.icon}
-                      count={projectCount}
-                      actionLabel={t("projects.exploreCategory")}
-                      onClick={() => setFilter(categoryName)}
-                      projectLabel={t("projects.projectLabel")}
-                      projectsLabel={t("projects.projectsLabel")}
-                    />
-                  );
-                })}
+            <nav className="-mx-4 mt-8 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+              <div className="inline-flex gap-1 rounded-full border border-white/10 bg-white/3 p-1">
+                {filterButton("*", t("projects.allLabel"))}
+                {categories.map((cat: string) => filterButton(cat, cat))}
               </div>
-            </div>
+            </nav>
+          </header>
+
+          {filtered.length > 0 ? (
+            <section className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+              {filtered.map((project: ProjectType) => (
+                <Project key={project.id} project={project} />
+              ))}
+            </section>
           ) : (
-            <div className="animate-fade-in py-6">
-              <header className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-white/10 pb-8 mb-10">
-                <div className="max-w-xl">
-                  <button
-                    onClick={() => setFilter(null)}
-                    className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white/50 hover:text-white transition-colors group mb-3 cursor-pointer"
-                  >
-                    <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform duration-200" />
-                    {t("projects.backToCategories")}
-                  </button>
-                  <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                    {t("projects.explore")}{" "}
-                    <span className="text-gradient">
-                      {filter === "*" ? t("projects.allLabel") : filter}
-                    </span>{" "}
-                    {t("projects.projectsSuffix")}
-                  </h1>
-                  <p className="text-white/60 text-sm sm:text-base mt-2">
-                    {filter === "*"
-                      ? t("projects.browseAll")
-                      : t("projects.browseCategory", { category: filter })}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10 w-full lg:w-auto max-w-full">
-                  <button
-                    onClick={() => setFilter("*")}
-                    className={`rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-250 border ${
-                      filter === "*"
-                        ? "bg-primary text-black border-primary shadow-lg shadow-primary/20"
-                        : "bg-white/5 text-white/70 border-white/10 hover:border-white/30 cursor-pointer"
-                    }`}
-                  >
-                    {t("projects.allLabel")} ({getProjectCount("*")})
-                  </button>
-                  {categories.map((cat: string) => (
-                    <button
-                      key={cat}
-                      onClick={() => setFilter(cat)}
-                      className={`rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-250 border ${
-                        filter === cat
-                          ? "bg-primary text-black border-primary shadow-lg shadow-primary/20"
-                          : "bg-white/5 text-white/70 border-white/10 hover:border-white/30 cursor-pointer"
-                      }`}
-                    >
-                      {cat} ({getProjectCount(cat)})
-                    </button>
-                  ))}
-                </div>
-              </header>
-
-              <div className="w-full">
-                {filtered.length > 0 ? (
-                  <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    {filtered.map((project: ProjectType) => (
-                      <Project key={project.id} project={project} />
-                    ))}
-                  </section>
-                ) : (
-                  <div className="rounded-2xl border border-dashed border-white/20 p-12 text-center text-white/60 max-w-2xl mx-auto">
-                    {t("projects.empty")}
-                  </div>
-                )}
-              </div>
+            <div className="mx-auto max-w-2xl rounded-3xl border border-dashed border-white/20 p-12 text-center text-white/60">
+              <p className="mb-4">{t("projects.empty")}</p>
+              <button
+                onClick={() => setFilter("*")}
+                className="cursor-pointer text-sm font-semibold text-primary hover:underline"
+              >
+                {t("projects.viewAll")}
+              </button>
             </div>
           )}
         </div>
