@@ -5,6 +5,10 @@
   --color-card: #232323;
 }
 
+@theme inline {
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+}
+
 @layer base {
   *,
   ::after,
@@ -56,5 +60,931 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+/* ---------- Home: layout ---------- */
+
+.home-root {
+  --stage-h: min(68vh, 580px);
+  --stage-w: calc(var(--stage-h) * 0.62);
+}
+
+@media (min-width: 1280px) {
+  .home-root {
+    --stage-h: min(76vh, 700px);
+  }
+}
+
+.home-col {
+  margin-inline: auto;
+  max-width: 1440px;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .home-col {
+    padding-left: 3rem;
+    /* Leave room for the pinned character on the right */
+    padding-right: calc(3rem + var(--stage-w) + 2rem);
+  }
+}
+
+/* ---------- Home: keycaps ---------- */
+
+.keycap {
+  --top: #efe9dc;
+  --hi: #fffaf0;
+  --side: #b3a993;
+  --ink: #1b1b1b;
+  --depth: 7px;
+  --radius: 14px;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  padding-bottom: var(--depth);
+  border-radius: var(--radius);
+  color: var(--ink);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
+}
+
+.keycap::before {
+  content: "";
+  position: absolute;
+  inset: var(--depth) 0 0 0;
+  border-radius: var(--radius);
+  background: var(--side);
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.keycap-top {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  background: linear-gradient(160deg, var(--hi), var(--top) 55%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.09s ease;
+}
+
+.keycap:hover .keycap-top {
+  transform: translateY(1.5px);
+}
+
+.keycap:active .keycap-top,
+.keycap.is-pressed .keycap-top {
+  transform: translateY(calc(var(--depth) - 2px));
+}
+
+.keycap:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+.keycap-sub {
+  position: absolute;
+  top: 9%;
+  left: 11%;
+  font-size: clamp(7px, 0.62vw, 10px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  opacity: 0.55;
+}
+
+.keycap-label {
+  font-weight: 900;
+  line-height: 1;
+}
+
+.keycap-yellow {
+  --top: #fcba03;
+  --hi: #ffd85c;
+  --side: #b07f00;
+  --ink: #241900;
+}
+
+.keycap-graphite {
+  --top: #2c2c2e;
+  --hi: #48484c;
+  --side: #0e0e0f;
+  --ink: #f4f4f4;
+}
+
+.keycap-blue {
+  --top: #5fc4f6;
+  --hi: #a2e2ff;
+  --side: #2585b8;
+  --ink: #052233;
+}
+
+.hero-keyboard {
+  --key: clamp(40px, 4.6vw, 68px);
+  --gap: clamp(6px, 0.9vw, 12px);
+}
+
+.keycap-letter,
+.keycap-letter-wide {
+  --depth: calc(var(--key) * 0.11);
+  --radius: calc(var(--key) * 0.2);
+  width: var(--key);
+  height: calc(var(--key) + var(--depth));
+  font-size: calc(var(--key) * 0.42);
+}
+
+.keycap-letter-wide {
+  width: calc(var(--key) * 2 + var(--gap));
+}
+
+.keycap-word {
+  height: 62px;
+  font-size: 1.05rem;
+}
+
+.keycap-word .keycap-top {
+  padding-inline: 1.4rem;
+}
+
+.keycap-icon {
+  width: 54px;
+  height: 60px;
+}
+
+.keycap-enter {
+  --depth: 12px;
+  --radius: 22px;
+  width: clamp(220px, 26vw, 300px);
+  height: clamp(120px, 13vw, 150px);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  animation: enter-glow 2.6s ease-in-out infinite;
+}
+
+.keycap-enter .keycap-sub {
+  top: 16px;
+  left: 20px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+@keyframes enter-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
+  }
+  50% {
+    filter: drop-shadow(0 10px 32px rgba(252, 186, 3, 0.45));
+  }
+}
+
+/* ---------- Home: hero ---------- */
+
+.hero-grid {
+  position: absolute;
+  inset: -6rem 0 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+  mask-image: radial-gradient(
+    ellipse 70% 60% at 35% 45%,
+    black,
+    transparent
+  );
+}
+
+/* --p is the hero's scroll-out progress: content lifts and the keys scatter */
+.hero-copy {
+  transform: translateY(calc(var(--p, 0) * -80px));
+  opacity: calc(1 - var(--p, 0) * 1.6);
+}
+
+.hero-key {
+  display: inline-block;
+  transform: translate(
+      calc(var(--dx) * var(--p, 0) * 2px),
+      calc(var(--dy) * var(--p, 0) * 2px - var(--p, 0) * 80px)
+    )
+    rotate(calc(var(--dr) * var(--p, 0) * 2deg));
+  opacity: calc(1 - var(--p, 0) * 1.3);
+}
+
+.key-drop {
+  animation: key-drop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--d, 0) * 60ms + 150ms);
+}
+
+@keyframes key-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-70px) rotate(-10deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.is-waving .keycap-top {
+  animation: key-wave 0.5s ease both;
+  animation-delay: calc(var(--d, 0) * 55ms);
+}
+
+@keyframes key-wave {
+  0%,
+  100% {
+    transform: none;
+  }
+  40% {
+    transform: translateY(-16px) rotate(-5deg);
+  }
+}
+
+.scroll-stamp {
+  position: relative;
+  width: 108px;
+  height: 108px;
+  flex-shrink: 0;
+}
+
+.stamp-ring {
+  width: 100%;
+  height: 100%;
+  animation: stamp-spin 16s linear infinite;
+}
+
+@keyframes stamp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Home: pinned character card ---------- */
+
+@property --stage-accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fcba03;
+}
+
+.character-stage {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .character-stage {
+    display: block;
+    position: fixed;
+    z-index: 20;
+    top: calc(50% + 2rem);
+    right: max(3rem, calc((100vw - 1440px) / 2 + 3rem));
+    width: var(--stage-w);
+    height: var(--stage-h);
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(40px, -50%);
+    transition:
+      opacity 0.45s ease,
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      --stage-accent 0.8s ease;
+  }
+
+  .character-stage.is-visible {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+
+.stage-card {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2rem;
+  background: #161616;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.8);
+}
+
+.stage-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      120% 65% at 50% 100%,
+      color-mix(in oklab, var(--stage-accent) 38%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px) 0 0 / 22px
+      22px;
+}
+
+.stage-number {
+  position: absolute;
+  right: -0.04em;
+  top: 14%;
+  font-size: calc(var(--stage-h) * 0.4);
+  font-weight: 900;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.09);
+  translate: calc(var(--mx, 0) * 16px) calc(var(--my, 0) * 10px);
+  transition: translate 0.5s ease-out;
+  animation: stage-number-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.stage-header {
+  position: absolute;
+  z-index: 2;
+  top: 1.25rem;
+  inset-inline: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.stage-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: stage-text-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.stage-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--stage-accent);
+  box-shadow: 0 0 10px var(--stage-accent);
+}
+
+.stage-quote {
+  position: absolute;
+  z-index: 2;
+  top: 3.25rem;
+  inset-inline: 1.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 1.6vw, 1.65rem);
+  font-style: italic;
+  line-height: 1.15;
+  animation: stage-text-in 0.7s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.stage-figure {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 78%;
+  translate: calc(var(--mx, 0) * -12px) calc(var(--my, 0) * -6px);
+  transition: translate 0.5s ease-out;
+}
+
+.stage-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 1%;
+  width: 55%;
+  height: 6%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.7), transparent 70%);
+}
+
+.stage-pose {
+  object-fit: contain;
+  object-position: bottom;
+  opacity: 0;
+  visibility: hidden;
+  padding-bottom: 3%;
+}
+
+/* The new pose rises in behind a scan line, the old one dissolves upwards */
+.stage-pose.is-active {
+  visibility: visible;
+  animation: pose-in 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.stage-pose.is-leaving {
+  visibility: visible;
+  animation: pose-out 0.45s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+.stage-scan {
+  position: absolute;
+  z-index: 3;
+  inset-inline: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--stage-accent);
+  box-shadow: 0 0 24px 6px
+    color-mix(in oklab, var(--stage-accent) 55%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  animation: stage-scan 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes pose-in {
+  0% {
+    opacity: 0;
+    transform: translateY(14%) scale(0.95);
+    clip-path: inset(100% 0 0 0);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes pose-out {
+  from {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-5%) scale(1.03);
+    filter: blur(8px);
+  }
+}
+
+@keyframes stage-scan {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(calc(var(--stage-h) * -0.8));
+  }
+}
+
+@keyframes stage-number-in {
+  from {
+    opacity: 0;
+    transform: translateY(25%);
+  }
+}
+
+@keyframes stage-text-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+}
+
+/* ---------- Home: section nav ---------- */
+
+.story-nav {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .story-nav {
+    position: fixed;
+    z-index: 30;
+    left: max(1rem, calc((100vw - 1440px) / 2 + 1rem));
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+
+  .story-nav.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.story-nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.story-nav a:hover,
+.story-nav a.is-active {
+  color: var(--color-primary);
+}
+
+.story-nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  background: currentColor;
+  transition: height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.story-nav a.is-active .story-nav-dot {
+  height: 22px;
+}
+
+.story-nav-label {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(20, 20, 20, 0.85);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 0.25s,
+    transform 0.25s;
+}
+
+.story-nav a:hover .story-nav-label {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Home: about chapters ---------- */
+
+.about-progress {
+  transform: scaleX(var(--p, 0));
+}
+
+.discipline {
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+  transition: border-color 0.3s;
+}
+
+.discipline:hover {
+  border-color: rgba(252, 186, 3, 0.4);
+}
+
+@media (min-width: 640px) {
+  .discipline {
+    padding: 1.75rem;
+  }
+}
+
+.about-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition:
+    opacity 0.5s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-panel[data-state="past"] {
+  opacity: 0;
+  transform: translateY(-50px);
+}
+
+.about-panel[data-state="future"] {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.about-panel .stagger > * {
+  transition:
+    opacity 0.6s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 90ms + 100ms);
+}
+
+.about-panel:not([data-state="active"]) .stagger > * {
+  opacity: 0;
+  transform: translateY(30px);
+  transition-delay: 0s;
+}
+
+/* ---------- Home: project reels ---------- */
+
+.reel {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  background: #0d0d0d;
+  transition:
+    border-color 0.3s,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reel-skeleton {
+  background: linear-gradient(110deg, #141414 30%, #1f1f1f 50%, #141414 70%);
+  background-size: 200% 100%;
+  animation: reel-shimmer 1.4s linear infinite;
+}
+
+@keyframes reel-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.reel-strip {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  will-change: transform;
+}
+
+.reel.is-blurring .reel-strip {
+  filter: blur(3px) brightness(0.7);
+}
+
+.reel-strip img {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reel-info {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0.75rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 70%);
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .reel-info {
+    padding: 0.9rem 1rem;
+  }
+}
+
+.reel.is-landed .reel-info {
+  opacity: 1;
+  transform: none;
+}
+
+.reel-arrow {
+  color: rgba(255, 255, 255, 0.6);
+  transition:
+    color 0.3s,
+    transform 0.3s;
+}
+
+a:hover .reel {
+  border-color: rgba(252, 186, 3, 0.6);
+  transform: translateY(-4px);
+}
+
+a:hover .reel-strip img {
+  transform: scale(1.05);
+}
+
+a:hover .reel-arrow {
+  color: var(--color-primary);
+  transform: translate(2px, -2px);
+}
+
+/* ---------- Home: review deck ---------- */
+
+.review-deck {
+  --drag-p: 0;
+  position: relative;
+  height: 320px;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.review-deck.is-dragging {
+  cursor: grabbing;
+}
+
+.review-card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.75rem;
+  background: linear-gradient(160deg, #222, #171717);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9);
+  transform-origin: bottom center;
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.5s ease;
+}
+
+@media (min-width: 640px) {
+  .review-deck {
+    height: 300px;
+  }
+
+  .review-card {
+    padding: 2rem 2.25rem;
+  }
+}
+
+.review-card > * {
+  transition: opacity 0.4s ease 0.1s;
+}
+
+/* Cards further back peek out below and move up while the front one is dragged */
+.review-card[data-offset="0"] {
+  z-index: 3;
+}
+
+.review-card[data-offset="1"] {
+  z-index: 2;
+  transform: translateY(calc(18px * (1 - var(--drag-p))))
+    scale(calc(0.95 + 0.05 * var(--drag-p)));
+  opacity: calc(0.7 + 0.3 * var(--drag-p));
+}
+
+.review-card[data-offset="2"] {
+  z-index: 1;
+  transform: translateY(calc(36px - 18px * var(--drag-p)))
+    scale(calc(0.9 + 0.05 * var(--drag-p)));
+  opacity: calc(0.4 + 0.3 * var(--drag-p));
+}
+
+.review-card:not([data-offset="0"]) > * {
+  opacity: 0;
+}
+
+.review-card[data-offset="1"] > * {
+  opacity: var(--drag-p);
+}
+
+.review-deck.is-dragging .review-card,
+.review-deck.is-dragging .review-card > * {
+  transition: none;
+}
+
+/* A thrown card flies out to the side, then tucks in at the back of the deck */
+.review-card[data-offset="out"] {
+  pointer-events: none;
+  animation: review-to-back 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.review-card[data-offset="out"] > * {
+  opacity: 1;
+  animation: review-content-out 0.35s ease forwards;
+}
+
+.review-card.is-entering {
+  animation: review-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes review-to-back {
+  0% {
+    z-index: 4;
+    transform: translateX(var(--from-x)) rotate(var(--from-r));
+    opacity: 1;
+  }
+  45% {
+    z-index: 4;
+    transform: translateX(var(--throw-x)) rotate(var(--throw-r)) scale(0.92);
+    opacity: 1;
+  }
+  46% {
+    z-index: 0;
+  }
+  100% {
+    z-index: 0;
+    transform: translateY(54px) scale(0.85);
+    opacity: 0;
+  }
+}
+
+@keyframes review-content-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes review-in {
+  from {
+    transform: translateX(-60%) rotate(-10deg);
+    opacity: 0;
+  }
+}
+
+.review-skeleton {
+  background: linear-gradient(110deg, #171717 30%, #222 50%, #171717 70%);
+  background-size: 200% 100%;
+  animation: reel-shimmer 1.4s linear infinite;
+}
+
+.review-nav {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 99px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.review-nav:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #000;
+}
+
+.review-progress {
+  flex: 1;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.review-progress span {
+  display: block;
+  height: 100%;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.review-progress span.is-running {
+  animation: review-progress 7s linear forwards;
+}
+
+.review-deck.is-paused + div .review-progress span {
+  animation-play-state: paused;
+}
+
+@keyframes review-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .key-drop,
+  .stamp-ring,
+  .stage-number,
+  .stage-label,
+  .stage-quote,
+  .stage-pose.is-active,
+  .stage-pose.is-leaving,
+  .stage-scan,
+  .keycap-enter,
+  .review-progress span.is-running,
+  .review-card[data-offset="out"],
+  .review-card.is-entering,
+  .is-waving .keycap-top {
+    animation: none;
+  }
+
+  .stage-pose.is-active {
+    opacity: 1;
+  }
+
+  .stage-figure,
+  .stage-number,
+  .about-panel,
+  .about-panel .stagger > * {
+    transition: none;
   }
 }

@@ -10,7 +10,7 @@ import { getLocaleServer } from "@/lib/i18n-server";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Instrument_Serif, Inter } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata: Metadata = {
@@ -35,6 +35,12 @@ export const viewport: Viewport = {
 };
 
 const inter = Inter({ subsets: ["latin"] });
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument-serif",
+});
 
 export default async function RootLayout({
   children,
@@ -45,7 +51,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} data-scroll-behavior="smooth">
-      <body className={"flex flex-col min-h-screen w-full " + inter.className}>
+      <body className={`flex flex-col min-h-screen w-full ${inter.className} ${serif.variable}`}>
         <SpeedInsights />
         <LanguageProvider initialLocale={locale}>
           <Navbar />

@@ -10,7 +10,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@ai-sdk/react": "^4.0.149",
+    "@ai-sdk/react": "^4.0.152",
     "@icons-pack/react-simple-icons": "^13.15.1",
     "@openrouter/ai-sdk-provider": "^3.1.0",
     "@prisma/adapter-pg": "^7.10.1",
@@ -20,14 +20,14 @@
     "@upstash/redis": "^1.39.0",
     "@upstash/vector": "^1.2.3",
     "@vercel/analytics": "^2.0.1",
-    "@vercel/functions": "^3.10.1",
+    "@vercel/functions": "^3.10.3",
     "@vercel/speed-insights": "^2.0.0",
-    "ai": "^7.0.145",
-    "better-auth": "^1.7.11",
-    "lucide-react": "^1.59.0",
+    "ai": "^7.0.148",
+    "better-auth": "^1.7.12",
+    "lucide-react": "^1.61.0",
     "next": "16.4.2",
     "nuqs": "^2.10.2",
-    "posthog-js": "^1.438.12",
+    "posthog-js": "^1.438.16",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-fast-marquee": "^1.6.5",
@@ -53,5 +53,5 @@
     "tsx": "^4.23.15",
     "typescript": "^6"
   },
-  "packageManager": "pnpm@12.14.0"
+  "packageManager": "pnpm@12.15.0"
 }

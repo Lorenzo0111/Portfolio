@@ -50,13 +50,23 @@ export async function fetchReviews() {
   if (data.error || !Array.isArray(data.user?.reviews))
     throw new VouchleyError(data.error ?? "Invalid response", 502);
 
-  const pinned = process.env.VOUCHLEY_PINNED_REVIEWS?.split(",") ?? [];
+  const pinned =
+    process.env.VOUCHLEY_PINNED_REVIEWS?.split(",").map((id) => id.trim()) ??
+    [];
+
+  // Pinned reviews first, in the order they are listed in the env var
+  const rank = (review: VouchleyReview) => {
+    const i = pinned.indexOf(review.id);
+    return i === -1 ? pinned.length : i;
+  };
 
   return {
     ...data.user,
-    reviews: data.user.reviews.map((review) => ({
-      ...review,
-      pinned: pinned.includes(review.id),
-    })),
+    reviews: data.user.reviews
+      .map((review) => ({
+        ...review,
+        pinned: pinned.includes(review.id),
+      }))
+      .sort((a, b) => rank(a) - rank(b)),
   };
 }
