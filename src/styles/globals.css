@@ -66,6 +66,9 @@
 /* ---------- Home: layout ---------- */
 
 .home-root {
+  /* Scattering keys and thrown review cards fly past the edges; clip (unlike
+     hidden) doesn't create a scroll container, so sticky sections still work */
+  overflow-x: clip;
   --stage-h: min(68vh, 580px);
   --stage-w: calc(var(--stage-h) * 0.62);
 }
