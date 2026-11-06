@@ -1,4 +1,4 @@
-import { chatModel, guardModel } from "@/lib/ai";
+import { chatModel, guardModel, isAIConfigured } from "@/lib/ai";
 import {
   buildInstructions,
   guardInstructions,
@@ -84,7 +84,7 @@ async function isOnTopic(messages: ModelMessage[]) {
         .slice(-4)
         .map((m) => `${m.role.toUpperCase()}: ${m.content}`)
         .join("\n\n"),
-      providerOptions: { openrouter: { reasoning: { effort: "minimal" } } },
+      providerOptions: { openai: { reasoningEffort: "minimal" } },
       maxRetries: 1,
       timeout: 8000,
     });
@@ -99,7 +99,7 @@ async function isOnTopic(messages: ModelMessage[]) {
 
 export async function POST(req: Request) {
   if (
-    !process.env.OPENROUTER_API_KEY ||
+    !isAIConfigured() ||
     !isRateLimitConfigured() ||
     !isTurnstileConfigured()
   )

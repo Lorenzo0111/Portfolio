@@ -5,6 +5,7 @@ import {
 } from "@/lib/chat/ratelimit";
 import { isTurnstileConfigured } from "@/lib/chat/turnstile";
 import { NextResponse } from "next/server";
+import { isAIConfigured } from "@/lib/ai";
 import { ipAddress } from "@vercel/functions";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +14,7 @@ export async function GET(req: Request) {
   const headers = { "Cache-Control": "private, no-store" };
 
   if (
-    !process.env.OPENROUTER_API_KEY ||
+    !isAIConfigured() ||
     !isRateLimitConfigured() ||
     !isTurnstileConfigured()
   )
